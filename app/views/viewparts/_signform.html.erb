@@ -1,0 +1,99 @@
+<%  @n1 =  rand(10)%>
+<%  @n2 =  rand(10)%>
+<%  @n3 =  rand(10)%>
+<%  @n4 =  rand(10)%>
+<div class="nk-sign-form">
+  <div class="nk-gap-5"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3">
+        <div class="nk-sign-form-container">
+          <div class="nk-sign-form-toggle h3"><a href="#" class="nk-sign-form-login-toggle active">Войти</a> <a href="#" class="nk-sign-form-register-toggle">Регистрация</a></div>
+          <div class="nk-gap-2"></div>
+          <!-- START: Login Form -->
+          <%= form_for :login, url: login_path,:html => {:class => 'nk-sign-form-login active', :id => 'loginform'}, remote: true do |f| %>
+              <div class="login_result home-game-info" style="display: none;"></div>
+
+              <%= f.text_field 'usermail', placeholder:'Почта' ,:required => true, class:'form-control home-game-info'%>
+              <div class="nk-gap-2"></div>
+              <%= f.password_field 'userpass', placeholder:'Пароль' ,:required => true, class:'form-control home-game-info'%>
+
+              <div class="nk-gap-2"></div>
+
+              <button type="submit" id="loginbutt" class="nk-btn nk-btn-color-white link-effect-4 pull-right">Отправить</button>
+              <div class="clearfix"></div>
+              <div class="nk-gap-1"></div><a class="nk-sign-form-lost-toggle pull-right home-game-info" href="#">Забыли пароль?</a>
+          <% end%>
+          <!-- END: Login Form -->
+          <!-- START: Lost Password Form -->
+          <form class="nk-sign-form-lost" action="#">
+            <input class="form-control" type="text" placeholder="Ваша почта или Ник">
+            <div class="nk-gap-2"></div>
+            <%= image_tag(image_path('capthca/'+@n3.to_s+'.png'), class: 'capctha',alt:'')%>
+            <%= image_tag(image_path('capthca/plus.png'), class: 'capctha',alt:'')%>
+            <%= image_tag(image_path('capthca/'+@n4.to_s+'.png'), class: 'capctha',alt:'')%>
+            <%= image_tag(image_path('capthca/eqal.png'), class: 'capctha',alt:'')%>
+            <div class="nk-form-control-number">
+              <span class="nk-form-control-number-down"></span>
+              <input type="number" id="capinput" name="n3" required="required" min="0" max="9" name="quantity" value="1" class="form-control nk-error" aria-describedby="quantity-error" aria-invalid="true">
+              <span class="nk-form-control-number-up"></span>
+            </div>
+            <div class="nk-gap-2"></div>
+            <input id="nn1" name="n1" value="<%= @n3%>" type="hidden" />
+            <input id="nn2" name="n2" value="<%= @n4%>" type="hidden" />
+            <p class="home-game-info">ПОКА НЕ РАБОТАЕТ</p>
+            <button class="nk-btn nk-btn-color-white link-effect-4 pull-right">Получить новый пароль</button>
+          </form>
+          <!-- END: Lost Password Form -->
+          <!-- START: Register Form -->
+
+          <%= form_for :registration, url: registration_path, :html => {:class => 'nk-sign-form-register', :id => 'regform'}  , remote: true  do |f|%>
+              <div class="reg_result home-game-info" style="display: none;"></div>
+
+              <%= f.text_field 'nickname', placeholder:'Ник' ,:required => true, class:'form-control home-game-info'%>
+
+              <div class="nk-gap-2"></div>
+              <%= f.text_field 'usermail', placeholder:'Почта' ,:required => true, class:'form-control home-game-info'%>
+
+              <div class="nk-gap-2"></div>
+              <%= image_tag(image_path('capthca/'+@n1.to_s+'.png'), class: 'capctha',alt:'')%>
+              <%= image_tag(image_path('capthca/plus.png'), class: 'capctha',alt:'')%>
+              <%= image_tag(image_path('capthca/'+@n2.to_s+'.png'), class: 'capctha',alt:'')%>
+              <%= image_tag(image_path('capthca/eqal.png'), class: 'capctha',alt:'')%>
+              <div class="nk-form-control-number" style="display: inline">
+
+                <input type="number" id="capinput" name="n3" required="required" min="0" max="18"  value="1" class="form-control nk-error" aria-describedby="quantity-error" aria-invalid="true">
+
+              </div>
+
+              <div class="nk-gap-2"></div>
+
+
+              <input id="nn1" name="n1" value="<%= @n1%>" type="hidden" />
+              <input id="nn2" name="n2" value="<%= @n2%>" type="hidden" />
+
+              <button  type="submit" id="regbutt"  class="nk-btn nk-btn-color-white link-effect-4 pull-right">Зарегистрироваться</button>
+
+          <% end%>
+
+          <!-- END: Register Form -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nk-gap-5"></div>
+</div>
+
+<script type="text/javascript">
+    $( "#regform" ).submit(function( ) {
+        $('#regbutt').html("Подождите...");
+        $('#regbutt').attr('disabled','disabled');
+    });
+</script>
+
+<script type="text/javascript">
+    $( "#loginform" ).submit(function( ) {
+        $('#loginbutt').html("Подождите...");
+        $('#loginbutt').attr('disabled','disabled');
+    });
+</script>
