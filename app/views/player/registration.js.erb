@@ -1,0 +1,17 @@
+if('<%= @status %>' == 'ok') {
+    $(".reg_result_err").css('display','none');
+    $(".reg_result_ok").css('display', 'block');
+
+    $(".reg_result_ok").text('<%= raw @res %>');
+    $('#regbutt').html("Спасибо за регистрацию");
+
+}
+else{
+    $(".reg_result_err").css('display','block');
+    $(".reg_result_err").text('<%= raw @res %>');
+    $('#regbutt').html("Зарегистрироваться");
+    $('#regbutt').removeAttr('disabled');
+
+
+}
+

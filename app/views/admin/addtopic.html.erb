@@ -1,0 +1,79 @@
+<div class="nk-main">
+  <div class="container">
+  <div class="nk-gap-4"></div>
+  <div class="nk-gap-4"></div>
+    <%= form_for  :addtopic, url: addtopic_path  do |f|%>
+      <div class="nk-gap-2"></div>
+        <p>Название темы :</p>
+      <%= f.text_field 'topic_name',  :required => true, class:'form-control'%>
+
+
+        <div class="nk-gap-1"></div>
+      <p>Иконка темы (основная):</p>
+      <% @icons.each do |icon| %>
+      <div class="form-check form-check-inline">
+        <label class="form-check-label">
+          <input style="margin-top: 15px !important;" class="form-check-input" type="radio" name="topic_icon"  value="<%= icon %>"><span class="icon <%= icon %>" style="font-size: 25px; color:#e08821;"></span>
+        </label>
+      </div>
+      <% end %>
+
+        <p>Отображать на главной?</p>
+        <div class="form-check form-check-inline">
+          <label class="form-check-label">
+            <input  class="form-check-input" type="radio" name="showhome"  value="show">Да
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <label class="form-check-label">
+            <input  class="form-check-input" type="radio" name="showhome"  value="notshow" checked="true">Нет
+          </label>
+        </div>
+
+            <label class="mr-sm-2" for="inlineFormCustomSelect">Тип темы (отображается на главной)</label>
+            <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect" name="topic_type" >
+              <% @topic_type.each do |type| %>
+              <option ><%= type %></option>
+
+              <% end %>
+            </select>
+        <p>Иконка темы (отображается на главной) :</p>
+        <% @icons.each do |ticon| %>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input style="margin-top: 15px !important;" class="form-check-input" type="radio" name="home_topic_icon"  value="<%= ticon %>"><span class="icon <%= ticon %>" style="font-size: 25px; color:#e08821;"></span>
+              </label>
+            </div>
+        <% end %>
+        <p>Картинка для темы (отображается на главной) :</p>
+        <%= f.file_field :home_topic_image %>
+
+
+      <input name="subforum_id" value="<%= @subforum_id%>" type="hidden" />
+
+      <div class="nk-gap-1"></div>
+      <p>Сообщение :</p>
+
+      <textarea class="nk-summernote"  id="content" name="content" rows="18"></textarea>
+
+
+        <div class="nk-gap-1"></div>
+          <p>Закрепить тему?</p>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input  class="form-check-input" type="radio" name="pintopic"  value="pin">Да
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input  class="form-check-input" type="radio" name="pintopic"  value="notpin" checked="true">Нет
+            </label>
+          </div>
+
+      <button  type="submit" class="nk-btn nk-btn-color-main-1 link-effect-4">Добавить тему</button>
+
+  <% end %>
+  <div class="nk-gap-4"></div>
+  <div class="nk-gap-4"></div>
+  </div>
+</div>

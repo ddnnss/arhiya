@@ -12,6 +12,7 @@ gem 'nokogiri'
 gem 'fastimage'
 gem 'jquery-turbolinks'
 gem 'jquery-rails'
+gem 'translit'
 
 gem 'will_paginate', '~> 3.1.0'
 

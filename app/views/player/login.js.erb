@@ -1,0 +1,8 @@
+$(".login_result").css('display','block');
+$(".login_result").css('background-color', 'rgba(255, 0, 0, 0.8)');
+$(".login_result").css('padding', '15px');
+$(".login_result").css('border-radius', '5px');
+$(".login_result").css('font-size', '13px');
+$(".login_result").text('<%= raw @res %>');
+$('#loginbutt').html("Отправить");
+$('#loginbutt').removeAttr('disabled');

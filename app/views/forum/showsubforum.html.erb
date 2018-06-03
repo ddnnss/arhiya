@@ -1,0 +1,167 @@
+<!-- START: Page Background -->
+<div class="nk-page-background op-5" data-bg-mp4="<%= asset_path('bg-2.mp4') %>" data-bg-webm="<%= asset_path('bg-2.webm') %>" data-bg-ogv="<%= asset_path('bg-2.ogv') %>" data-bg-poster="<%= asset_path('bg-2.jpg') %>"></div>
+<!-- END: Page Background -->
+
+<div class="nk-main">
+
+
+  <!-- START: Header Title -->
+  <!--
+Additional Classes:
+  .nk-header-title-sm
+  .nk-header-title-md
+  .nk-header-title-lg
+  .nk-header-title-xl
+  .nk-header-title-full
+  .nk-header-title-parallax
+  .nk-header-title-parallax-opacity
+  .nk-header-title-boxed
+-->
+  <div class="nk-header-title nk-header-title-sm nk-header-title-parallax-opacity">
+
+
+
+
+    <div class="nk-header-text-bottom">
+      <div class="nk-breadcrumbs text-xs-center">
+        <ul>
+          <li><a href="/">ГЛАВНАЯ</a></li>
+          <li><a href="/forums">ФОРУМ</a></li>
+          <li>
+            <span><%= @subforum.subforum_name.mb_chars.upcase %></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+  </div>
+  <!-- END: Header Title -->
+
+
+
+
+
+  <div class="nk-gap-4"></div>
+
+  <div class="container">
+
+    <!-- START: Pagination -->
+    <div class="row">
+      <% if session[:active] %>
+        <div class="col-md-3 push-md-9 text-xs-right">
+          <button class="nk-btn nk-btn-lg link-effect-4" data-toggle="modal" data-target=".new_topic_modal">Новая тема</button>
+
+        </div>
+
+      <% end %>
+      <div class="col-md-9 pull-md-3">
+        <div class="digg_pagination">
+
+        </div>
+      </div>
+    </div>
+    <!-- END: Pagination -->
+
+    <div class="nk-gap-2"></div>
+
+    <!-- START: Forums List -->
+    <ul class="nk-forum">
+
+
+
+          <% if @pinned %>
+            <% @pinnedtopic.each do |pintopic| %>
+          <li>
+            <div class="nk-forum-icon">
+              <%=pintopic.topic_closed ? '<span class="ion-pin text-danger"></span>'.html_safe  : '<span class="ion-pin"></span>'.html_safe %>
+            </div>
+            <div class="nk-forum-title">
+              <h3><a href="/topic/<%= pintopic.topic_name_translit %>"><%=pintopic.topic_closed ? '<span class="text-danger">[ЗАКРЫТА]</span> '.html_safe + pintopic.topic_name : pintopic.topic_name %></a></h3>
+              <div class="nk-forum-title-sub">Начата <a href="/profile/<%=pintopic.player.player_nickname_translit  %>"><%=pintopic.player.player_nickname  %></a> <%=pintopic.created_at.strftime("%d.%m.%Y | %H:%M:%S") %></div>
+            </div>
+            <div class="nk-forum-count">
+              <%=pintopic.posts.count  %> сообщений
+            </div>
+            <div class="nk-forum-count">
+              <%=pintopic.topic_views  %> просмотров
+            </div>
+            <div class="nk-forum-activity-avatar">
+              <img src="/images/avatars/<%=pintopic.posts.last.player.player_avatar %>" alt="<%=pintopic.posts.last.player.player_nickname  %>">
+            </div>
+            <div class="nk-forum-activity">
+              <div class="nk-forum-activity-title" title="<%=pintopic.posts.last.player.player_nickname  %>">
+                <a href="/profile/<%=pintopic.player.player_nickname_translit  %>"><%=pintopic.posts.last.player.player_nickname  %></a>
+              </div>
+              <div class="nk-forum-activity-date">
+                <%=pintopic.posts.last.updated_at.strftime("%d.%m.%Y | %H:%M:%S")  %>
+              </div>
+            </div>
+          </li>
+            <% end %>
+          <% end %>
+
+          <% @topic.each do |topic| %>
+      <li>
+        <div class="nk-forum-icon">
+
+          <%if topic.topic_closed%>
+            <span class="ion-locked text-danger"></span>
+            <% else %>
+            <span class="<%=topic.topic_icon %>"></span>
+
+          <% end %>
+        </div>
+        <div class="nk-forum-title">
+          <h3><a href="/topic/<%= topic.topic_name_translit %>"><%=topic.topic_closed ? '<span class="text-danger">[ЗАКРЫТА]</span> '.html_safe + topic.topic_name : topic.topic_name %></a></h3>
+          <div class="nk-forum-title-sub">Начата <a href="/profile/<%=topic.player.player_nickname_translit  %>"><%=topic.player.player_nickname  %></a> <%=topic.created_at.strftime("%d.%m.%Y | %H:%M:%S") %></div>
+        </div>
+        <div class="nk-forum-count">
+          <%=topic.posts.count  %> сообщений
+        </div>
+        <div class="nk-forum-count">
+          <%=topic.topic_views  %> просмотров
+        </div>
+        <div class="nk-forum-activity-avatar">
+          <img src="/images/avatars/<%=topic.posts.last.player.player_avatar %>" alt="<%=topic.posts.last.player.player_nickname  %>">
+        </div>
+        <div class="nk-forum-activity">
+          <div class="nk-forum-activity-title" title="<%=topic.posts.last.player.player_nickname  %>">
+            <a href="/profile/<%=topic.player.player_nickname_translit  %>"><%=topic.posts.last.player.player_nickname  %></a>
+          </div>
+          <div class="nk-forum-activity-date">
+            <%=topic.posts.last.updated_at.strftime("%d.%m.%Y | %H:%M:%S")  %>
+          </div>
+        </div>
+      </li>
+          <% end %>
+
+
+    </ul>
+    <!-- END: Forums List -->
+
+    <div class="nk-gap-2"></div>
+
+    <!-- START: Pagination -->
+    <div class="row">
+      <% if session[:active] %>
+        <div class="col-md-3 push-md-9 text-xs-right">
+          <button class="nk-btn nk-btn-lg link-effect-4" data-toggle="modal" data-target=".new_topic_modal">Новая тема</button>
+        </div>
+      <% end %>
+      <div class="col-md-9 pull-md-3">
+        <div class="digg_pagination">
+
+        </div>
+      </div>
+    </div>
+    <!-- END: Pagination -->
+  </div>
+
+  <div class="nk-gap-4"></div>
+  <div class="nk-gap-4"></div>
+
+
+
+</div>
+<%= render 'forum/newtopicmodal' %>

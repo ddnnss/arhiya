@@ -12,11 +12,17 @@
           <div class="nk-gap-2"></div>
           <!-- START: Login Form -->
           <%= form_for :login, url: login_path,:html => {:class => 'nk-sign-form-login active', :id => 'loginform'}, remote: true do |f| %>
-              <div class="login_result home-game-info" style="display: none;"></div>
 
-              <%= f.text_field 'usermail', placeholder:'Почта' ,:required => true, class:'form-control home-game-info'%>
+            <div class="nk-info-box bg-danger login_result" style="display: none;">
+              <div class="nk-info-box-icon">
+                <i class="ion-alert-circled"></i>
+              </div>
+
+            </div>
+
+              <%= f.text_field 'player_email', placeholder:'Почта' ,:required => true, class:'form-control home-game-info'%>
               <div class="nk-gap-2"></div>
-              <%= f.password_field 'userpass', placeholder:'Пароль' ,:required => true, class:'form-control home-game-info'%>
+              <%= f.password_field 'player_password', placeholder:'Пароль' ,:required => true, class:'form-control home-game-info'%>
 
               <div class="nk-gap-2"></div>
 
@@ -48,12 +54,21 @@
           <!-- START: Register Form -->
 
           <%= form_for :registration, url: registration_path, :html => {:class => 'nk-sign-form-register', :id => 'regform'}  , remote: true  do |f|%>
-              <div class="reg_result home-game-info" style="display: none;"></div>
 
-              <%= f.text_field 'nickname', placeholder:'Ник' ,:required => true, class:'form-control home-game-info'%>
+            <div class="nk-info-box bg-danger reg_result_err" style="display: none;">
+              <div class="nk-info-box-icon">
+                <i class="ion-alert-circled"></i>
+              </div>
+            </div>
+            <div class="nk-info-box bg-success reg_result_ok" style="display: none;">
+              <div class="nk-info-box-icon">
+                <i class="ion-alert-circled"></i>
+              </div>
+            </div>
+              <%= f.text_field 'player_nickname', placeholder:'Ник' ,:required => true, class:'form-control home-game-info'%>
 
               <div class="nk-gap-2"></div>
-              <%= f.text_field 'usermail', placeholder:'Почта' ,:required => true, class:'form-control home-game-info'%>
+              <%= f.text_field 'player_email', placeholder:'Почта' ,:required => true, class:'form-control home-game-info'%>
 
               <div class="nk-gap-2"></div>
               <%= image_tag(image_path('capthca/'+@n1.to_s+'.png'), class: 'capctha',alt:'')%>

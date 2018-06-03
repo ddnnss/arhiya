@@ -1,0 +1,155 @@
+<!-- START: Page Background -->
+<div class="nk-page-background op-5" data-bg-mp4="<%= asset_path('bg-2.mp4') %>" data-bg-webm="<%= asset_path('bg-2.webm') %>" data-bg-ogv="<%= asset_path('bg-2.ogv') %>" data-bg-poster="<%= asset_path('bg-2.jpg') %>"></div>
+<!-- END: Page Background -->
+<div class="nk-main">
+
+
+  <!-- START: Header Title -->
+  <!--
+Additional Classes:
+  .nk-header-title-sm
+  .nk-header-title-md
+  .nk-header-title-lg
+  .nk-header-title-xl
+  .nk-header-title-full
+  .nk-header-title-parallax
+  .nk-header-title-parallax-opacity
+  .nk-header-title-boxed
+-->
+  <div class="nk-header-title nk-header-title-sm nk-header-title-parallax-opacity">
+
+
+
+    <div class="nk-header-text-bottom">
+      <div class="nk-breadcrumbs text-xs-center">
+        <ul>
+          <li><a href="/">ГЛАВНАЯ</a></li>
+          <li><a href="/forums">ФОРУМ</a></li>
+          <li><a href="/forum/<%=@topic.subforum.subforum_name_translit %>"><%=@topic.subforum.subforum_name.mb_chars.upcase%></a></li>
+          <li>
+            <span><%= @topic.topic_name.mb_chars.upcase %></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+  </div>
+  <!-- END: Header Title -->
+
+
+
+
+
+  <div class="nk-gap-4"></div>
+
+  <div class="container">
+
+    <!-- START: Pagination -->
+    <div class="row">
+      <% if session[:admin] #and @currenttopic.topic_closed == false %>
+        <div class="col-md-9  text-xs-right">
+          <a href="/pintopic/<%=@topic.id %>" class="nk-btn nk-btn-lg link-effect-4"> <%= @topic.topic_pinned ? 'Открепить тему' : 'Закрепить тему' %></a>
+          <a href="/closetopic/<%=@topic.id %>" class="nk-btn nk-btn-lg link-effect-4"> <%= @topic.topic_closed ? 'Открыть тему' : 'Закрыть тему' %></a>
+          <a href="/movetopic/<%=@topic.id %>" class="nk-btn nk-btn-lg nk-btn-bg-warning link-effect-4">Перенести тему</a>
+          <a href="/deletetopic/<%=@topic.id %>" class="nk-btn nk-btn-lg nk-btn-bg-danger link-effect-4">Удалить тему</a>
+        </div>
+      <% end %>
+      <% if session[:active]%>
+      <div class="col-md-2  text-xs-right">
+        <a href="#forum-reply" class="nk-btn nk-btn-lg link-effect-4 nk-anchor">Новое сообщение</a>
+      </div>
+      <% end %>
+
+      <div class="digg_pagination">
+
+      </div>
+
+    </div>
+    <!-- END: Pagination -->
+
+    <div class="nk-gap-2"></div>
+
+    <!-- START: Forums List -->
+    <ul class="nk-forum nk-forum-topic home-game-info">
+      <% @topic.posts.each do |post| %>
+      <li id="post<%=post.id%>">
+
+        <div class="nk-forum-topic-author">
+          <img src="/images/avatars/<%=post.player.player_avatar %>" alt="<%=post.player.player_nickname %>">
+          <div class="nk-forum-topic-author-name" title="<%=post.player.player_nickname %>">
+            <a href="/profile/<%=post.player.player_nickname_translit  %>"><%=post.player.player_nickname %></a>
+          </div>
+          <div class="nk-forum-topic-author-role"><%=post.player.player_rank %></div>
+          <div class="nk-forum-topic-author-since">
+
+          </div>
+        </div>
+        <div class="nk-forum-topic-content">
+          <%=post.post_text.html_safe %>
+        </div>
+        <div class="nk-forum-topic-footer">
+          <span class="nk-forum-topic-date"><%=post.created_at.strftime("%d.%m.%Y | %H:%M:%S") %></span>
+          <% if session[:active]%>
+          <span class="nk-forum-action-btn">
+            <a href="#forum-reply" class="nk-anchor"><span class="fa fa-reply"></span> Ответ</a>
+          </span>
+          <% end %>
+          <% if post.player_id == session[:player_id].to_i  or session[:admin] %>
+          <span class="nk-forum-action-btn">
+            <a href="/editpost/<%=post.id%>" data-remote="true"><span class="fa fa-edit"></span> Редактировать</a></span>
+
+          <% end %>
+          <% if  post.player_id == session[:player_id].to_i  or session[:admin] %>
+              <span class="nk-forum-action-btn">
+                            <a href="/deletepost/<%=  post.id%>">
+                                <span class="fa fa-eraser"></span> Удалить</a>
+                        </span>
+          <% end %>
+          <span class="nk-forum-action-btn">
+                            <a href="/topic/<%=post.topic.topic_name_translit%>#post<%=post.id%>">
+                                <span class="fa fa-link"></span>#<%=post.id%></a>
+                        </span>
+
+
+        </div>
+      </li>
+      <% end %>
+    </ul>
+
+    <!-- END: Forums List -->
+
+    <div class="nk-gap-2"></div>
+
+    <!-- START: Pagination -->
+
+    <div class="digg_pagination">
+
+    </div>
+
+    <% if session[:active] and @topic.topic_closed == false %>
+      <div id="forum-reply"></div>
+      <div class="nk-gap-4"></div>
+      <!-- START: Reply -->
+      <h3 class="h4">Ответ в теме</h3>
+      <div class="nk-gap-1"></div>
+      <%= form_for :addpost, url: addpost_path  do %>
+        <textarea class="nk-summernote"  required="required" name="new_post_content" rows="18"></textarea>
+        <div class="nk-gap-1"></div>
+        <input name="topic_id" value="<%= @topic.id%>" type="hidden" />
+        <input name="topic_name" value="<%= @topic.topic_name_translit%>" type="hidden" />
+        <div class="nk-gap-1"></div>
+        <%= submit_tag 'Ответить' , class:'nk-btn nk-btn-lg link-effect-4'%>
+
+
+      <% end %>
+      <div class="nk-gap-1"></div>
+    <% end %>
+  </div>
+
+
+  <div class="nk-gap-4"></div>
+  <div class="nk-gap-4"></div>
+</div>
+
+<%= render 'editpostmodal' %>

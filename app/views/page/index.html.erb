@@ -77,6 +77,88 @@ Additional Classes:
   </div>
 
   <!-- START: Rev Slider -->
+  <div class="mnt-80">
+    <div id="rev_slider_50_1_wrapper" class="rev_slider_wrapper fullscreen-container" data-alias="photography-carousel48" style="padding:0px">
+      <div id="rev_slider_50_1" class="rev_slider fullscreenbanner" style="display:none" data-version="5.0.7">
+        <ul>
+
+            <!-- SLIDE  -->
+
+            <li data-index="rs-<%= rand(100..999) %>" data-transition="slideoverhorizontal" data-slotamount="7" data-easein="default" data-easeout="default" data-masterspeed="1500" data-thumb="<%= image_path('gallery-3-thumb.jpg') %>" data-rotate="0" data-saveperformance="off">
+
+              <img src="images/homepage/getImage.jpg" alt="" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
+              <!-- SLIDE descr start  -->
+              <div class="container hidden-sm-down" style="padding: 10% 50px;">
+                <div style="    background-color: rgba(21, 19, 19, 0.65);
+                    padding: 30px;">
+                  <h2 class="nk-title h3">TTTTTTTTT</h2>
+                  <div class="nk-title-sep"></div>
+
+
+                    <p class="home-game-info">NNNNNNNNNNNNNNNNNNNNNNN</p>
+
+                    <a href="" class="nk-btn  nk-btn-color-main-1 link-effect-4"><span>Подробнее о игре</span></a> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="" class="nk-btn  link-effect-4"><span><span class="icon ion-eye"></span> Официальный сайт</span></a>
+                    <a href="" class="nk-btn  link-effect-4"><span><span class="icon ion-steam"></span> Купить игру в STEAM</span></a>
+
+                    </div>
+              </div>
+              <!-- SLIDE descr end  -->
+            </li>
+            <!-- SLIDE  -->
+          <!-- SLIDE  -->
+
+          <li data-index="rs-<%= rand(100..999) %>" data-transition="slideoverhorizontal" data-slotamount="7" data-easein="default" data-easeout="default" data-masterspeed="1500" data-thumb="<%= image_path('gallery-3-thumb.jpg') %>" data-rotate="0" data-saveperformance="off">
+
+            <img src="images/homepage/getImage.jpg" alt="" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
+            <!-- SLIDE descr start  -->
+            <div class="container hidden-sm-down" style="padding: 10% 50px;">
+              <div style="    background-color: rgba(21, 19, 19, 0.65);
+                  padding: 30px;">
+                <h2 class="nk-title h3">TTTTTTTTT</h2>
+                <div class="nk-title-sep"></div>
+
+
+                <p class="home-game-info">NNNNNNNNNNNNNNNNNNNNNNN</p>
+
+                <a href="" class="nk-btn  nk-btn-color-main-1 link-effect-4"><span>Подробнее о игре</span></a> &nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="" class="nk-btn  link-effect-4"><span><span class="icon ion-eye"></span> Официальный сайт</span></a>
+                <a href="" class="nk-btn  link-effect-4"><span><span class="icon ion-steam"></span> Купить игру в STEAM</span></a>
+
+              </div>
+            </div>
+            <!-- SLIDE descr end  -->
+          </li>
+          <!-- SLIDE  -->
+          <!-- SLIDE  -->
+
+          <li data-index="rs-<%= rand(100..999) %>" data-transition="slideoverhorizontal" data-slotamount="7" data-easein="default" data-easeout="default" data-masterspeed="1500" data-thumb="<%= image_path('gallery-3-thumb.jpg') %>" data-rotate="0" data-saveperformance="off">
+
+            <img src="images/homepage/getImage.jpg" alt="" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
+            <!-- SLIDE descr start  -->
+            <div class="container hidden-sm-down" style="padding: 10% 50px;">
+              <div style="    background-color: rgba(21, 19, 19, 0.65);
+                  padding: 30px;">
+                <h2 class="nk-title h3">TTTTTTTTT</h2>
+                <div class="nk-title-sep"></div>
+
+
+                <p class="home-game-info">NNNNNNNNNNNNNNNNNNNNNNN</p>
+
+                <a href="" class="nk-btn  nk-btn-color-main-1 link-effect-4"><span>Подробнее о игре</span></a> &nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="" class="nk-btn  link-effect-4"><span><span class="icon ion-eye"></span> Официальный сайт</span></a>
+                <a href="" class="nk-btn  link-effect-4"><span><span class="icon ion-steam"></span> Купить игру в STEAM</span></a>
+
+              </div>
+            </div>
+            <!-- SLIDE descr end  -->
+          </li>
+          <!-- SLIDE  -->
+        </ul>
+        <div class="tp-bannertimer tp-bottom" style="visibility: hidden !important"></div>
+      </div>
+    </div>
+  </div>
 
   <!-- END: Rev Slider -->
   <!-- START: Features -->
@@ -151,7 +233,29 @@ Additional Classes:
   </div>
   <div class="nk-gap-2"></div>
   <div class="container">
-  news
+    <div class="nk-blog-list">
+      <% unless @noslides %>
+      <% @homepage_topics.each do |topic| %>
+        <!-- START: Post -->
+        <div class="nk-blog-post" data-mouse-parallax-z="5" data-mouse-parallax-speed="1">
+          <div class="nk-post-thumb">
+            <div class="nk-post-type"><span class="<%=topic.topic_home_icon %>"></span></div>
+            <div class="nk-post-category"><a href="#"> <%=topic.topic_home_type %></a></div>
+            <a href="/topic/<%=topic.topic_name_translit %>"><img class="nk-img-stretch" src="images/homepage/<%= topic.topic_home_image %>" alt="<%= topic.topic_name %>"></a>
+          </div>
+          <div class="nk-post-content">
+            <div data-mouse-parallax-z="2" class="parallaxed" style="transform: translate3d(-10px, 3.78743px, 0px);">
+              <h2 class="nk-post-title h1"> <a href="/topic/<%=topic.topic_name_translit %>"><%=topic.topic_name%></a></h2>
+              <div class="nk-post-date"><%= topic.created_at.strftime("%d.%m.%Y | %H:%M:%S") %></div>
+            </div>
+          </div>
+
+          <!-- END: Post -->
+
+        </div>
+        <% end %>
+      <% end %>
+    </div>
   </div>
 
 

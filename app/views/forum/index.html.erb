@@ -1,0 +1,103 @@
+<!-- START: Page Background -->
+<div class="nk-page-background op-5" data-bg-mp4="<%= asset_path('bg-2.mp4') %>" data-bg-webm="<%= asset_path('bg-2.webm') %>" data-bg-ogv="<%= asset_path('bg-2.ogv') %>" data-bg-poster="<%= asset_path('bg-2.jpg') %>"></div>
+<!-- END: Page Background -->
+<div class="nk-main">
+
+
+  <!-- START: Header Title -->
+  <!--
+Additional Classes:
+  .nk-header-title-sm
+  .nk-header-title-md
+  .nk-header-title-lg
+  .nk-header-title-xl
+  .nk-header-title-full
+  .nk-header-title-parallax
+  .nk-header-title-parallax-opacity
+  .nk-header-title-boxed
+-->
+  <div class="nk-header-title nk-header-title-sm nk-header-title-parallax-opacity">
+
+
+
+    <div class="nk-header-text-bottom">
+      <div class="nk-breadcrumbs text-xs-center">
+        <ul>
+          <li><a href="/">ГЛАВНАЯ</a></li>
+          <li>
+            <span>ФОРУМ</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+  </div>
+  <!-- END: Header Title -->
+
+
+
+
+
+  <div class="nk-gap-4"></div>
+
+  <div class="container">
+
+    <!-- START: Forums List -->
+    <ul class="nk-forum">
+      <% @forums.each do |forum| %>
+
+
+        <li style="    padding-top: 40px;
+            padding-bottom: 40px;">
+
+          <div class="nk-forum-title" >
+            <h3 ><%=forum.forum_name %></h3>
+          </div>
+          <hr/>
+          <% forum.subforums.each do |subforum| %>
+
+          <li style="    padding-top: 30px;
+              padding-bottom: 30px;
+              background-color:#060606;">
+            <div class="nk-forum-icon">
+              <span class="<%= subforum.subforum_icon %>"></span>
+            </div>
+            <div class="nk-forum-title">
+              <h3><a href="/forum/<%= subforum.subforum_name_translit%>"><%= subforum.subforum_name %></a></h3>
+
+            </div>
+            <div class="nk-forum-count">
+              <%= subforum.topics.count %> тем
+            </div>
+            <div class="nk-forum-count">
+              <%= subforum.posts.count %> сообщений
+            </div>
+            <% unless @empty %>
+            <div class="nk-forum-activity-avatar">
+              <img src="/images/avatars/<%= subforum.posts.last.player.player_avatar %>" alt="<%= subforum.posts.last.player.player_nickname %>">
+            </div>
+            <div class="nk-forum-activity">
+              <div class="nk-forum-activity-title" title="<%= subforum.posts.last.player.player_nickname %>">
+                <a href="/topic/<%= subforum.topics.last.topic_name%>#post<%= subforum.posts.last.id%>"><%= subforum.topics.last.topic_name%></a>
+              </div>
+              <div class="nk-forum-activity-date">
+                <%= subforum.posts.last.updated_at.strftime("%d.%m.%Y | %H:%M:%S") %>
+              </div>
+            </div>
+          <% end %>
+          </li>
+
+        </li>
+
+      <% end %>
+      <% end %>
+    </ul>
+    <!-- END: Forums List link_to forum.last_topic, {:controller => 'forums', :action => 'showposts', :topicid => forum.last_topic_id},  :class=>'' %> -->
+
+  </div>
+
+  <div class="nk-gap-4"></div>
+  <div class="nk-gap-4"></div>
+
+</div>

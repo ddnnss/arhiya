@@ -1,6 +1,6 @@
 class Topic < ApplicationRecord
   belongs_to :subforum
   belongs_to :player
-  has_many :posts
+  has_many :posts,:dependent => :destroy
 
 end

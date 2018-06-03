@@ -1,0 +1,249 @@
+<div class="nk-page-background op-5" data-bg-mp4="<%= asset_path('bg-1.mp4') %>" data-bg-webm="<%= asset_path('bg-1.webm') %>" data-bg-ogv="<%= asset_path('bg-1.ogv') %>" data-bg-poster="<%= asset_path('bg-1.jpg') %>"></div>
+<div class="nk-main">
+  <!-- START: Header Title -->
+  <!--
+  Additional Classes:
+      .nk-header-title-sm
+      .nk-header-title-md
+      .nk-header-title-lg
+      .nk-header-title-xl
+      .nk-header-title-full
+      .nk-header-title-parallax
+      .nk-header-title-parallax-opacity
+      .nk-header-title-boxed
+-->
+  <div class="nk-header-title nk-header-title-sm nk-header-title-parallax nk-header-title-parallax-opacity">
+    <div class="bg-image">
+      <div style="background-image: url(<%=image_path('lk_bg2.jpg') %>);" class="op-5"></div>
+    </div>
+    <div class="nk-header-table">
+      <div class="nk-header-table-cell">
+        <div class="container"></div>
+      </div>
+    </div>
+  </div>
+  <!-- END: Header Title -->
+  <div class="container">
+    <div class="nk-social-profile nk-social-profile-container-offset">
+      <div class="row">
+        <div class="col-md-5 col-lg-3">
+          <div class="nk-social-profile-avatar">
+            <a href="#"><img src="/images/avatars/<%= @player.player_avatar%>" alt="nK"></a>
+          </div>
+        </div>
+        <div class="col-md-7 col-lg-9">
+          <div class="nk-social-profile-info">
+            <div class="nk-gap-2"></div>
+            <div class="nk-social-profile-info-last-seen">Дата регистрации : <%= @player.created_at.strftime("%d.%m.%Y")%> </div>
+            <h1 class="nk-social-profile-info-name"><%= @player.player_nickname%></h1>
+            <div class="nk-social-profile-info-username home-game-info" > <%= @player.player_rank%> </div>
+
+            <div class="nk-social-profile-info-actions">
+              <button class="nk-btn nk-btn-lg link-effect-4" data-toggle="modal" data-target="">Личное сообщение</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row vertical-gap">
+      <div class="col-lg-3 nk-sidebar-sticky-parent" style="">
+        <!--
+            START: Sidebar
+
+            Additional Classes:
+                .nk-sidebar-left
+                .nk-sidebar-right
+                .nk-sidebar-sticky
+        -->
+        <aside class="nk-sidebar nk-sidebar-left nk-sidebar-sticky"><div class="" style="">
+          <div class="nk-gap-2"></div>
+
+
+          <div class="nk-social-menu d-none d-lg-block">
+            <ul>
+              <li>  Общий рейтинг : <%= @player.player_votes_summ  == 0 ? 'Нет рейтинга' : @rating.to_s%></li>
+              <li>    Всего продаж : <%= @player.player_buys_count == 0 ? 'Нет продаж' : @player.player_buys_count%></li>
+              <li>   Всего покупок : <%= @player.player_sells_count == 0 ? 'Нет покупок' : @player.player_sells_count%></li>
+              <li>-</li>
+              <li>  VK : <%= @player.player_vk_link%></li>
+              <li>  Telegramm : <%= @player.player_tm_link%></li>
+              <li>  Discord : <%= @player.player_discord_link%></li>
+              <li>  Skype : <%= @player.player_skype_link%></li>
+
+            </ul>
+          </div>
+
+          <div class="nk-accordion d-lg-none" id="nk-social-menu-mobile" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="nk-social-menu-mobile-1-heading">
+                <a data-toggle="collapse" data-parent="#nk-social-menu-mobile" href="#nk-social-menu-mobile-1" aria-expanded="true" aria-controls="nk-social-menu-mobile-1" class="collapsed">
+                 ИНФОРМАЦИЯ О ИГРОКЕ
+                </a>
+              </div>
+              <div id="nk-social-menu-mobile-1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="nk-social-menu-mobile-1-heading">
+                <div class="nk-social-menu">
+                  <ul>
+                    <li>  Общий рейтинг : <%= @player.player_votes_summ  = 0 ? 'Нет рейтинга' : @rating.to_s%></li>
+                    <li>    Всего продаж : <%= @player.player_buys_count == 0 ? 'Нет продаж' : @player.player_buys_count%></li>
+                    <li>   Всего покупок : <%= @player.player_sells_count == 0 ? 'Нет покупок' : @player.player_sells_count%></li>
+                    <li>-</li>
+                    <li>  VK : <%= @player.player_vk_link%></li>
+                    <li>  Telegramm : <%= @player.player_tm_link%></li>
+                    <li>  Discord : <%= @player.player_discord_link%></li>
+                    <li>  Skype : <%= @player.player_skype_link%></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="nk-gap-4 d-none d-lg-block"></div>
+        </div></aside>
+        <!-- END: Sidebar -->
+      </div>
+      <div class="col-lg-9">
+        <div class="nk-gap-2 d-none d-lg-block"></div>
+        <div class="nk-tabs">
+          <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" href="#tab-description" role="tab" data-toggle="tab" aria-expanded="true">ТОРГОВЛЯ</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#tab-reviews" role="tab" data-toggle="tab">ОТЗЫВЫ <small>(<%=@player.comments.nil? ? '0' : @player.comments.count.to_s %>)</small></a>
+            </li>
+          </ul>
+
+          <div class="tab-content">
+
+            <!-- START: Tab Description -->
+            <div role="tabpanel" class="tab-pane fade in active show" id="tab-description">
+              <div class="nk-gap-3"></div>
+              <div class="nk-box-3 bg-dark-1">
+                <p>And gathering. Form for, gathering, female you'll blessed appear day us cattle hath be moving face he Whales fruitful is spirit Beginning. Abundantly good living Thing isn't stars saw over and earth dry rule herb bring image night, fowl their, third set saw for. Green a also upon life stars, green and darkness greater.</p>
+                <p>The light two his moving won't a kind unto they're sea sea subdue fowl light male forth second beginning. Saying seas signs. Seed brought air grass. Divided Meat god subdue own. He. Female form very cattle man i sixth. Beast living darkness open god bring image divide. Third which.</p>
+                <p>He. Herb created. Beginning. Gathering given our winged sea Two is image us life from seed so darkness and his replenish they're There, creature isn't divide face replenish creature. His gathered midst brought divided land without face were, midst multiply.</p>
+                <p>Place and the unto itself image also. Night earth good also gathered forth man cattle very open. Unto fill is. Midst together of, it you're own He sea fifth day moving spirit can't meat heaven fowl fruit isn't called fruitful made earth also. Him fourth upon To upon fill face. Also earth light shall also green. Grass.</p>
+              </div>
+            </div>
+            <!-- END: Tab Description -->
+
+            <!-- START: Tab Parameters -->
+           
+            <!-- END: Tab Parameters -->
+
+            <!-- START: Tab Reviews -->
+            <div role="tabpanel" class="tab-pane fade" id="tab-reviews">
+              <div class="nk-gap-3"></div>
+
+
+                <div >
+                  <!-- START: Reply -->
+                  <div class="nk-box-3 bg-dark-1">
+                    <h3 class="nk-title h4 text-xs-center">Написать отзыв</h3>
+                    <div class="nk-gap"></div>
+                    <div class="nk-reply mt-0">
+                     <%= form_for :addcomment, url: addcomment_path do |f|%>
+                        <div class="nk-rating">
+                          <input type="radio" id="reviewrate-5" required name="reviewrate" value="5">
+                          <label for="reviewrate-5">
+                            <span><i class="fa fa-star-o"></i></span>
+                            <span><i class="fa fa-star"></i></span>
+                          </label>
+
+                          <input type="radio" id="reviewrate-4" required name="reviewrate" value="4">
+                          <label for="reviewrate-4">
+                            <span><i class="fa fa-star-o"></i></span>
+                            <span><i class="fa fa-star"></i></span>
+                            </i>
+                          </label>
+
+                          <input type="radio" id="reviewrate-3" required name="reviewrate" value="3">
+                          <label for="reviewrate-3">
+                            <span><i class="fa fa-star-o"></i></span>
+                            <span><i class="fa fa-star"></i></span>
+                          </label>
+
+                          <input type="radio" id="reviewrate-2" required name="reviewrate" value="2">
+                          <label for="reviewrate-2">
+                            <span><i class="fa fa-star-o"></i></span>
+                            <span><i class="fa fa-star"></i></span>
+                          </label>
+
+                          <input type="radio" id="reviewrate-1" required name="reviewrate" value="1">
+                          <label for="reviewrate-1">
+                            <span><i class="fa fa-star-o"></i></span>
+                            <span><i class="fa fa-star"></i></span>
+                          </label>
+                        </div>
+
+
+                        <div class="nk-gap-1"></div>
+                        <textarea class="form-control" required name="review_message" rows="5" placeholder="Ваш отзыв" aria-required="true"></textarea>
+                        <input name="review_for" value="<%= @player.id%>" type="hidden" />
+                        <div class="nk-gap-1"></div>
+                        <button class="nk-btn nk-btn-lg link-effect-4 pull-right">Submit</button>
+                     <% end %>
+                    </div>
+                  </div>
+                  <!-- END: Reply -->
+                </div>
+
+
+              <div class="nk-gap-3"></div>
+              <div class="nk-comments mb-0">
+                <h3 class="nk-title h4 text-xs-center"><%=@player.comments.nil? ? 'НЕТ ОТЗЫВОВ' : 'ОТЗЫВОВ : ' + @player.comments.count.to_s %></h3>
+                <div class="nk-gap-2"></div>
+              <% unless @player.comments.nil?  %>
+                <!-- START: Review -->
+                  <% @player.comments.each do |comment| %>
+                <div class="nk-comment">
+                  <div class="nk-comment-avatar">
+                    <a href="#">
+                      <img src="/images/avatars/<%=comment.player.player_avatar %>" alt="">
+                    </a>
+                  </div>
+                  <div class="nk-comment-meta">
+                    <div class="nk-review-rating" data-rating="3.5">
+                      <% comment.comment_rate.to_i.times do %>
+                        <span class="fa fa-star"></span>
+                      <% end %>
+
+                    </div>
+
+                    <div class="nk-comment-name h5">
+                      <a href="/profile/<%=comment.player.player_nickname_translit %>"><%=comment.player.player_nickname %></a>
+                    </div>
+                    <div class="nk-comment-date">
+                      <%=comment.created_at.strftime("%d.%m.%Y | %H:%M:%S") %>
+                     </div>
+                  </div>
+                  <%=comment.comment_text %>
+                  <div class="text-xs-right">
+                    <div class="nk-action-like">
+                      <span class="like-icon fa fa-thumbs-up"></span>
+                      <span class="num"><%=comment.comment_likes %></span>
+                      <span class="dislike-icon fa fa-thumbs-down"></span>
+                    </div>
+                  </div>
+                </div>
+                <!-- END: Review -->
+                  <% end %>
+              <% end %>
+              </div>
+            </div>
+            <!-- END: Tab Reviews -->
+
+          </div>
+        </div>
+        <!-- END: Tabs -->
+
+        <div class="nk-gap-4"></div>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>

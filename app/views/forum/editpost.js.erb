@@ -1,0 +1,8 @@
+
+$("#post_content").summernote('code',"<%= j @post_text %>");
+
+
+$('#edit-post-modal').modal('show');
+$('#post_id').val('<%=@post_id %>');
+$('#topic_id').val('<%=@topic_id %>');
+$('#topic_name').val('<%=@topic_name %>');

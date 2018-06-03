@@ -1,0 +1,44 @@
+<div class="modal nk-modal fade new_topic_modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none; top : 1%;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span class="ion-android-close"></span>
+        </button>
+        <h4 class="modal-title nk-title" id="myLargeModalLabel">Новая тема</h4>
+      </div>
+      <div class="modal-body">
+        <%= form_for  :addtopic, url: addtopic_path do |f|%>
+
+
+            <%= f.text_field 'topic_name',  :required => true, class:'form-control  home-game-info', placeholder:'Название темы'%>
+            <div class="nk-gap-1"></div>
+            <label class=" home-game-info">Иконка темы :  </label>
+            <% @icons.each do |icon| %>
+                <div class="form-check form-check-inline home-game-info">
+                  <label class="form-check-label">
+                    <input style="margin-top: 15px !important;" class="form-check-input  home-game-info" id="iconn" type="radio" name="topic_icon" required="required" value=" <%= icon %>"><span class="icon <%= icon %>" style="font-size: 25px; color:#e08821;"></span>
+                  </label>
+                </div>
+            <% end %>
+           <br>
+            <span class=" home-game-info">Сообщение :</span>
+
+            <textarea class="nk-summernote  home-game-info"   required="required" name="content" rows="10"></textarea>
+
+
+            <div class="nk-gap-2"></div>
+           <input name="subforum_id" value="<%= @subforum.id%>" type="hidden" />
+           <input name="type" value="normal_topic" type="hidden" />
+            <% if session[:admin] %>
+                <a href="/admin/addtopic?subforum_id=<%= @subforum.id%>"> Админский вариант добавления новой темы</a>
+            <% end %>
+
+
+            <button  type="submit" class="nk-btn nk-btn-color-main-1 link-effect-4">Добавить тему</button>
+
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

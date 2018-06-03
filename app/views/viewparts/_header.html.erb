@@ -87,7 +87,7 @@
 
           </li>
 
-          <li class="<%= @activeforum%>"><a href="/forum"><span class="fa fa-comments"></span> ОБСУЖДЕНИЯ</a>
+          <li class="<%= @activeforum%>"><a href="/forums"><span class="fa fa-comments"></span> ОБСУЖДЕНИЯ</a>
 
           </li>
           <% if session[:active] %>
@@ -98,7 +98,7 @@
 
 <span class="nk-badge">!</span>
 
-                 </span> <%= session[:nickname]%> </a>
+                 </span> <%= session[:player_nickname]%> </a>
 
           </li>
 
@@ -158,7 +158,7 @@
             <% end %>
             </li>
             <li>
-              Тип аккаунта : <%= session[:playervip] ? '<span class="nk-badge">VIP</span>'.html_safe : 'Обычный'%><br/>
+              Тип аккаунта : <%= session[:player_vip] ? '<span class="nk-badge">VIP</span>'.html_safe : 'Обычный'%><br/>
             </li>
             <li>
             Личных сообщений : <span class="nk-badge">0</span>
@@ -170,7 +170,7 @@
           </ul>
         </div>
         <div class="nk-nav-row">
-          <div class="nk-nav-footer">ПРИВЕТ, <span style="color: #DF8720;"> <%= session[:nickname]%></span></div>
+          <div class="nk-nav-footer">ПРИВЕТ, <span style="color: #DF8720;"> <%= session[:player_nickname]%></span></div>
         </div>
       </div>
     </div>
