@@ -5,7 +5,27 @@ class PlayerController < ApplicationController
     if @player.player_votes_count != 0
       @rating = (@player.player_votes_summ / @player.player_votes_count)
     end
+  end
+  def editplayer
+    p=Player.find(session[:player_id])
+    unless params[:editplayer][:player_avatar].blank?
+      uploadedFile = params[:editplayer][:player_avatar]
 
+      if File.file?(Rails.root.join('public','images','avatars', uploadedFile.original_filename))
+        uploadedFile.original_filename = [*('a'..'z'),*('0'..'9')].shuffle[0,4].join + uploadedFile.original_filename
+      end
+
+      File.open(Rails.root.join('public','images','avatars',  uploadedFile.original_filename), 'wb' ) do |f|
+        f.write(uploadedFile.read)
+      end
+      p.update_column(:player_avatar,uploadedFile.original_filename)
+    end
+    p.update_column(:player_vk_link,params[:player_vk_link])
+    p.update_column(:player_tm_link,params[:player_tm_link])
+    p.update_column(:player_discord_link,params[:player_discord_link])
+    p.update_column(:player_skype_link,params[:player_skype_link])
+    p.update_column(:player_info,params[:player_info])
+    redirect_to '/profile/'+p.player_nickname_translit
 
   end
   def addcomment

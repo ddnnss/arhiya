@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   match '/logout' => 'player#destroy', via: [:get]
   match '/profile(/:player_nickname)' => 'player#playerprofile', via: [:get]
   match '/addcomment'  => 'player#addcomment', via: [:post]
+  match '/editplayer'  => 'player#editplayer', via: [:post]
  #----------ADMIN------------------------
   match '/admin/forum'  => 'admin#forum_admin', via: [:get]
   match '/admin/addtopic'  => 'admin#addtopic', via: [:get]
