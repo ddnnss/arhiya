@@ -73,13 +73,13 @@ Additional Classes:
             <div class="nk-forum-count">
               <%= subforum.posts.count %> сообщений
             </div>
-            <% unless @empty %>
+            <% unless subforum.posts.blank? %>
             <div class="nk-forum-activity-avatar">
               <img src="/images/avatars/<%= subforum.posts.last.player.player_avatar %>" alt="<%= subforum.posts.last.player.player_nickname %>">
             </div>
             <div class="nk-forum-activity">
               <div class="nk-forum-activity-title" title="<%= subforum.posts.last.player.player_nickname %>">
-                <a href="/topic/<%= subforum.topics.last.topic_name%>#post<%= subforum.posts.last.id%>"><%= subforum.topics.last.topic_name%></a>
+                <a href="/topic/<%= subforum.topics.last.topic_name_translit%>#post<%= subforum.posts.last.id%>"><%= subforum.topics.last.topic_name%></a>
               </div>
               <div class="nk-forum-activity-date">
                 <%= subforum.posts.last.updated_at.strftime("%d.%m.%Y | %H:%M:%S") %>

@@ -1,8 +1,9 @@
 class PlayerController < ApplicationController
   def playerprofile
     @player = Player.find_by_player_nickname_translit(params[:player_nickname])
+    @comments = Comment.where(comment_for_id: @player.id)
     if @player.player_votes_count != 0
-      @rating = @player.player_votes_summ / @player.player_votes_count
+      @rating = (@player.player_votes_summ / @player.player_votes_count)
     end
 
 
@@ -99,7 +100,7 @@ class PlayerController < ApplicationController
 
       if @user.valid? ##check user
         @user.player_password = [*('a'..'z'),*('0'..'9')].shuffle[0,8].join
-        @user.player_nickname_translit =Translit.convert(params[:registration][:player_nickname].gsub(' ','-'), :english)
+        @user.player_nickname_translit =Translit.convert(params[:registration][:player_nickname].gsub(' ','-').gsub(/[?!*.,:; ]/, ''), :english)
 
         @user.save
 

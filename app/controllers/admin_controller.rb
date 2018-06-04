@@ -21,7 +21,7 @@ class AdminController < ApplicationController
       sf=Subforum.new
       sf.forum_id = params[:forum_id]
       sf.subforum_name = params[:addforum][:subforum_name]
-      sf.subforum_name_translit = Translit.convert(params[:addforum][:subforum_name].gsub(' ','-'), :english)
+      sf.subforum_name_translit = Translit.convert(params[:addforum][:subforum_name].gsub(' ','-').gsub(/[?!*.,:; ]/, ''), :english)
       sf.subforum_icon = params[:subforum_icon]
       sf.save
     end
