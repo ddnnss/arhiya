@@ -4,9 +4,9 @@ class PlayerController < ApplicationController
     @comments = Comment.where(comment_for_id: @player.id)
     if @player.id == session[:player_id]
       @pm = Privatemessage.where(message_for_id: session[:player_id])
-      @item_tags = {'Ключи': 1,'Оружие': 2,'Квестовые предметы': 3,'предметы на обмен': 4,'Снаряжение и одежда': 5,
+      @item_tags = {'Игровая валюта': 1,'Оружие': 2,'Квестовые предметы': 3,'предметы на обмен': 4,'Снаряжение и одежда': 5,
                     'Модули и магазины': 6,'Ценные предметы': 7,'Контейнеры и кейсы': 8,'Медикаменты': 9,'Коллекционные предметы': 10,
-                    'Жетоны': 11}
+                    'Жетоны': 11, 'Ключи': 12}
     end
     if @player.player_votes_count != 0
       @rating = (@player.player_votes_summ / @player.player_votes_count)

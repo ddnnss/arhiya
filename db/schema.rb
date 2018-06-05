@@ -95,17 +95,16 @@ ActiveRecord::Schema.define(version: 20180603164708) do
     t.string "item_name_caps"
     t.string "item_name_translit"
     t.string "item_type", default: ""
-    t.string "item_icon", default: ""
-    t.string "item_image", default: ""
     t.string "item_tags", default: ""
+    t.integer "item_barter_for", default: 0
     t.text "item_info", default: ""
     t.integer "item_to_sell_count", default: 0
     t.integer "item_price_virt_rub"
     t.integer "item_price_real_rub", default: 0
     t.integer "item_price_virt_usd", default: 0
     t.integer "item_price_virt_eur", default: 0
-    t.integer "item_barter_for", default: 0
     t.boolean "item_barter", default: false
+    t.boolean "item_vip", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["item_barter"], name: "index_tarkovitems_on_item_barter"
@@ -113,6 +112,7 @@ ActiveRecord::Schema.define(version: 20180603164708) do
     t.index ["item_price_virt_rub"], name: "index_tarkovitems_on_item_price_virt_rub"
     t.index ["item_tags"], name: "index_tarkovitems_on_item_tags"
     t.index ["item_type"], name: "index_tarkovitems_on_item_type"
+    t.index ["item_vip"], name: "index_tarkovitems_on_item_vip"
     t.index ["player_id"], name: "index_tarkovitems_on_player_id"
   end
 
