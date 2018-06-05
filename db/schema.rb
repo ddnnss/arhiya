@@ -17,7 +17,6 @@ ActiveRecord::Schema.define(version: 20180603164708) do
     t.string "comment_rate"
     t.text "comment_text"
     t.integer "comment_for_id"
-    t.integer "comment_likes", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["player_id"], name: "index_comments_on_player_id"
@@ -25,6 +24,7 @@ ActiveRecord::Schema.define(version: 20180603164708) do
 
   create_table "forums", force: :cascade do |t|
     t.string "forum_name"
+    t.integer "forum_show_order", default: 1
   end
 
   create_table "players", force: :cascade do |t|
@@ -33,14 +33,12 @@ ActiveRecord::Schema.define(version: 20180603164708) do
     t.string "player_nickname_translit"
     t.string "player_password"
     t.string "player_avatar", default: "noavatar.png"
-    t.string "player_rank", default: "Новичек"
+    t.string "player_rank", default: "ТЕСТ"
     t.string "player_skype_link", default: "Нет данных"
     t.string "player_vk_link", default: "Нет данных"
     t.string "player_tm_link", default: "Нет данных"
     t.string "player_discord_link", default: "Нет данных"
     t.string "player_system_messages", default: ""
-    t.string "player_already_vote", default: ""
-    t.string "player_already_like", default: ""
     t.date "player_lastlogin"
     t.date "player_vip_expire"
     t.integer "player_sells_count", default: 0
@@ -74,7 +72,7 @@ ActiveRecord::Schema.define(version: 20180603164708) do
   create_table "privatemessages", force: :cascade do |t|
     t.integer "player_id"
     t.text "message_text"
-    t.integer "message_for"
+    t.integer "message_for_id"
     t.boolean "message_read", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -83,6 +81,7 @@ ActiveRecord::Schema.define(version: 20180603164708) do
 
   create_table "subforums", force: :cascade do |t|
     t.integer "forum_id"
+    t.integer "subforum_show_order", default: 1
     t.string "subforum_name"
     t.string "subforum_icon"
     t.string "subforum_name_translit"

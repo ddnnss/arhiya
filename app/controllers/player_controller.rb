@@ -2,6 +2,12 @@ class PlayerController < ApplicationController
   def playerprofile
     @player = Player.find_by_player_nickname_translit(params[:player_nickname])
     @comments = Comment.where(comment_for_id: @player.id)
+    if @player.id == session[:player_id]
+      @pm = Privatemessage.where(message_for_id: session[:player_id])
+      @item_tags = {'Ключи': 1,'Оружие': 2,'Квестовые предметы': 3,'предметы на обмен': 4,'Снаряжение и одежда': 5,
+                    'Модули и магазины': 6,'Ценные предметы': 7,'Контейнеры и кейсы': 8,'Медикаменты': 9,'Коллекционные предметы': 10,
+                    'Жетоны': 11}
+    end
     if @player.player_votes_count != 0
       @rating = (@player.player_votes_summ / @player.player_votes_count)
     end
@@ -26,16 +32,44 @@ class PlayerController < ApplicationController
     p.update_column(:player_skype_link,params[:player_skype_link])
     p.update_column(:player_info,params[:player_info])
     redirect_to '/profile/'+p.player_nickname_translit
+  end
+
+  def sendpm
+
+      m= Privatemessage.new
+      m.player_id = session[:player_id]
+      m.message_for_id = params[:player_id]
+      m.message_text = params[:sendpm][:message_txt]
+      m.save
+
+     # @p = Player.find(params[:tid])
+     # if @p.notify
+     #   UserMailer.pm(@p,params[:f],params[:message]).deliver_now
+     # end
+      respond_to do |format|
+        @res='Неверный ответ'
+        format.js
+      end
+
+
+
+
 
   end
   def addcomment
     c = Comment.new
     p = Player.find(params[:review_for])
+    if params[:reviewrate].present?
+      c.comment_rate = params[:reviewrate]
+    else
+      c.comment_rate = '1'
+    end
+    rate = c.comment_rate.to_i
     p.update_column(:player_votes_count,p.player_votes_count + 1)
-    p.update_column(:player_votes_summ,p.player_votes_summ + params[:reviewrate].to_i)
+    p.update_column(:player_votes_summ,p.player_votes_summ + rate)
     c.player_id = session[:player_id]
     c.comment_for_id = p.id
-    c.comment_rate = params[:reviewrate]
+
     c.comment_text = params[:review_message]
     c.save
 
@@ -57,24 +91,36 @@ class PlayerController < ApplicationController
 
           session[:active] = true
           session[:player_nickname] = user.player_nickname
+          session[:player_nickname_translit] = user.player_nickname_translit
           session[:player_id] = user.id
           session[:player_vip] = user.player_vip
+
+
           user.update_column( :player_lastlogin , Date.today)
+
+          if Date.today+2.week > user.created_at+2.week && user.player_rank =='ТЕСТ'
+            user.update_column( :player_rank , 'Новичек')
+          end
 
 
 
 
           if user.player_admin
             session[:admin] = true
-            if user.player_rank == 'Новичек'
+            if user.player_rank == 'ТЕСТ'
 
-              user.update_column( :player_rank , 'Админ')
+              user.update_column( :player_rank , 'ГРЕШНИК')
 
             end
           end
 
           if user.player_moder
             session[:moder] = true
+            if user.player_rank == 'ТЕСТ'
+
+              user.update_column( :player_rank , 'АДМИН')
+
+            end
           end
 
 
@@ -121,7 +167,7 @@ class PlayerController < ApplicationController
       if @user.valid? ##check user
         @user.player_password = [*('a'..'z'),*('0'..'9')].shuffle[0,8].join
         @user.player_nickname_translit =Translit.convert(params[:registration][:player_nickname].gsub(' ','-').gsub(/[?!*.,:; ]/, ''), :english)
-
+        @user.player_lastlogin = Date.today
         @user.save
 
        # UserMailer.activation(@user).deliver_now

@@ -96,7 +96,7 @@
 
                  <span class="fa fa-id-badge">
 
-<span class="nk-badge">!</span>
+
 
                  </span> <%= session[:player_nickname]%> </a>
 
@@ -161,10 +161,10 @@
               Тип аккаунта : <%= session[:player_vip] ? '<span class="nk-badge">VIP</span>'.html_safe : 'Обычный'%><br/>
             </li>
             <li>
-            Личных сообщений : <span class="nk-badge">0</span>
+            Личных сообщений : <span class="nk-badge"><%= session[:player_pm]%></span>
           </li>
             <li>
-              Редактировать профиль
+              <a href="/profile/<%= session[:player_nickname_translit]%>" >Мой профиль</a>
             </li>
 
           </ul>

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   match '/profile(/:player_nickname)' => 'player#playerprofile', via: [:get]
   match '/addcomment'  => 'player#addcomment', via: [:post]
   match '/editplayer'  => 'player#editplayer', via: [:post]
+  match '/sendpm'  => 'player#sendpm', via: [:post]
  #----------ADMIN------------------------
   match '/admin/forum'  => 'admin#forum_admin', via: [:get]
   match '/admin/addtopic'  => 'admin#addtopic', via: [:get]
@@ -26,4 +27,7 @@ Rails.application.routes.draw do
   match '/deletetopic(/:topic_id)'  => 'forum#deletetopic', via: [:get]
   match '/closetopic(/:topic_id)'  => 'forum#closetopic', via: [:get]
   match '/pintopic(/:topic_id)'  => 'forum#pintopic', via: [:get]
+  #----------MARKET------------------------
+  match '/newtarkovitem'  => 'market#newtarkovitem', via: [:post]
+
 end

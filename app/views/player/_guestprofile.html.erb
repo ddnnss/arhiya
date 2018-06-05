@@ -1,4 +1,4 @@
-<div class="nk-page-background op-5" data-bg-mp4="<%= asset_path('bg-1.mp4') %>" data-bg-webm="<%= asset_path('bg-1.webm') %>" data-bg-ogv="<%= asset_path('bg-1.ogv') %>" data-bg-poster="<%= asset_path('bg-1.jpg') %>"></div>
+<div class="nk-page-background op-5" data-bg-mp4="<%= asset_path('bg-2.mp4') %>" data-bg-webm="<%= asset_path('bg-2.webm') %>" data-bg-ogv="<%= asset_path('bg-2.ogv') %>" data-bg-poster="<%= asset_path('bg-2.jpg') %>"></div>
 <div class="nk-main">
   <!-- START: Header Title -->
   <!--
@@ -34,14 +34,16 @@
         <div class="col-md-7 col-lg-9">
           <div class="nk-social-profile-info">
             <div class="nk-gap-2"></div>
-            <div class="nk-social-profile-info-last-seen">Дата регистрации : <%= @player.created_at.strftime("%d.%m.%Y")%> </div>
+            <div class="nk-social-profile-info-last-seen">Дата регистрации : <%= @player.created_at.strftime("%d.%m.%Y")%> | Последний вход : <%= @player.player_lastlogin.strftime("%d.%m.%Y")%>  </div>
             <h1 class="nk-social-profile-info-name"><%= @player.player_nickname%></h1>
             <div class="nk-social-profile-info-username home-game-info" > <%= @player.player_rank%> </div>
 
             <div class="nk-social-profile-info-actions">
-              <button class="nk-btn nk-btn-lg link-effect-4" data-toggle="modal" data-target="">Личное сообщение</button>
+              <button class="nk-btn nk-btn-lg link-effect-4" data-toggle="modal" data-target=".privatemsg">Личное сообщение</button>
             </div>
-
+            <%unless @player.player_info == ''%>
+             <div class="nk-social-profile-info-username home-game-info" > <%= @player.player_info%> </div>
+            <%  end %>
           </div>
         </div>
       </div>
@@ -90,7 +92,7 @@
                     <li>   Всего покупок : <%= @player.player_sells_count == 0 ? 'Нет покупок' : @player.player_sells_count%></li>
                     <li>-</li>
                     <li>  VK : <%= @player.player_vk_link%></li>
-                    <li>  Telegramm : <%= @player.player_tm_link%></li>
+                    <li>  Telegram : <%= @player.player_tm_link%></li>
                     <li>  Discord : <%= @player.player_discord_link%></li>
                     <li>  Skype : <%= @player.player_skype_link%></li>
                   </ul>
@@ -146,32 +148,32 @@
                   <div class="nk-reply mt-0">
                     <%= form_for :addcomment, url: addcomment_path do |f|%>
                         <div class="nk-rating">
-                          <input type="radio" id="reviewrate-5" required name="reviewrate" value="5">
+                          <input type="radio" id="reviewrate-5" required="required" name="reviewrate" value="5">
                           <label for="reviewrate-5">
                             <span><i class="fa fa-star-o"></i></span>
                             <span><i class="fa fa-star"></i></span>
                           </label>
 
-                          <input type="radio" id="reviewrate-4" required name="reviewrate" value="4">
+                          <input type="radio" id="reviewrate-4" required="required" name="reviewrate" value="4">
                           <label for="reviewrate-4">
                             <span><i class="fa fa-star-o"></i></span>
                             <span><i class="fa fa-star"></i></span>
                             </i>
                           </label>
 
-                          <input type="radio" id="reviewrate-3" required name="reviewrate" value="3">
+                          <input type="radio" id="reviewrate-3" required="required" name="reviewrate" value="3">
                           <label for="reviewrate-3">
                             <span><i class="fa fa-star-o"></i></span>
                             <span><i class="fa fa-star"></i></span>
                           </label>
 
-                          <input type="radio" id="reviewrate-2" required name="reviewrate" value="2">
+                          <input type="radio" id="reviewrate-2" required="required" name="reviewrate" value="2">
                           <label for="reviewrate-2">
                             <span><i class="fa fa-star-o"></i></span>
                             <span><i class="fa fa-star"></i></span>
                           </label>
 
-                          <input type="radio" id="reviewrate-1" required name="reviewrate" value="1">
+                          <input type="radio" id="reviewrate-1" required="required" name="reviewrate" value="1">
                           <label for="reviewrate-1">
                             <span><i class="fa fa-star-o"></i></span>
                             <span><i class="fa fa-star"></i></span>
@@ -180,10 +182,12 @@
 
 
                         <div class="nk-gap-1"></div>
-                        <textarea class="form-control" required name="review_message" rows="5" placeholder="Ваш отзыв" aria-required="true"></textarea>
+                        <textarea class="form-control" required name="review_message" rows="1" placeholder="Ваш отзыв" aria-required="true"></textarea>
                         <input name="review_for" value="<%= @player.id%>" type="hidden" />
                         <div class="nk-gap-1"></div>
+
                         <button class="nk-btn nk-btn-lg link-effect-4 pull-right">Submit</button>
+
                     <% end %>
                   </div>
                 </div>
@@ -193,9 +197,10 @@
 
               <div class="nk-gap-3"></div>
               <div class="nk-comments mb-0">
-                <h3 class="nk-title h4 text-xs-center"><%=@comments.nil? ? 'НЕТ ОТЗЫВОВ' : 'ОТЗЫВЫ :' + @comments.count.to_s  %></h3>
-                <div class="nk-gap-2"></div>
-                <% unless @comments.nil?  %>
+                <% unless @comments.blank?  %>
+
+
+
                     <!-- START: Review -->
                     <% @comments.each do |comment| %>
                         <div class="nk-comment">
@@ -224,7 +229,14 @@
                         </div>
                         <!-- END: Review -->
                     <% end %>
-                <% end %>
+                <%else%>
+                    <div class="nk-info-box bg-main-1">
+                      <div class="nk-info-box-icon">
+                        <i class="ion-information-circled"></i>
+                      </div>
+                      Отзывов пока никто не оставил. Самое время стать первым)
+                    </div>
+              <% end %>
               </div>
             </div>
             <!-- END: Tab Reviews -->
@@ -234,10 +246,43 @@
         <!-- END: Tabs -->
 
         <div class="nk-gap-4"></div>
+        <div class="nk-gap-4"></div>
+        <div class="nk-gap-4"></div>
       </div>
     </div>
 
 
 
+  </div>
+</div>
+
+<div class="modal nk-modal fade privatemsg" id tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" style="top: 30%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title nk-title" id="mySmallModalLabel">Сообщение для игрока <%=@player.player_nickname %></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span class="ion-android-close"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= form_for  :sendpm, url: sendpm_path , :html => { :id => 'pmform'}, remote: true  do |f|%>
+            <%=f.text_field :message_txt, :placeholder =>'Ваше сообщение', :required => true ,class:'form-control'%>
+            <div class="nk-gap-2"></div>
+            <input  name="player_id" value="<%=@player.id%>" type="hidden" />
+
+            <%= submit_tag 'Отправить', class:'nk-btn  nk-btn-color-main-1'%>
+        <% end %>
+        <div id="pmsend" style="display: none;">
+          <div class="nk-info-box bg-success" >
+            <div class="nk-info-box-icon">
+              <i class="ion-information-circled"></i>
+            </div>
+            Сообщение отправлено. Спасибо.
+          </div>
+          <button type="button" class="nk-btn" data-dismiss="modal">Закрыть</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

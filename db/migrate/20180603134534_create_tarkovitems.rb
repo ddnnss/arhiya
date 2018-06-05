@@ -7,7 +7,7 @@ class CreateTarkovitems < ActiveRecord::Migration[5.1]
       t.string  :item_name_translit
       t.string  :item_type, :default => '', index: true
       t.string  :item_icon, :default => ''
-      t.string  :item_image, :default => ''
+      t.string  :item_image, :default => 'noimage.jpj'
       t.string  :item_tags, :default => '', index: true
       t.text    :item_info, :default => ''
       t.integer :item_to_sell_count, :default => 0

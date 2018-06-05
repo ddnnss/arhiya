@@ -1,4 +1,4 @@
-<div class="nk-page-background op-5" data-bg-mp4="<%= asset_path('bg-1.mp4') %>" data-bg-webm="<%= asset_path('bg-1.webm') %>" data-bg-ogv="<%= asset_path('bg-1.ogv') %>" data-bg-poster="<%= asset_path('bg-1.jpg') %>"></div>
+<div class="nk-page-background op-5" data-bg-mp4="<%= asset_path('bg-2.mp4') %>" data-bg-webm="<%= asset_path('bg-2.webm') %>" data-bg-ogv="<%= asset_path('bg-2.ogv') %>" data-bg-poster="<%= asset_path('bg-2.jpg') %>"></div>
 <div class="nk-main">
   <!-- START: Header Title -->
   <!--
@@ -68,7 +68,7 @@
               <li>   Всего покупок : <%= @player.player_sells_count == 0 ? 'Нет покупок' : @player.player_sells_count%></li>
               <li>-</li>
               <li>  VK : <%= @player.player_vk_link%></li>
-              <li>  Telegramm : <%= @player.player_tm_link%></li>
+              <li>  Telegram : <%= @player.player_tm_link%></li>
               <li>  Discord : <%= @player.player_discord_link%></li>
               <li>  Skype : <%= @player.player_skype_link%></li>
               <li>  <a href="#" class="nk-btn nk-btn-lg nk-btn-bg-warning" data-toggle="modal" data-target=".edit-player-modal">РЕДАКТИРОВАТЬ</a> </li>
@@ -111,7 +111,7 @@
               <a class="nav-link active" href="#tab-description" role="tab" data-toggle="tab" aria-expanded="true">ТОРГОВЛЯ</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link " href="#tab-pm" role="tab" data-toggle="tab" aria-expanded="true">ЛИЧНЫЕ СООБЩЕНИЯ</a>
+              <a class="nav-link " href="#tab-pm" role="tab" data-toggle="tab" aria-expanded="true">ЛИЧНЫЕ СООБЩЕНИЯ <small><%=@pm.nil? ? '(0)' : '(' + @pm.count.to_s + ')'  %></small></a>
             </li>
 
             <li class="nav-item">
@@ -125,10 +125,49 @@
             <div role="tabpanel" class="tab-pane fade in active show" id="tab-description">
               <div class="nk-gap-3"></div>
               <div class="nk-box-3 bg-dark-1">
-                <p>And gathering. Form for, gathering, female you'll blessed appear day us cattle hath be moving face he Whales fruitful is spirit Beginning. Abundantly good living Thing isn't stars saw over and earth dry rule herb bring image night, fowl their, third set saw for. Green a also upon life stars, green and darkness greater.</p>
-                <p>The light two his moving won't a kind unto they're sea sea subdue fowl light male forth second beginning. Saying seas signs. Seed brought air grass. Divided Meat god subdue own. He. Female form very cattle man i sixth. Beast living darkness open god bring image divide. Third which.</p>
-                <p>He. Herb created. Beginning. Gathering given our winged sea Two is image us life from seed so darkness and his replenish they're There, creature isn't divide face replenish creature. His gathered midst brought divided land without face were, midst multiply.</p>
-                <p>Place and the unto itself image also. Night earth good also gathered forth man cattle very open. Unto fill is. Midst together of, it you're own He sea fifth day moving spirit can't meat heaven fowl fruit isn't called fruitful made earth also. Him fourth upon To upon fill face. Also earth light shall also green. Grass.</p>
+             Разместить товар EFT на продажу:
+                <%= form_for :newtarkovitem, url: newtarkovitem_path do %>
+                    <div class="form-group row">
+                      <label for="item_name" class="col-3 col-form-label">Название товара:</label>
+                      <div class="col-sm-9">
+
+                        <%= text_field_tag 'item_name', '',:required => true, id:'item_name', class:'form-control home-game-info'  %>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="itemtag" class="col-3 col-form-label">Тип товара:</label>
+                      <div class="col-sm-9">
+                        <%= select("item_tag", "item_tag_id", @item_tags.each {|k,v| [ k, v ] }, {:id => "itemtag"}, :required => "required",:class=>"form-control") %>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="item_price_virt_rub" class="col-3 col-form-label">Цена в игровых руб.:</label>
+                      <div class="col-sm-4">
+                        <%= text_field_tag 'item_price_virt_rub', '',:required => true, :type => 'number', id:'item_price_virt_rub', class:'form-control home-game-info'  %>
+                      </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="item_info" class="col-3 col-form-label">Информация о товаре (можно разместить скрин c изображением (Prt Sc -> Ctrl+V)):</label>
+                      <div class="col-sm-9">
+
+                        <textarea class="nk-summernote"  id="item_info" name="item_info"  rows="18"></textarea>
+                      </div>
+                    </div>
+
+
+
+
+
+                    <div class="nk-gap-2"></div>
+
+
+
+                    <button  type="submit" class="nk-btn nk-btn-color-main-1 ">Разместить</button>
+
+
+                <%end%>
               </div>
             </div>
             <!-- END: Tab Description -->
@@ -137,7 +176,54 @@
             <div role="tabpanel" class="tab-pane fade " id="tab-pm">
               <div class="nk-gap-3"></div>
               <div class="nk-box-3 bg-dark-1">
-vbvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+                <% unless @pm.blank?  %>
+
+
+                    <div class="table-responsive nk-social-messages">
+                      <table class="table table-bordered">
+                        <thead class="thead-default">
+                        <tr>
+                          <th class="nk-social-messages-bulk-select">
+                            <input type="checkbox">
+                          </th>
+                          <th>
+                            <div class="sr-only">Сообщения</div>
+                          </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% @pm.each do |pm| %>
+                          <tr id="pm_tr_<%=pm.id%>">
+                          <td>
+                            <input id="pm_checkbox_<%=pm.id%>" type="checkbox">
+                          </td>
+                          <td class="nk-social-messages-description">
+                            <div class="nk-social-messages-since"><%=pm.created_at.strftime("%d.%m.%Y | %H:%M:%S")%></div>
+                            <a href="#" class="nk-social-messages-remove"><span class="ion-trash-b"></span></a>
+
+                            <div class="nk-social-messages-from">
+                              <a href="/profile/<%=pm.player.player_nickname_translit%>"><img src="/images/avatars/<%=pm.player.player_avatar%>" alt="<%=pm.player.player_nickname%>" title="<%=pm.player.player_nickname%>"></a>
+                            </div>
+                            <div class="nk-social-messages-subject">
+                              <a href="/profile/<%=pm.player.player_nickname_translit%>">От : <%=pm.player.player_nickname%></a>
+                            </div>
+                            <div class="nk-social-messages-excerpt">
+                              <%=pm.message_text%>
+                            </div>
+                          </td>
+                        </tr>
+                        <% end %>
+                        </tbody>
+                      </table>
+                    </div>
+                    <%else%>
+                    <div class="nk-info-box bg-main-1">
+                      <div class="nk-info-box-icon">
+                        <i class="ion-information-circled"></i>
+                      </div>
+                      Личных сообщений пока нет
+                    </div>
+                <% end %>
               </div>
             </div>
             <!-- END: Tab pm -->
@@ -146,9 +232,8 @@ vbvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
             <div role="tabpanel" class="tab-pane fade" id="tab-reviews">
               <div class="nk-gap-3"></div>
                 <div class="nk-comments mb-0">
-                <h3 class="nk-title h4 text-xs-center"><%=@comments.nil? ? 'НЕТ ОТЗЫВОВ' : 'ОТЗЫВЫ :' + @comments.count.to_s  %></h3>
-                <div class="nk-gap-2"></div>
-                <% unless @comments.nil?  %>
+                  <% unless @comments.blank?  %>
+
                     <!-- START: Review -->
                     <% @comments.each do |comment| %>
                         <div class="nk-comment">
@@ -177,6 +262,13 @@ vbvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
                         </div>
                         <!-- END: Review -->
                     <% end %>
+                  <%else%>
+                      <div class="nk-info-box bg-main-1">
+                        <div class="nk-info-box-icon">
+                          <i class="ion-information-circled"></i>
+                        </div>
+                        Отзывов пока нет
+                      </div>
                 <% end %>
               </div>
             </div>
@@ -186,6 +278,8 @@ vbvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
         </div>
         <!-- END: Tabs -->
 
+        <div class="nk-gap-4"></div>
+        <div class="nk-gap-4"></div>
         <div class="nk-gap-4"></div>
       </div>
     </div>

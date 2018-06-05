@@ -6,7 +6,7 @@ class CreateComments < ActiveRecord::Migration[5.1]
       t.text        :comment_text
 
       t.integer     :comment_for_id
-      t.integer     :comment_likes, :default => 0
+
 
 
 
