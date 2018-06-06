@@ -125,13 +125,23 @@
             <div role="tabpanel" class="tab-pane fade in active show" id="tab-description">
               <div class="nk-gap-3"></div>
               <div class="nk-box-3 bg-dark-1">
-                <div class="nk-info-box bg-main-1">
-                  <div class="nk-info-box-icon">
-                    <i class="ion-information-circled"></i>
-                  </div>
-                  Разместить товар EFT на продажу
-                </div>
-
+                Размещение на продажу товара EFT
+                <% if flash[:error] %>
+                    <div class="nk-info-box bg-danger">
+                      <div class="nk-info-box-icon">
+                        <i class="ion-alert-circled"></i>
+                      </div>
+                      <%=flash[:error] %>
+                    </div>
+                <%end%>
+                <% if flash[:ok] %>
+                    <div class="nk-info-box bg-success">
+                      <div class="nk-info-box-icon">
+                        <i class="ion-information-circled"></i>
+                      </div>
+                      <%=flash[:ok] %>
+                    </div>
+                <%end%>
                 <%= form_for :newtarkovitem, url: newtarkovitem_path do %>
                     <div class="form-group row">
                       <label for="item_name" class="col-3 col-form-label">Название товара*:</label>
@@ -152,12 +162,14 @@
                         <%= text_field_tag 'item_price_virt_rub', '',:required => true, :type => 'number', id:'item_price_virt_rub', class:'form-control home-game-info'  %>
                       </div>
                     </div>
+                    <% if session[:admin] || session[:vip] %>
                   <div class="form-group row">
                     <label for="item_price_real_rub" class="col-3 col-form-label">Цена в реальных &#8381;:</label>
                     <div class="col-sm-4">
-                      <%= text_field_tag 'item_price_real_rub', '', :type => 'number', id:'item_price_real_rub',disabled:'disabled', class:'form-control home-game-info'  %>
+                      <%= text_field_tag 'item_price_real_rub', '', :type => 'number', id:'item_price_real_rub', class:'form-control home-game-info'  %>
                     </div>
                   </div>
+                    <%end%>
                   <div class="form-group row">
                     <label for="item_price_virt_usd" class="col-3 col-form-label">Цена в игровых &#36;:</label>
                     <div class="col-sm-4">

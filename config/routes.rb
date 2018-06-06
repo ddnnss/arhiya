@@ -29,5 +29,6 @@ Rails.application.routes.draw do
   match '/pintopic(/:topic_id)'  => 'forum#pintopic', via: [:get]
   #----------MARKET------------------------
   match '/newtarkovitem'  => 'market#newtarkovitem', via: [:post]
+  match '/tarkovmarket' => 'market#tarkovmarket', via: [:get]
 
 end
