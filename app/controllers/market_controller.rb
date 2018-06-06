@@ -24,7 +24,7 @@ class MarketController < ApplicationController
         i.item_barter = true
       end
       if session[:admin] || session[:vip]
-      #  i.item_vip = true
+        i.item_vip = true
         i.item_price_real_rub = params[:item_price_real_rub].to_i
       end
       i.save
@@ -35,10 +35,23 @@ class MarketController < ApplicationController
   end
 
   def tarkovmarket
-    @tarkovitems = Tarkovitem.all
+
+
     @item_tags = {'Игровая валюта': 1,'Оружие': 2,'Квестовые предметы': 3,'Предметы на обмен': 4,'Снаряжение и одежда': 5,
                   'Модули и магазины': 6,'Ценные предметы': 7,'Контейнеры и кейсы': 8,'Медикаменты': 9,'Коллекционные предметы': 10,
                   'Жетоны': 11, 'Ключи': 12}
+    if params[:q].present?
+      @tarkovitems = Tarkovitem.paginate(:page => params[:page], :per_page => 6).where('item_name_caps LIKE ?','%'+params[:q].mb_chars.upcase+'%' )
+      @tarkovitems.blank? ? flash[:search] = 'По запросу '+params[:q]+' ничего не найдено.' : flash[:search] = 'Результаты  поиска по запросу '+params[:q]+' .'
+    else
+      if params[:item_type].present?
+        @tarkovitems = Tarkovitem.paginate(:page => params[:page], :per_page => 6).where(item_type: params[:item_type]).order('created_at desc')
+
+      else
+        @tarkovitems = Tarkovitem.paginate(:page => params[:page], :per_page => 6).all
+        @active ='active'
+      end
+    end
 
   end
 end

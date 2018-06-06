@@ -57,9 +57,10 @@ Additional Classes:
 
         <div class="nk-social-menu d-none d-lg-block">
           <ul>
+            <li ><a href="/tarkovmarket">ВСЕ ТОВАРЫ</a> </li>
             <% @item_tags.each do |k,v|%>
-            <li class="">
-              <a href="<%= v %>">
+            <li >
+              <a href="/tarkovmarket/<%= v %>">
                 <%= k %></a>
             </li>
                 <% end %>
@@ -76,28 +77,13 @@ Additional Classes:
             <div id="nk-social-menu-mobile-1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="nk-social-menu-mobile-1-heading">
               <div class="nk-social-menu">
                 <ul>
-                  <li class="active">
-                    <a href="social-user-activity.html">
-                      Activity</a>
-                  </li><li class="">
-                  <a href="social-user-notifications.html">
-                    Notifications</a>
-                </li><li class="">
-                  <a href="social-user-messages.html">
-                    Messages<span class="nk-badge">192</span></a>
-                </li><li class="">
-                  <a href="social-user-friends.html">
-                    Friends<span class="nk-badge">19</span></a>
-                </li><li class="">
-                  <a href="social-user-groups.html">
-                    Groups<span class="nk-badge">2</span></a>
-                </li><li class="">
-                  <a href="forum.html">
-                    Forum</a>
-                </li><li class="">
-                  <a href="social-user-settings.html">
-                    Settings</a>
-                </li>
+                  <li class="active"><a href="/tarkovmarket">ВСЕ ТОВАРЫ</a> </li>
+                  <% @item_tags.each do |k,v|%>
+                    <li class="">
+                      <a href="/tarkovmarket/<%= v %>">
+                        <%= k %></a>
+                    </li>
+                  <% end %>
                 </ul>
               </div>
             </div>
@@ -108,38 +94,47 @@ Additional Classes:
       <!-- END: Sidebar -->
     </div>
     <div class="col-lg-9">
-      <div class="nk-gap-2 d-none d-lg-block"></div>
-      <div class="nk-social-menu-inline">
-        <ul>
-          <% @item_tags.each do |k,v|%>
-              <li class="">
-                <a href="<%= v %>">
-                  <%= k %></a>
-              </li>
-          <% end %>
-        </ul>
-      </div>
+      <div class=" d-none d-lg-block"></div>
+
+        <div class="digg_pagination">
+          <%= will_paginate @tarkovitems, :container => false %>
+
+      <form action="/tarkovmarket" class="nk-social-sort" >
+        <input type="text" name="q" required="required" placeholder="Найти товар..." class="form-control">
+        <button type="submit" class="nk-btn link-effect-4 ready">Поиск</button>
+      </form>
+    </div>
+      <div class="nk-gap-2"></div>
       <div class="nk-social-container">
 
         <div class="nk-gap"></div>
 
         <!-- START: Activity -->
         <ul class="nk-social-friends">
+<% if flash[:search]%>
+            <div class="nk-info-box bg-main-1">
+              <div class="nk-info-box-icon">
+                <i class="ion-information-circled"></i>
+              </div>
+              <%= flash[:search]%>
+            </div>
+            <% end %>
           <%@tarkovitems.each do |item|%>
           <!-- START: post -->
-          <li>
+
+          <li >
             <div class="nk-social-activity-avatar">
               <a href="store-product.html" class="nk-post-image">
-                <%if item.player.player_admin%>
+                <%if item.item_vip%>
 
                     <img style=" box-shadow: 0 0 20px #e08821;
                         border: 1px solid;
                         padding: 15px;
                         border-radius: 50%;" src="/images/tarkovitems/<%= item.item_type%>.png" class="nk-img">
                 <%else%>
-                    <img style="    border: 1px solid;
+                    <img style="
                         padding: 15px;
-                        border-radius: 50%;" src="/images/tarkovitems/<%= item.item_type%>.png" class="nk-img">
+                       " src="/images/tarkovitems/<%= item.item_type%>.png" class="nk-img">
                 <%end%>
 
               </a>
@@ -162,7 +157,7 @@ Additional Classes:
 
                      | Рейтинг :
                       <% (item.player.player_votes_summ / item.player.player_votes_count).times do %>
-                          <span class="fa fa-star"></span>
+                          <span class="nk-btn-color-main-1 fa fa-star"></span>
                       <% end %>
 
 
@@ -171,7 +166,8 @@ Additional Classes:
                 | Продаж : <%= item.player.player_sells_count == 0 ? 'Нет' : item.player.player_sells_count%>
               </div>
               <div class="nk-social-activity-actions">
-                &#8381; : <%= item.item_price_virt_rub%> &#36; : <%= item.item_price_virt_usd%>
+            <strong> &#8381;</strong> <%= item.item_price_virt_rub%> | <strong>&#36;</strong> <%= item.item_price_virt_usd%> | <strong>&euro;</strong> <%= item.item_price_virt_eur%> <%= item.item_barter ? '| <span class="nk-btn-color-danger" style="font-weight:bold;">Возможен бартер</span>'.html_safe : '' %>
+                <a style="    float: right;" href="#" class="nk-btn nk-btn-xs ">Сообщение продавцу</a>
               </div>
 
             </div>
@@ -182,160 +178,17 @@ Additional Classes:
         </ul>
         <!-- END: Activity -->
       </div>
-      <div class="nk-gap-4"></div>
+
+
+      <div class="nk-gap-2"></div>
+        <div class="digg_pagination">
+          <%= will_paginate @tarkovitems, :container => false %>
+        </div>
+
     </div>
   </div>
 </div>
-  <div class="container bg-dark-1">
 
-      <div class="nk-store nk-store-cart">
-        <div class="table-responsive">
-          <table class="table nk-store-cart-products">
-            <tbody>
-            <%@tarkovitems.each do |item|%>
-            <tr style="opacity: 1; transform: matrix(1, 0, 0, 1, 0, 0);">
-              <td class="nk-product-cart-thumb" style="width: 100px;">
-                <a href="store-product.html" class="nk-post-image">
-                  <%if item.player.player_admin%>
-
-                  <img style=" box-shadow: 0 0 20px #e08821;
-                      border: 1px solid;
-                      padding: 15px;
-                      border-radius: 50%;" src="/images/tarkovitems/<%= item.item_type%>.png" class="nk-img">
-                  <%else%>
-                  <img style="    border: 1px solid;
-                      padding: 15px;
-                      border-radius: 50%;" src="/images/tarkovitems/<%= item.item_type%>.png" class="nk-img">
-                  <%end%>
-
-                </a>
-              </td>
-              <td class="nk-product-cart-title">
-                <h2 class="nk-post-title h5">
-                  <a href="store-product.html"><%= item.item_name%></a> в наличии <%= item.item_to_sell_count%> шт.
-                </h2>
-                <div class="nk-social-friends-meta">
-                  Продавец : <a href="/profile/<%= item.player.player_nickname_translit%>"><%= item.player.player_nickname%></a>
-                  | Покупок: <%= item.player.player_buys_count == 0 ? 'Нет' : item.player.player_buys_count%>
-                  | Продаж : <%= item.player.player_sells_count == 0 ? 'Нет' : item.player.player_sells_count%>
-                  <% if item.player.player_votes_count == 0%>
-                      Рейтинг : НЕТ
-                  <%else%>
-
-                      <div class="nk-review-rating" data-rating="3.5">
-                        Рейтинг :
-                        <% (item.player.player_votes_summ / item.player.player_votes_count).times do %>
-                            <span class="fa fa-star"></span>
-                        <% end %>
-
-                      </div>
-                  <% end %>
-                </div>
-              </td>
-              <td class="nk-product-cart-price">&#8381; : <%= item.item_price_virt_rub%> <br>&#36; : <%= item.item_price_virt_usd%></td>
-
-              <td class="nk-product-cart-total">
-                <a href="#" class="nk-btn nk-btn-xs ">Купить</a>
-              </td>
-
-            </tr>
-            <% end %>
-
-
-            </tbody>
-          </table>
-        </div>
-
-
-
-      </div>
-
-    <div class="row align-items-center">
-      <div class="col-lg-12 ">
-        <div class="row no-gutters">
-          <%bg = 2%>
-          <%@tarkovitems.each do |item|%>
-              <%if bg == 2 %>
-                  <%bg =1%>
-                  <%else%>
-                  <%bg =2%>
-                  <%end%>
-          <div class="col-md-4">
-            <div class="nk-box-3 bg-dark-<%=bg%>">
-              <div class="nk-ibox">
-                <div class="nk-ibox-icon nk-ibox-icon-circle">
-                  <span> <a href="#"><img src="/images/tarkovitems/<%= item.item_type%>.png" alt="Продажа <%= item.item_name%>"></a> </span>
-                </div>
-                <div class="nk-ibox-cont">
-                  <h2 class="nk-ibox-title"><%= item.item_name%></h2>
-                  Продавец : <a href="/profile/<%= item.player.player_nickname_translit%>"><%= item.player.player_nickname%></a><br>
-                  Покупок: <%= item.player.player_buys_count == 0 ? 'Нет' : item.player.player_buys_count%><br>
-                  Продаж : <%= item.player.player_sells_count == 0 ? 'Нет' : item.player.player_sells_count%><br>
-                  <% if item.player.player_votes_count == 0%>
-                      Рейтинг : НЕТ
-                  <%else%>
-
-                      <div class="nk-review-rating" data-rating="3.5">
-                        Рейтинг :
-                        <% (item.player.player_votes_summ / item.player.player_votes_count).times do %>
-                            <span class="fa fa-star"></span>
-                        <% end %>
-
-                      </div>
-                      <hr/>
-                      <a href="#" class="nk-btn nk-btn-xs ">Сообщение продавцу</a>
-                  <% end %>
-
-                </div>
-              </div>
-            </div>
-          </div>
-          <% end %>
-        </div>
-      </div>
-    </div>
-    <div class="nk-social-container">
-    <ul class="nk-social-friends">
-      <%@tarkovitems.each do |item|%>
-      <li>
-        <div class="nk-social-friends-avatar">
-          <a href="#"><img src="/images/tarkovitems/<%= item.item_type%>.png" alt="Продажа <%= item.item_name%>"></a>
-        </div>
-        <div class="nk-social-friends-content">
-          <div class="nk-social-friends-info" style="width: 100%">
-            <div class="nk-social-friends-name">
-             Товар : <a href="#"><%= item.item_name%></a>
-
-              Продавец : <a href="/profile/<%= item.player.player_nickname_translit%>"><%= item.player.player_nickname%></a>
-              | Покупок: <%= item.player.player_buys_count == 0 ? 'Нет' : item.player.player_buys_count%>
-              | Продаж : <%= item.player.player_sells_count == 0 ? 'Нет' : item.player.player_sells_count%>
-
-              <% if item.player.player_votes_count == 0%>
-                  Рейтинг : НЕТ
-                  <%else%>
-
-              <div class="nk-review-rating" data-rating="3.5">
-                Рейтинг :
-                <% (item.player.player_votes_summ / item.player.player_votes_count).times do %>
-                    <span class="fa fa-star"></span>
-                <% end %>
-
-              </div>
-              <% end %>
-            </div>
-            <div class="nk-social-friends-meta">
-            Цена в &#8381; : <%= item.item_price_virt_rub%> | Цена в &#36; :
-            </div>
-          </div>
-          <div class="nk-social-friends-actions">
-            <a href="#" class="nk-btn nk-btn-xs ">Сообщение продавцу</a>
-          </div>
-        </div>
-      </li>
-     <% end %>
-    </ul>
-    </div>
-  </div>
 
   <div class="nk-gap-4"></div>
   <div class="nk-gap-4"></div>
