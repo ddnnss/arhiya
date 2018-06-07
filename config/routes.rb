@@ -31,4 +31,5 @@ Rails.application.routes.draw do
   match '/newtarkovitem'  => 'market#newtarkovitem', via: [:post]
   match '/tarkovmarket(/:item_type)' => 'market#tarkovmarket', via: [:get]
   match '/tarkovitem(/:item_id)'  => 'market#tarkovitem', via: [:get]
+  match '/br(/:player_id)'  => 'market#buyrequest', via: [:get]
 end

@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20180603164708) do
     t.string "player_nickname_translit"
     t.string "player_password"
     t.string "player_avatar", default: "noavatar.png"
-    t.string "player_rank", default: "ТЕСТ"
+    t.string "player_rank", default: "Новичек"
     t.string "player_skype_link", default: "Нет данных"
     t.string "player_vk_link", default: "Нет данных"
     t.string "player_tm_link", default: "Нет данных"
@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(version: 20180603164708) do
     t.string "item_tags", default: ""
     t.integer "item_barter_for", default: 0
     t.text "item_info", default: ""
+    t.text "item_message_send_by"
     t.integer "item_to_sell_count", default: 0
     t.integer "item_price_virt_rub"
     t.integer "item_price_real_rub", default: 0

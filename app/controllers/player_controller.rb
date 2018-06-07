@@ -1,9 +1,9 @@
 class PlayerController < ApplicationController
   def playerprofile
     @player = Player.find_by_player_nickname_translit(params[:player_nickname])
-    @comments = Comment.where(comment_for_id: @player.id)
+    @comments = Comment.where(comment_for_id: @player.id).order('created_at desc')
     if @player.id == session[:player_id]
-      @pm = Privatemessage.where(message_for_id: session[:player_id])
+      @pm = Privatemessage.where(message_for_id: session[:player_id]).order('created_at desc')
       @item_tags = {'Игровая валюта': 1,'Оружие': 2,'Квестовые предметы': 3,'Предметы на обмен': 4,'Снаряжение и одежда': 5,
                     'Модули и магазины': 6,'Ценные предметы': 7,'Контейнеры и кейсы': 8,'Медикаменты': 9,'Коллекционные предметы': 10,
                     'Жетоны': 11, 'Ключи': 12}

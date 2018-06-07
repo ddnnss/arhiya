@@ -36,10 +36,11 @@
             <div class="nk-gap-2"></div>
             <div class="nk-social-profile-info-last-seen">Дата регистрации : <%= @player.created_at.strftime("%d.%m.%Y")%> </div>
             <h1 class="nk-social-profile-info-name"><%= @player.player_nickname%></h1>
-            <div class="nk-social-profile-info-username home-game-info" > <%= @player.player_rank%> </div>
+            <div class="nk-social-profile-info-username home-game-info" > </div>
 
             <div class="nk-social-profile-info-actions">
-
+             Ранг : <%= @player.player_rank%> <br/>
+              На балансе : <%= @player.player_wallet%>
             </div>
 
           </div>
@@ -269,7 +270,7 @@
 
                                   </a>
                                 </div>
-                                <div class="nk-social-activity-content" style="margin-left: 40px;">
+                                <div class="nk-social-activity-content" style="margin-left: 40px;width: 80%;">
                                   <div class="nk-social-activity-meta" style="font-size: .9em;
                                       background-color: #181818;
                                       padding: 5px 15px;
@@ -280,7 +281,8 @@
 
                                   <div class="nk-social-activity-actions">
                                     <strong> &#8381;</strong> <%= item.item_price_virt_rub%> | <strong>&#36;</strong> <%= item.item_price_virt_usd%> | <strong>&euro;</strong> <%= item.item_price_virt_eur%> <%= item.item_barter ? '| <span class="nk-btn-color-danger" style="font-weight:bold;">Возможен бартер</span>'.html_safe : '' %>
-<a href="#">Снять в продажи</a> <a href="#">Товар продан</a>
+                                    <a href="#" class="nk-btn nk-btn-xs nk-btn-color-danger pull-right">Снять в продажи</a>
+                                    <a href="#" class="nk-btn nk-btn-xs nk-btn-color-success pull-right">Товар продан</a>
                                   </div>
 
                                 </div>

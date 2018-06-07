@@ -147,7 +147,7 @@ Additional Classes:
 
               </a>
             </div>
-            <div class="nk-social-activity-content" style="margin-left: 40px;">
+            <div class="nk-social-activity-content" style="margin-left: 40px;width: 100%;">
               <div class="nk-social-activity-meta" style="font-size: .9em;
                   background-color: #181818;
                   padding: 5px 15px;
@@ -176,8 +176,16 @@ Additional Classes:
               <div class="nk-social-activity-actions">
             <strong> &#8381;</strong> <%= item.item_price_virt_rub%> | <strong>&#36;</strong> <%= item.item_price_virt_usd%> | <strong>&euro;</strong> <%= item.item_price_virt_eur%> <%= item.item_barter ? '| <span class="nk-btn-color-danger" style="font-weight:bold;">Возможен бартер</span>'.html_safe : '' %>
                 <% if session[:active] %>
-                <a style="    float: right;" href="#" class="nk-btn nk-btn-xs ">Сообщение продавцу</a>
+                  <% if item.player.id ==session[:player_id] %>
+                    <a style="    float: right;" href="" class="nk-btn nk-btn-xs nk-btn-color-warning">Это ваш товар</a>
+                  <%else%>
+                    <% if item.item_message_send_by.include? session[:player_id] %>
+                      <a style="    float: right;" href="" class="nk-btn nk-btn-xs nk-btn-color-success ">Сообщение продавцу отправлено</a>
                     <%else%>
+                      <a style="    float: right;" href="/br/<%=item.player.id%>?i=<%= item.id%>" class="nk-btn nk-btn-xs ">Сообщение продавцу</a>
+                    <%end%>
+                  <%end%>
+                 <%else%>
                     <a style="    float: right;" href="#" class="nk-sign-toggle nk-btn nk-btn-xs nk-btn-color-danger">
                 <span class="nk-icon-toggle">
                   <span class="nk-icon-toggle-front">
@@ -191,7 +199,7 @@ Additional Classes:
                 </span>
                       ВОЙТИ / ЗАРЕГИСТРИРОВАТЬСЯ
                     </a>
-                    <%end%>
+                <%end%>
               </div>
 
             </div>

@@ -63,4 +63,19 @@ class MarketController < ApplicationController
       end
     end
   end
+  def buyrequest
+      m= Privatemessage.new
+      i=Tarkovitem.find(params[:i])
+      m.player_id = session[:player_id]
+      m.message_for_id = params[:player_id]
+      m.message_text ='Привет! Я заинтересован в покупке (обмене) :' + i.item_name + '. Жду ответа!'
+
+      i.update_column(:item_message_send_by , i.item_message_send_by.append(session[:player_id]))
+      m.save
+
+      redirect_to request.referer
+
+
+
+  end
 end
