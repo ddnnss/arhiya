@@ -111,7 +111,7 @@ Additional Classes:
 
         <!-- START: Activity -->
         <ul class="nk-social-friends">
-<% if flash[:search]%>
+            <% if flash[:search]%>
             <div class="nk-info-box bg-main-1">
               <div class="nk-info-box-icon">
                 <i class="ion-information-circled"></i>
@@ -119,22 +119,30 @@ Additional Classes:
               <%= flash[:search]%>
             </div>
             <% end %>
-          <%@tarkovitems.each do |item|%>
+          <% if @tarkovitems.blank? %>
+              <div class="nk-info-box bg-main-1">
+                <div class="nk-info-box-icon">
+                  <i class="ion-information-circled"></i>
+                </div>
+                На продажу пока ничего нет... Приходите позже;)
+              </div>
+          <% else %>
+               <%@tarkovitems.each do |item|%>
           <!-- START: post -->
 
           <li >
             <div class="nk-social-activity-avatar">
-              <a href="store-product.html" class="nk-post-image">
+              <a href="/tarkovitem/<%= item.id%>"  class="nk-post-image" data-remote="true">
                 <%if item.item_vip%>
 
                     <img style=" box-shadow: 0 0 20px #e08821;
                         border: 1px solid;
                         padding: 15px;
-                        border-radius: 50%;" src="/images/tarkovitems/<%= item.item_type%>.png" class="nk-img">
+                        border-radius: 50%;" src="/images/tarkovitems/<%= item.item_type%>.png" class="nk-img" alt="Купить <%= item.item_name%> ETF">
                 <%else%>
                     <img style="
                         padding: 15px;
-                       " src="/images/tarkovitems/<%= item.item_type%>.png" class="nk-img">
+                       " src="/images/tarkovitems/<%= item.item_type%>.png" class="nk-img" alt="Купить <%= item.item_name%> ETF">
                 <%end%>
 
               </a>
@@ -144,7 +152,7 @@ Additional Classes:
                   background-color: #181818;
                   padding: 5px 15px;
                   margin-bottom: 15px;">
-                <a href="store-product.html"><%= item.item_name%></a> в наличии <%= item.item_to_sell_count%> шт.
+                <a href="/tarkovitem/<%= item.id%>" data-remote="true" ><%= item.item_name%></a> в наличии <%= item.item_to_sell_count%> шт.
 
               </div>
               <div class="nk-social-activity-text">
@@ -167,14 +175,30 @@ Additional Classes:
               </div>
               <div class="nk-social-activity-actions">
             <strong> &#8381;</strong> <%= item.item_price_virt_rub%> | <strong>&#36;</strong> <%= item.item_price_virt_usd%> | <strong>&euro;</strong> <%= item.item_price_virt_eur%> <%= item.item_barter ? '| <span class="nk-btn-color-danger" style="font-weight:bold;">Возможен бартер</span>'.html_safe : '' %>
+                <% if session[:active] %>
                 <a style="    float: right;" href="#" class="nk-btn nk-btn-xs ">Сообщение продавцу</a>
+                    <%else%>
+                    <a style="    float: right;" href="#" class="nk-sign-toggle nk-btn nk-btn-xs nk-btn-color-danger">
+                <span class="nk-icon-toggle">
+                  <span class="nk-icon-toggle-front">
+                    <span class="fa fa-sign-in">
+                    </span>
+                  </span>
+                  <span class="nk-icon-toggle-back">
+                  <span class="nk-icon-close">
+                  </span>
+                </span>
+                </span>
+                      ВОЙТИ / ЗАРЕГИСТРИРОВАТЬСЯ
+                    </a>
+                    <%end%>
               </div>
 
             </div>
           </li>
           <!-- END: post -->
           <%end%>
-
+          <% end %>
         </ul>
         <!-- END: Activity -->
       </div>
@@ -194,3 +218,30 @@ Additional Classes:
   <div class="nk-gap-4"></div>
 
 </div>
+
+
+
+<div id="item_info_modal" class="modal nk-modal fade " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none; top : 5%;">
+  <div class="modal-dialog modal-lg" style="max-width: 1000px !important;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span class="ion-android-close"></span>
+        </button>
+        <h4 class="modal-title nk-title" id="myLargeModalLabel">Описание товара</h4>
+      </div>
+      <div  id="item_info_p" class="modal-body">
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="nk-btn" data-dismiss="modal">Закрыть</button>
+        <% if session[:active] %>
+        <button type="button" class="nk-btn nk-btn-color-main-1">Купить</button>
+            <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+

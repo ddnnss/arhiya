@@ -30,5 +30,5 @@ Rails.application.routes.draw do
   #----------MARKET------------------------
   match '/newtarkovitem'  => 'market#newtarkovitem', via: [:post]
   match '/tarkovmarket(/:item_type)' => 'market#tarkovmarket', via: [:get]
-
+  match '/tarkovitem(/:item_id)'  => 'market#tarkovitem', via: [:get]
 end

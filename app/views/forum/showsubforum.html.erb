@@ -58,6 +58,7 @@ Additional Classes:
       <div class="col-md-9 pull-md-3">
         <div class="digg_pagination">
 
+            <%= will_paginate @topic, :container => false %>
         </div>
       </div>
     </div>
@@ -72,7 +73,7 @@ Additional Classes:
 
           <% if @pinned %>
             <% @pinnedtopic.each do |pintopic| %>
-          <li>
+          <li style="background-color: #060606 !important;">
             <div class="nk-forum-icon">
               <%=pintopic.topic_closed ? '<span class="ion-pin text-danger"></span>'.html_safe  : '<span class="ion-pin"></span>'.html_safe %>
             </div>
@@ -100,7 +101,7 @@ Additional Classes:
           </li>
             <% end %>
           <% end %>
-
+<hr>
           <% @topic.each do |topic| %>
       <li>
         <div class="nk-forum-icon">
@@ -152,6 +153,7 @@ Additional Classes:
       <div class="col-md-9 pull-md-3">
         <div class="digg_pagination">
 
+          <%= will_paginate @topic, :container => false %>
         </div>
       </div>
     </div>

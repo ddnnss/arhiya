@@ -6,7 +6,7 @@ class CreatePlayers < ActiveRecord::Migration[5.1]
       t.string  :player_nickname_translit
       t.string  :player_password
       t.string  :player_avatar, :default => 'noavatar.png'
-      t.string  :player_rank , :default => 'ТЕСТ'
+      t.string  :player_rank , :default => 'Новичек'
       t.string  :player_skype_link, :default => 'Нет данных'
       t.string  :player_vk_link, :default => 'Нет данных'
       t.string  :player_tm_link, :default => 'Нет данных'

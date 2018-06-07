@@ -46,7 +46,12 @@ Additional Classes:
   <div class="container">
 
     <!-- START: Pagination -->
+
     <div class="row">
+      <div class="digg_pagination col-md-6">
+
+        <%= will_paginate @posts, :container => false %>
+      </div>
       <% if session[:admin] #and @currenttopic.topic_closed == false %>
         <div class="col-md-9  text-xs-right">
           <a href="/pintopic/<%=@topic.id %>" class="nk-btn nk-btn-lg link-effect-4"> <%= @topic.topic_pinned ? 'Открепить тему' : 'Закрепить тему' %></a>
@@ -55,15 +60,13 @@ Additional Classes:
           <a href="/deletetopic/<%=@topic.id %>" class="nk-btn nk-btn-lg nk-btn-bg-danger link-effect-4">Удалить тему</a>
         </div>
       <% end %>
-      <% if session[:active]%>
-      <div class="col-md-2  text-xs-right">
-        <a href="#forum-reply" class="nk-btn nk-btn-lg link-effect-4 nk-anchor">Новое сообщение</a>
+      <% if session[:active] && @topic.topic_closed == false%>
+      <div class="col-md-6 text-xs-right">
+        <a href="#forum-reply" class="nk-btn nk-btn-lg link-effect-4 nk-anchor pull-right">Новое сообщение</a>
       </div>
       <% end %>
 
-      <div class="digg_pagination">
 
-      </div>
 
     </div>
     <!-- END: Pagination -->
@@ -72,7 +75,7 @@ Additional Classes:
 
     <!-- START: Forums List -->
     <ul class="nk-forum nk-forum-topic home-game-info">
-      <% @topic.posts.each do |post| %>
+      <% @posts.each do |post| %>
       <li id="post<%=post.id%>">
 
         <div class="nk-forum-topic-author">
@@ -125,6 +128,7 @@ Additional Classes:
 
     <div class="digg_pagination">
 
+      <%= will_paginate @posts, :container => false %>
     </div>
 
     <% if session[:active] and @topic.topic_closed == false %>
@@ -132,6 +136,15 @@ Additional Classes:
       <div class="nk-gap-4"></div>
       <!-- START: Reply -->
       <h3 class="h4">Ответ в теме</h3>
+        <%if  flash[:error]%>
+            <div class="nk-gap-1"></div>
+            <div class="nk-info-box bg-danger">
+              <div class="nk-info-box-icon">
+                <i class="ion-alert-circled"></i>
+              </div>
+              <%= flash[:error]%>
+            </div>
+        <% end %>
       <div class="nk-gap-1"></div>
       <%= form_for :addpost, url: addpost_path  do %>
         <textarea class="nk-summernote"  required="required" name="new_post_content" rows="18"></textarea>

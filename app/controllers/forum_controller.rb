@@ -9,8 +9,9 @@ class ForumController < ApplicationController
   def showsubforum
     @activeforum = 'active'
     @subforum = Subforum.find_by_subforum_name_translit(params[:subforum_name])
-    @topic =  @subforum.topics.where.not(topic_pinned: true).order('updated_at desc')
+    @topic =  @subforum.topics.paginate(:page => params[:page], :per_page => 6).where.not(topic_pinned: true).order('updated_at desc')
     @pinnedtopic = @subforum.topics.where(topic_pinned: true).order('updated_at desc')
+
     @pinnedtopic.nil? ? @pinned = false : @pinned = true
 
 
@@ -19,8 +20,10 @@ class ForumController < ApplicationController
   end
   def showtopic
     @activeforum = 'active'
-    @topic = Topic.find_by_topic_name_translit(params[:topic_name])
+    @topic = Topic.find_by(topic_name_translit: params[:topic_name])
+
     @topic.update_column(:topic_views, @topic.topic_views + 1)
+    @posts = @topic.posts.paginate(:page => params[:page], :per_page => 6)
   end
   def addtopic
 
@@ -61,12 +64,18 @@ class ForumController < ApplicationController
 
   end
   def addpost
-    p = Post.new
-    p.player_id = session[:player_id]
-    p.topic_id = params[:topic_id]
-    p.post_text = params[:new_post_content]
-    p.save
-    redirect_to '/topic/' + params[:topic_name]
+    if params[:new_post_content]== ''
+      flash[:error] = 'А сообщение кто писать будет?'
+      redirect_to '/topic/' + params[:topic_name] +'#forum-reply'
+    else
+      p = Post.new
+      p.player_id = session[:player_id]
+      p.topic_id = params[:topic_id]
+      p.post_text = params[:new_post_content]
+      p.save
+      redirect_to '/topic/' + params[:topic_name] +'#post'+p.id.to_s
+    end
+
 
   end
   def editpost1

@@ -15,6 +15,7 @@ class MarketController < ApplicationController
       i.item_type = params[:item_tag][:item_tag_id]
       i.item_to_sell_count = params[:item_to_sell_count].to_i
       i.item_price_virt_rub = params[:item_price_virt_rub].to_i
+      i.item_info = params[:item_info]
 
       i.item_price_virt_usd = params[:item_price_virt_usd].to_i
       i.item_price_virt_eur = params[:item_price_virt_eur].to_i
@@ -35,8 +36,6 @@ class MarketController < ApplicationController
   end
 
   def tarkovmarket
-
-
     @item_tags = {'Игровая валюта': 1,'Оружие': 2,'Квестовые предметы': 3,'Предметы на обмен': 4,'Снаряжение и одежда': 5,
                   'Модули и магазины': 6,'Ценные предметы': 7,'Контейнеры и кейсы': 8,'Медикаменты': 9,'Коллекционные предметы': 10,
                   'Жетоны': 11, 'Ключи': 12}
@@ -46,12 +45,22 @@ class MarketController < ApplicationController
     else
       if params[:item_type].present?
         @tarkovitems = Tarkovitem.paginate(:page => params[:page], :per_page => 6).where(item_type: params[:item_type]).order('created_at desc')
-
       else
         @tarkovitems = Tarkovitem.paginate(:page => params[:page], :per_page => 6).all
         @active ='active'
       end
     end
+  end
 
+  def tarkovitem
+    i= Tarkovitem.find(params[:item_id])
+    if i.nil?
+      redirect_to '/tarkovmarket'
+    else
+      respond_to do |format|
+        @iteminfo = i.item_info.html_safe
+        format.js
+      end
+    end
   end
 end

@@ -82,11 +82,12 @@ class PlayerController < ApplicationController
       if user.player_activated ##check user activated
         if user.player_password == params[:login][:player_password]##check user password
 
-          # if user.lastlogin != Date.today
-          # user.lastlogin=Date.today
-          #  user.wallet += 30
-          # user.save
-          # end
+          if user.player_lastlogin != Date.today
+            user.update_column( :player_lastlogin , Date.today)
+            user.update_column( :player_wallet ,player_wallet += 10)
+          else
+            user.update_column( :player_lastlogin , Date.today)
+          end
 
 
           session[:active] = true
@@ -96,10 +97,10 @@ class PlayerController < ApplicationController
           session[:player_vip] = user.player_vip
 
 
-          user.update_column( :player_lastlogin , Date.today)
 
-          if Date.today+2.week > user.created_at+2.week && user.player_rank =='ТЕСТ'
-            user.update_column( :player_rank , 'Новичек')
+
+          if Date.today  >= user.created_at+1.day && user.player_rank =='Новичек'
+            user.update_column( :player_rank , 'Комрад')
           end
 
 
@@ -107,18 +108,18 @@ class PlayerController < ApplicationController
 
           if user.player_admin
             session[:admin] = true
-            if user.player_rank == 'ТЕСТ'
+            if user.player_rank == 'Новичек'
 
-              user.update_column( :player_rank , 'ГРЕШНИК')
+              user.update_column( :player_rank , 'Админ')
 
             end
           end
 
           if user.player_moder
             session[:moder] = true
-            if user.player_rank == 'ТЕСТ'
+            if user.player_rank == 'Новичек'
 
-              user.update_column( :player_rank , 'АДМИН')
+              user.update_column( :player_rank , 'Модератор')
 
             end
           end

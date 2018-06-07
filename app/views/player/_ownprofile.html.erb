@@ -124,104 +124,177 @@
             <!-- START: Tab Description -->
             <div role="tabpanel" class="tab-pane fade in active show" id="tab-description">
               <div class="nk-gap-3"></div>
-              <div class="nk-box-3 bg-dark-1">
-                Размещение на продажу товара EFT
-                <% if flash[:error] %>
-                    <div class="nk-info-box bg-danger">
-                      <div class="nk-info-box-icon">
-                        <i class="ion-alert-circled"></i>
-                      </div>
-                      <%=flash[:error] %>
-                    </div>
-                <%end%>
-                <% if flash[:ok] %>
-                    <div class="nk-info-box bg-success">
-                      <div class="nk-info-box-icon">
-                        <i class="ion-information-circled"></i>
-                      </div>
-                      <%=flash[:ok] %>
-                    </div>
-                <%end%>
-                <%= form_for :newtarkovitem, url: newtarkovitem_path do %>
-                    <div class="form-group row">
-                      <label for="item_name" class="col-3 col-form-label">Название товара*:</label>
-                      <div class="col-sm-9">
 
-                        <%= text_field_tag 'item_name', '',:required => true, id:'item_name', class:'form-control home-game-info'  %>
-                      </div>
+              <div class="nk-tabs bg-dark-1">
+                <ul class="nav nav-tabs" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active show" href="#tabs-3-1" role="tab" data-toggle="tab" aria-selected="true">Размещение на продажу</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#tabs-3-2" role="tab" data-toggle="tab">Уже размещенные товары</a>
+                  </li>
+
+                </ul>
+                <div class="tab-content">
+                  <div role="tabpanel" class="tab-pane fade active show" id="tabs-3-1">
+
+                    <div class="nk-box-3 bg-dark-1">
+
+                      <% if flash[:error] %>
+                          <div class="nk-info-box bg-danger">
+                            <div class="nk-info-box-icon">
+                              <i class="ion-alert-circled"></i>
+                            </div>
+                            <%=flash[:error] %>
+                          </div>
+                      <%end%>
+                      <% if flash[:ok] %>
+                          <div class="nk-info-box bg-success">
+                            <div class="nk-info-box-icon">
+                              <i class="ion-information-circled"></i>
+                            </div>
+                            <%=flash[:ok] %>
+                          </div>
+                      <%end%>
+                      <%= form_for :newtarkovitem, url: newtarkovitem_path do %>
+                          <div class="form-group row">
+                            <label for="item_name" class="col-3 col-form-label">Название товара*:</label>
+                            <div class="col-sm-9">
+
+                              <%= text_field_tag 'item_name', '',:required => true, id:'item_name', class:'form-control home-game-info'  %>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label for="itemtag" class="col-3 col-form-label">Тип товара*:</label>
+                            <div class="col-sm-9">
+                              <%= select("item_tag", "item_tag_id", @item_tags.each {|k,v| [ k, v ] }, {:id => "itemtag"}, :required => "required",:class=>"form-control") %>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label for="item_price_virt_rub" class="col-3 col-form-label">Цена в игровых &#8381;*:</label>
+                            <div class="col-sm-4">
+                              <%= text_field_tag 'item_price_virt_rub', '',:required => true, :type => 'number', id:'item_price_virt_rub', class:'form-control home-game-info'  %>
+                            </div>
+                          </div>
+                          <% if session[:admin] || session[:vip] %>
+                              <div class="form-group row">
+                                <label for="item_price_real_rub" class="col-3 col-form-label">Цена в реальных &#8381;:</label>
+                                <div class="col-sm-4">
+                                  <%= text_field_tag 'item_price_real_rub', '', :type => 'number', id:'item_price_real_rub', class:'form-control home-game-info'  %>
+                                </div>
+                              </div>
+                          <%end%>
+                          <div class="form-group row">
+                            <label for="item_price_virt_usd" class="col-3 col-form-label">Цена в игровых &#36;:</label>
+                            <div class="col-sm-4">
+                              <%= text_field_tag 'item_price_virt_usd', '', :type => 'number', id:'item_price_virt_usd', class:'form-control home-game-info'  %>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label for="item_price_virt_eur" class="col-3 col-form-label">Цена в игровых &euro;:</label>
+                            <div class="col-sm-4">
+                              <%= text_field_tag 'item_price_virt_eur', '', :type => 'number', id:'item_price_virt_eur', class:'form-control home-game-info'  %>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label for="item_to_sell_count" class="col-3 col-form-label">Кол-во товара в наличии*:</label>
+                            <div class="col-sm-4">
+                              <%= text_field_tag 'item_to_sell_count', '',:required => true, :type => 'number', id:'item_to_sell_count', class:'form-control home-game-info'  %>
+                            </div>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <label class="form-check-label">
+                              <input type="checkbox" class="form-check-input" name="item_barter_checkbox"  id="item_barter_checkbox" value="on">
+                              Возможен обмен ?
+                            </label>
+                          </div>
+
+                          <div class="form-group row">
+                            <label for="item_barter" class="col-3 col-form-label">Какой товар интерусует на обмен:</label>
+                            <div class="col-sm-4">
+                              <%= text_field_tag 'item_barter', '', id:'item_barter',disabled:'disabled', class:'form-control home-game-info'  %>
+                            </div>
+                          </div>
+
+                          <div class="form-group row">
+                            <label for="item_info" class="col-3 col-form-label">Информация о товаре (разместить скрин c изображением : (PrintScreen -> Ctrl+V)):</label>
+                            <div class="col-sm-9">
+
+                              <textarea class="nk-summernote" required="required"  id="item_info" name="item_info"  rows="18"></textarea>
+                            </div>
+                          </div>
+
+
+
+
+
+                          <div class="nk-gap-2"></div>
+
+
+
+                          <button  type="submit" class="nk-btn nk-btn-color-main-1 ">Разместить</button>
+
+
+                      <%end%>
                     </div>
-                    <div class="form-group row">
-                      <label for="itemtag" class="col-3 col-form-label">Тип товара*:</label>
-                      <div class="col-sm-9">
-                        <%= select("item_tag", "item_tag_id", @item_tags.each {|k,v| [ k, v ] }, {:id => "itemtag"}, :required => "required",:class=>"form-control") %>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="item_price_virt_rub" class="col-3 col-form-label">Цена в игровых &#8381;*:</label>
-                      <div class="col-sm-4">
-                        <%= text_field_tag 'item_price_virt_rub', '',:required => true, :type => 'number', id:'item_price_virt_rub', class:'form-control home-game-info'  %>
-                      </div>
-                    </div>
-                    <% if session[:admin] || session[:vip] %>
-                  <div class="form-group row">
-                    <label for="item_price_real_rub" class="col-3 col-form-label">Цена в реальных &#8381;:</label>
-                    <div class="col-sm-4">
-                      <%= text_field_tag 'item_price_real_rub', '', :type => 'number', id:'item_price_real_rub', class:'form-control home-game-info'  %>
-                    </div>
+
+
                   </div>
-                    <%end%>
-                  <div class="form-group row">
-                    <label for="item_price_virt_usd" class="col-3 col-form-label">Цена в игровых &#36;:</label>
-                    <div class="col-sm-4">
-                      <%= text_field_tag 'item_price_virt_usd', '', :type => 'number', id:'item_price_virt_usd', class:'form-control home-game-info'  %>
-                    </div>
+                  <div role="tabpanel" class="tab-pane fade" id="tabs-3-2">
+                    <div class="nk-gap-1"></div>
+                    <ul class="nk-social-friends">
+                      <% if @player.tarkovitems.blank? %>
+                          <div class="nk-info-box bg-main-1">
+                            <div class="nk-info-box-icon">
+                              <i class="ion-information-circled"></i>
+                            </div>
+                            На продажу пока ничего не выставлено.
+                          </div>
+                      <% else %>
+                          <% @player.tarkovitems.each do |item|%>
+                              <li >
+                                <div class="nk-social-activity-avatar">
+                                  <a href="/tarkovitem/<%= item.id%>"  class="nk-post-image" data-remote="true">
+                                    <%if item.item_vip%>
+
+                                        <img style=" box-shadow: 0 0 20px #e08821;
+                                            border: 1px solid;
+                                            padding: 15px;
+                                            border-radius: 50%;" src="/images/tarkovitems/<%= item.item_type%>.png" class="nk-img" alt="Купить <%= item.item_name%> ETF">
+                                    <%else%>
+                                        <img style="
+                                        padding: 15px;
+                                        " src="/images/tarkovitems/<%= item.item_type%>.png" class="nk-img" alt="Купить <%= item.item_name%> ETF">
+                                    <%end%>
+
+                                  </a>
+                                </div>
+                                <div class="nk-social-activity-content" style="margin-left: 40px;">
+                                  <div class="nk-social-activity-meta" style="font-size: .9em;
+                                      background-color: #181818;
+                                      padding: 5px 15px;
+                                      margin-bottom: 15px;">
+                                    <a href="/tarkovitem/<%= item.id%>" data-remote="true" ><%= item.item_name%></a> в наличии <%= item.item_to_sell_count%> шт.
+
+                                  </div>
+
+                                  <div class="nk-social-activity-actions">
+                                    <strong> &#8381;</strong> <%= item.item_price_virt_rub%> | <strong>&#36;</strong> <%= item.item_price_virt_usd%> | <strong>&euro;</strong> <%= item.item_price_virt_eur%> <%= item.item_barter ? '| <span class="nk-btn-color-danger" style="font-weight:bold;">Возможен бартер</span>'.html_safe : '' %>
+<a href="#">Снять в продажи</a> <a href="#">Товар продан</a>
+                                  </div>
+
+                                </div>
+                              </li>
+
+
+                          <% end%>
+                      <% end %>
+                    </ul>
+
+                    <div class="nk-gap-1"></div>
                   </div>
-                  <div class="form-group row">
-                    <label for="item_price_virt_eur" class="col-3 col-form-label">Цена в игровых &euro;:</label>
-                    <div class="col-sm-4">
-                      <%= text_field_tag 'item_price_virt_eur', '', :type => 'number', id:'item_price_virt_eur', class:'form-control home-game-info'  %>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="item_to_sell_count" class="col-3 col-form-label">Кол-во товара в наличии*:</label>
-                    <div class="col-sm-4">
-                      <%= text_field_tag 'item_to_sell_count', '',:required => true, :type => 'number', id:'item_to_sell_count', class:'form-control home-game-info'  %>
-                    </div>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                      <input type="checkbox" class="form-check-input" name="item_barter_checkbox"  id="item_barter_checkbox" value="on">
-                      Возможен обмен ?
-                    </label>
-                  </div>
 
-                  <div class="form-group row">
-                    <label for="item_barter" class="col-3 col-form-label">Какой товар интерусует на обмен:</label>
-                    <div class="col-sm-4">
-                      <%= text_field_tag 'item_barter', '', id:'item_barter',disabled:'disabled', class:'form-control home-game-info'  %>
-                    </div>
-                  </div>
-
-                    <div class="form-group row">
-                      <label for="item_info" class="col-3 col-form-label">Информация о товаре (разместить скрин c изображением : (PrintScreen -> Ctrl+V)):</label>
-                      <div class="col-sm-9">
-
-                        <textarea class="nk-summernote" required="required"  id="item_info" name="item_info"  rows="18"></textarea>
-                      </div>
-                    </div>
-
-
-
-
-
-                    <div class="nk-gap-2"></div>
-
-
-
-                    <button  type="submit" class="nk-btn nk-btn-color-main-1 ">Разместить</button>
-
-
-                <%end%>
+                </div>
               </div>
             </div>
             <!-- END: Tab Description -->

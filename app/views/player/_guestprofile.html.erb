@@ -39,7 +39,11 @@
             <div class="nk-social-profile-info-username home-game-info" > <%= @player.player_rank%> </div>
 
             <div class="nk-social-profile-info-actions">
+              <% if session[:active] %>
               <button class="nk-btn nk-btn-lg link-effect-4" data-toggle="modal" data-target=".privatemsg">Личное сообщение</button>
+              <% else %>
+                  <span class="pull-left nk-btn-color-danger"> ГОСТИ НЕ МОГУТ ОТПРАВЛЯТЬ ЛИЧНЫЕ СООБЩЕНИЯ</span>
+              <% end %>
             </div>
             <%unless @player.player_info == ''%>
              <div class="nk-social-profile-info-username home-game-info" > <%= @player.player_info%> </div>
@@ -66,8 +70,8 @@
           <div class="nk-social-menu d-none d-lg-block">
             <ul>
               <li>  Общий рейтинг : <%= @player.player_votes_summ  == 0 ? 'Нет рейтинга' : @rating.to_s%></li>
-              <li>    Всего продаж : <%= @player.player_buys_count == 0 ? 'Нет продаж' : @player.player_buys_count%></li>
-              <li>   Всего покупок : <%= @player.player_sells_count == 0 ? 'Нет покупок' : @player.player_sells_count%></li>
+              <li>    Всего покупок : <%= @player.player_buys_count == 0 ? 'Нет покупок' : @player.player_buys_count%></li>
+              <li>   Всего продаж : <%= @player.player_sells_count == 0 ? 'Нет продаж' : @player.player_sells_count%></li>
               <li>-</li>
               <li>  VK : <%= @player.player_vk_link%></li>
               <li>  Telegramm : <%= @player.player_tm_link%></li>
@@ -88,8 +92,8 @@
                 <div class="nk-social-menu">
                   <ul>
                     <li>  Общий рейтинг : <%= @player.player_votes_summ  = 0 ? 'Нет рейтинга' : @rating.to_s%></li>
-                    <li>    Всего продаж : <%= @player.player_buys_count == 0 ? 'Нет продаж' : @player.player_buys_count%></li>
-                    <li>   Всего покупок : <%= @player.player_sells_count == 0 ? 'Нет покупок' : @player.player_sells_count%></li>
+                    <li>    Всего покупок : <%= @player.player_buys_count == 0 ? 'Нет покупок' : @player.player_buys_count%></li>
+                    <li>   Всего продаж : <%= @player.player_sells_count == 0 ? 'Нет продаж' : @player.player_sells_count%></li>
                     <li>-</li>
                     <li>  VK : <%= @player.player_vk_link%></li>
                     <li>  Telegram : <%= @player.player_tm_link%></li>
@@ -123,10 +127,55 @@
             <div role="tabpanel" class="tab-pane fade in active show" id="tab-description">
               <div class="nk-gap-3"></div>
               <div class="nk-box-3 bg-dark-1">
-                <p>And gathering. Form for, gathering, female you'll blessed appear day us cattle hath be moving face he Whales fruitful is spirit Beginning. Abundantly good living Thing isn't stars saw over and earth dry rule herb bring image night, fowl their, third set saw for. Green a also upon life stars, green and darkness greater.</p>
-                <p>The light two his moving won't a kind unto they're sea sea subdue fowl light male forth second beginning. Saying seas signs. Seed brought air grass. Divided Meat god subdue own. He. Female form very cattle man i sixth. Beast living darkness open god bring image divide. Third which.</p>
-                <p>He. Herb created. Beginning. Gathering given our winged sea Two is image us life from seed so darkness and his replenish they're There, creature isn't divide face replenish creature. His gathered midst brought divided land without face were, midst multiply.</p>
-                <p>Place and the unto itself image also. Night earth good also gathered forth man cattle very open. Unto fill is. Midst together of, it you're own He sea fifth day moving spirit can't meat heaven fowl fruit isn't called fruitful made earth also. Him fourth upon To upon fill face. Also earth light shall also green. Grass.</p>
+
+                <ul class="nk-social-friends">
+                  <% if @player.tarkovitems.blank? %>
+                      <div class="nk-info-box bg-main-1">
+                        <div class="nk-info-box-icon">
+                          <i class="ion-information-circled"></i>
+                        </div>
+                       На продажу пока ничего нет... Приходите позже;)
+                      </div>
+                      <% else %>
+                <% @player.tarkovitems.each do |item|%>
+                      <li >
+                        <div class="nk-social-activity-avatar">
+                          <a href="/tarkovitem/<%= item.id%>"  class="nk-post-image" data-remote="true">
+                            <%if item.item_vip%>
+
+                                <img style=" box-shadow: 0 0 20px #e08821;
+                                    border: 1px solid;
+                                    padding: 15px;
+                                    border-radius: 50%;" src="/images/tarkovitems/<%= item.item_type%>.png" class="nk-img" alt="Купить <%= item.item_name%> ETF">
+                            <%else%>
+                                <img style="
+                                padding: 15px;
+                                " src="/images/tarkovitems/<%= item.item_type%>.png" class="nk-img" alt="Купить <%= item.item_name%> ETF">
+                            <%end%>
+
+                          </a>
+                        </div>
+                        <div class="nk-social-activity-content" style="margin-left: 40px;">
+                          <div class="nk-social-activity-meta" style="font-size: .9em;
+                              background-color: #181818;
+                              padding: 5px 15px;
+                              margin-bottom: 15px;">
+                            <a href="/tarkovitem/<%= item.id%>" data-remote="true" ><%= item.item_name%></a> в наличии <%= item.item_to_sell_count%> шт.
+
+                          </div>
+
+                          <div class="nk-social-activity-actions">
+                            <strong> &#8381;</strong> <%= item.item_price_virt_rub%> | <strong>&#36;</strong> <%= item.item_price_virt_usd%> | <strong>&euro;</strong> <%= item.item_price_virt_eur%> <%= item.item_barter ? '| <span class="nk-btn-color-danger" style="font-weight:bold;">Возможен бартер</span>'.html_safe : '' %>
+
+                          </div>
+
+                        </div>
+                      </li>
+
+
+                <% end%>
+                  <% end %>
+                </ul>
               </div>
             </div>
             <!-- END: Tab Description -->
@@ -185,8 +234,11 @@
                         <textarea class="form-control" required name="review_message" rows="1" placeholder="Ваш отзыв" aria-required="true"></textarea>
                         <input name="review_for" value="<%= @player.id%>" type="hidden" />
                         <div class="nk-gap-1"></div>
-
-                        <button class="nk-btn nk-btn-lg link-effect-4 pull-right">Submit</button>
+                        <% if session[:active] %>
+                        <button class="nk-btn nk-btn-lg link-effect-4 pull-right">Отправить отзыв</button>
+                            <% else %>
+                        <span class="pull-right nk-btn-color-danger"> ГОСТИ НЕ МОГУТ ПИСАТЬ ОТЗЫВЫ</span>
+                        <% end %>
 
                     <% end %>
                   </div>
@@ -198,9 +250,6 @@
               <div class="nk-gap-3"></div>
               <div class="nk-comments mb-0">
                 <% unless @comments.blank?  %>
-
-
-
                     <!-- START: Review -->
                     <% @comments.each do |comment| %>
                         <div class="nk-comment">
