@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   match '/addcomment'  => 'player#addcomment', via: [:post]
   match '/editplayer'  => 'player#editplayer', via: [:post]
   match '/sendpm'  => 'player#sendpm', via: [:post]
+  match '/deletepm(:/pm_id)'  => 'player#deletepm', via: [:post]
  #----------ADMIN------------------------
   match '/admin/forum'  => 'admin#forum_admin', via: [:get]
   match '/admin/addtopic'  => 'admin#addtopic', via: [:get]

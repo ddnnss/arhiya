@@ -92,13 +92,15 @@
           </li>
           <% if session[:active] %>
 
-          <li class=""><a href="#" data-nav-toggle="#nk-side" >
+          <li class="">
+            <a href="#" data-nav-toggle="#nk-side" >
 
                  <span class="fa fa-id-badge">
-
-
-
-                 </span> <%= session[:player_nickname]%> </a>
+                   <% if session[:pm_count].to_i > 0 %>
+                   <span style="right: 0px !important;" class="nk-badge">!</span>
+                <% end %>
+                 </span> <%= session[:player_nickname]%>
+          </a>
 
           </li>
 
@@ -161,7 +163,7 @@
               Тип аккаунта : <%= session[:player_vip] ? '<span class="nk-badge">VIP</span>'.html_safe : 'Обычный'%><br/>
             </li>
             <li>
-            Личных сообщений : <span class="nk-badge"><%= session[:player_pm]%></span>
+            Личных сообщений : <span class="nk-badge"><%= session[:pm_count]%></span>
           </li>
             <li>
               <a href="/profile/<%= session[:player_nickname_translit]%>" >Мой профиль</a>

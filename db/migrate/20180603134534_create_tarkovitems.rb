@@ -15,7 +15,7 @@ class CreateTarkovitems < ActiveRecord::Migration[5.1]
       t.integer :item_price_real_rub, :default => 0
       t.integer :item_price_virt_usd, :default => 0
       t.integer :item_price_virt_eur, :default => 0
-      t.integer :item_barter_for, :default => 0
+      t.string :item_barter_for, :default => 0
       t.boolean :item_barter, :default => false, index: true
       t.boolean :item_vip, :default => false, index: true
 

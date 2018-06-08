@@ -1,4 +1,13 @@
 class PlayerController < ApplicationController
+  before_action :checkpm
+
+  def checkpm
+    if session[:active]
+      pm = Privatemessage.where(player_id: session[:player_id])
+      pm.blank? ? session[:pm_count] = 0 : session[:pm_count] = pm.count
+
+    end
+  end
   def playerprofile
     @player = Player.find_by_player_nickname_translit(params[:player_nickname])
     @comments = Comment.where(comment_for_id: @player.id).order('created_at desc')
@@ -35,7 +44,6 @@ class PlayerController < ApplicationController
   end
 
   def sendpm
-
       m= Privatemessage.new
       m.player_id = session[:player_id]
       m.message_for_id = params[:player_id]
@@ -50,10 +58,8 @@ class PlayerController < ApplicationController
         @res='Неверный ответ'
         format.js
       end
-
-
-
-
+  end
+  def deletepm
 
   end
   def addcomment
@@ -84,7 +90,7 @@ class PlayerController < ApplicationController
 
           if user.player_lastlogin != Date.today
             user.update_column( :player_lastlogin , Date.today)
-            user.update_column( :player_wallet ,player_wallet += 10)
+            user.update_column( :player_wallet ,user.player_wallet += 10)
           else
             user.update_column( :player_lastlogin , Date.today)
           end
@@ -96,7 +102,8 @@ class PlayerController < ApplicationController
           session[:player_id] = user.id
           session[:player_vip] = user.player_vip
 
-
+          pm = Privatemessage.where(player_id: session[:player_id])
+          pm.blank? ? session[:pm_count] = 0 : session[:pm_count] = pm.count
 
 
           if Date.today  >= user.created_at+1.day && user.player_rank =='Новичек'
