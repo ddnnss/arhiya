@@ -97,7 +97,7 @@
 
                  <span class="fa fa-id-badge">
                    <% if session[:pm_count].to_i > 0 %>
-                   <span style="right: 0px !important;" class="nk-badge">!</span>
+                   <span style="right: 0px !important;" class="nk-badge"><%=session[:pm_count]%></span>
                 <% end %>
                  </span> <%= session[:player_nickname]%>
           </a>

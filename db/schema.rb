@@ -96,7 +96,7 @@ ActiveRecord::Schema.define(version: 20180603164708) do
     t.string "item_name_translit"
     t.string "item_type", default: ""
     t.string "item_tags", default: ""
-    t.integer "item_barter_for", default: 0
+    t.string "item_barter_for", default: "0"
     t.text "item_info", default: ""
     t.text "item_message_send_by"
     t.integer "item_to_sell_count", default: 0

@@ -3,7 +3,7 @@ class PageController < ApplicationController
 
   def checkpm
     if session[:active]
-      pm = Privatemessage.where(player_id: session[:player_id])
+      pm = Privatemessage.where(message_for_id: session[:player_id])
       pm.blank? ? session[:pm_count] = 0 : session[:pm_count] = pm.count
 
     end
