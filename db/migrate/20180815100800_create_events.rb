@@ -58,9 +58,14 @@ class CreateEvents < ActiveRecord::Migration[5.1]
       t.string :event_trial_add_player11, :default => ''
       t.string :event_trial_add_player12, :default => ''
 
+      t.string :event_link, :default => ''
+      t.text   :event_info, :default => ''
+
       t.integer :event_creator
       t.integer :event_votes_count, :default => 0
       t.integer :event_votes_summ, :default => 0
+
+      t.boolean :event_end, :default => false
 
       t.timestamps
     end
