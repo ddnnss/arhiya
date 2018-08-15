@@ -65,9 +65,11 @@
                 <i class="ion-alert-circled"></i>
               </div>
             </div>
+              <%= f.text_field 'player_id', placeholder:'ID игрока (без @)' ,:required => true, class:'form-control home-game-info'%>
+              <div class="nk-gap-1"></div>
               <%= f.text_field 'player_nickname', placeholder:'Ник' ,:required => true, class:'form-control home-game-info'%>
 
-              <div class="nk-gap-2"></div>
+              <div class="nk-gap-1"></div>
               <%= f.text_field 'player_email', placeholder:'Почта' ,:required => true, class:'form-control home-game-info'%>
 
               <div class="nk-gap-2"></div>

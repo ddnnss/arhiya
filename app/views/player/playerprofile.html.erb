@@ -1,4 +1,4 @@
-<% if session[:player_id] == @player.id %>
+<% if logged_in? && current_player.id == @player.id %>
     <%=render 'ownprofile'%>
     <%else%>
     <%=render 'guestprofile'%>

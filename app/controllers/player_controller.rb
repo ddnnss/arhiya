@@ -1,25 +1,23 @@
 class PlayerController < ApplicationController
-  before_action :checkpm
 
-  def checkpm
-    if session[:active]
-      pm = Privatemessage.where(player_id: session[:player_id])
-      pm.blank? ? session[:pm_count] = 0 : session[:pm_count] = pm.count
 
-    end
-  end
+
   def playerprofile
     @player = Player.find_by_player_nickname_translit(params[:player_nickname])
-    @comments = Comment.where(comment_for_id: @player.id).order('created_at desc')
-    if @player.id == session[:player_id]
-      @pm = Privatemessage.where(message_for_id: session[:player_id]).order('created_at desc')
-      @item_tags = {'Игровая валюта': 1,'Оружие': 2,'Квестовые предметы': 3,'Предметы на обмен': 4,'Снаряжение и одежда': 5,
-                    'Модули и магазины': 6,'Ценные предметы': 7,'Контейнеры и кейсы': 8,'Медикаменты': 9,'Коллекционные предметы': 10,
-                    'Жетоны': 11, 'Ключи': 12}
+    unless @player
+      redirect_to root_path
+  else
+   # @comments = Comment.where(comment_for_id: @player.id).order('created_at desc')
+    if logged_in? && @player.id == current_player.id
+    #  @pm = Privatemessage.where(message_for_id: session[:player_id]).order('created_at desc')
+   #   @item_tags = {'Игровая валюта': 1,'Оружие': 2,'Квестовые предметы': 3,'Предметы на обмен': 4,'Снаряжение и одежда': 5,
+    #                'Модули и магазины': 6,'Ценные предметы': 7,'Контейнеры и кейсы': 8,'Медикаменты': 9,'Коллекционные предметы': 10,
+    #                'Жетоны': 11, 'Ключи': 12}
     end
     if @player.player_votes_count != 0
       @rating = (@player.player_votes_summ / @player.player_votes_count)
     end
+  end
   end
   def editplayer
     p=Player.find(session[:player_id])
@@ -87,73 +85,29 @@ class PlayerController < ApplicationController
     if user             ##check user exists
       if user.player_activated ##check user activated
         if user.player_password == params[:login][:player_password]##check user password
-
-          if user.player_lastlogin != Date.today
-            user.update_column( :player_lastlogin , Date.today)
-            user.update_column( :player_wallet ,user.player_wallet += 10)
-          else
-            user.update_column( :player_lastlogin , Date.today)
-          end
-
-
-          session[:active] = true
-          session[:player_nickname] = user.player_nickname
-          session[:player_nickname_translit] = user.player_nickname_translit
           session[:player_id] = user.id
-          session[:player_vip] = user.player_vip
-
-          pm = Privatemessage.where(player_id: session[:player_id])
-          pm.blank? ? session[:pm_count] = 0 : session[:pm_count] = pm.count
-
-
-          if Date.today  >= user.created_at+1.day && user.player_rank =='Новичек'
-            user.update_column( :player_rank , 'Комрад')
-          end
-
-
-
-
+          user.update_column(:player_lastlogin, Date.today)
           if user.player_admin
             session[:admin] = true
             if user.player_rank == 'Новичек'
-
-              user.update_column( :player_rank , 'Админ')
-
+              user.update_column( :player_rank , 'Гильдмастер')
             end
           end
-
-          if user.player_moder
-            session[:moder] = true
-            if user.player_rank == 'Новичек'
-
-              user.update_column( :player_rank , 'Модератор')
-
-            end
-          end
-
-
-
-
           respond_to do |format|
             format.js {render inline: " window.location.reload()" }
-
           end
-
         else          ##wrong password
-
           respond_to do |format|
             @res = 'Неверный пaроль'
             format.js
           end           ##end respond
         end             ##end check user password
-
       else          ##user not activated
         respond_to do |format|
           @res = 'Аккаунт не активирован'
           format.js
         end           ##end respond
       end               ##end check user activated
-
     else              ##user not exists
       respond_to do |format|
         @res = 'Аккаунт не зарегистрирован'
@@ -175,11 +129,9 @@ class PlayerController < ApplicationController
       if @user.valid? ##check user
         @user.player_password = [*('a'..'z'),*('0'..'9')].shuffle[0,8].join
         @user.player_nickname_translit =Translit.convert(params[:registration][:player_nickname].gsub(' ','-').gsub(/[?!*.,:; ]/, ''), :english)
-        @user.player_lastlogin = Date.today
         @user.save
 
-       # UserMailer.activation(@user).deliver_now
-
+       # UserMailer.activation(@user).deliver_later
         respond_to do |format|
           @res='Письмо с инструкцией по активации отправлено (возможно оно попадет в спам)'
           @status = 'ok'
@@ -190,7 +142,7 @@ class PlayerController < ApplicationController
 
         respond_to do |format|
 
-          @res=@user.errors[:player_nickname][0].to_s + @user.errors[:player_email][0].to_s
+          @res=@user.errors[:player_nickname][0].to_s + @user.errors[:player_email][0].to_s+ @user.errors[:player_id][0].to_s
 
 
           format.js
@@ -223,7 +175,7 @@ class PlayerController < ApplicationController
 
 private
   def user_data
-    params.require(:registration).permit(:player_email, :player_nickname)
+    params.require(:registration).permit(:player_id,:player_email, :player_nickname)
   end
 
 end

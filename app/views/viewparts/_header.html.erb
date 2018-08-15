@@ -26,7 +26,7 @@
       <div class="nk-contacts-right">
         <div class="nk-navbar">
           <ul class="nk-nav">
-            <% if session[:active] %>
+            <% if logged_in? %>
 
                 <li class="single-icon">
                   <a href="/logout" >
@@ -87,19 +87,21 @@
 
           </li>
 
-          <li class="<%= @activeforum%>"><a href="/forums"><span class="fa fa-comments"></span> ОБСУЖДЕНИЯ</a>
-
-          </li>
-          <% if session[:active] %>
+          <li class="<%= @activeforum%>"><a href="/forums"><span class="fa fa-comments"></span> ФОРУМ</a></li>
+          <li class="<%= @aboutguild%>"><a href="/forums"><span class="fa fa-comments"></span> О ГИЛЬДИИ</a></li>
+          <li class="<%= @helpers%>"><a href="/forums"><span class="fa fa-comments"></span> К КОМУ ОБРАЩАТЬСЯ</a></li>
+          <li class="<%= @calendar%>"><a href="/forums"><span class="fa fa-comments"></span> КАЛЕНДАРЬ СОБЫТИЙ</a></li>
+          <li class="<%= @rating%>"><a href="/forums"><span class="fa fa-comments"></span> РЕЙТИНГ</a></li>
+          <% if logged_in? %>
 
           <li class="">
             <a href="#" data-nav-toggle="#nk-side" >
 
                  <span class="fa fa-id-badge">
-                   <% if session[:pm_count].to_i > 0 %>
-                   <span style="right: 0px !important;" class="nk-badge"><%=session[:pm_count]%></span>
+                   <% if player_pm.count.to_i > 0 %>
+                   <span style="right: 0px !important;" class="nk-badge"><%=player_pm.count%></span>
                 <% end %>
-                 </span> <%= session[:player_nickname]%>
+                 </span> <%= current_player.player_nickname%>
           </a>
 
           </li>
@@ -136,6 +138,7 @@
         .nk-navbar-light
         .nk-navbar-no-link-effect
 -->
+<%if logged_in?%>
 <nav class="nk-navbar nk-navbar-side nk-navbar-right-side nk-navbar-lg nk-navbar-align-center nk-navbar-overlay-content" id="nk-side">
   <div class="nk-navbar-bg">
     <div class="bg-image" style="background-image: url(<%= asset_path('bg-nav-side.jpg') %>)"></div>
@@ -149,7 +152,7 @@
         <div class="nk-nav-row nk-nav-row-full nk-nav-row-center">
           <ul class="nk-nav">
             <li class="">
-              <% if session[:admin] %>
+              <% if current_player.player_admin %>
                 <li class="single-icon">
                   <a href="/admin" >
                   <span class="fa fa-user">
@@ -160,24 +163,25 @@
             <% end %>
             </li>
             <li>
-              Тип аккаунта : <%= session[:player_vip] ? '<span class="nk-badge">VIP</span>'.html_safe : 'Обычный'%><br/>
+
             </li>
             <li>
-            Личных сообщений : <span class="nk-badge"><%= session[:pm_count]%></span>
+            Личных сообщений : <span class="nk-badge"><%= player_pm.count%></span>
           </li>
             <li>
-              <a href="/profile/<%= session[:player_nickname_translit]%>" >Мой профиль</a>
+              <a href="/profile/<%= current_player.player_nickname_translit%>" >Мой профиль</a>
             </li>
 
           </ul>
         </div>
         <div class="nk-nav-row">
-          <div class="nk-nav-footer">ПРИВЕТ, <span style="color: #DF8720;"> <%= session[:player_nickname]%></span></div>
+          <div class="nk-nav-footer">ПРИВЕТ, <span style="color: #DF8720;"> <%= current_player.player_nickname%></span></div>
         </div>
       </div>
     </div>
   </div>
 </nav>
+<%end%>
 <!-- END: Right Navbar -->
 <!--
     START: Navbar Mobile
@@ -222,6 +226,6 @@ Additional Classes:
   </div>
 </div>
 <!-- END: Search -->
-<% unless session[:active] %>
+<% unless logged_in? %>
 <%= render 'viewparts/signform' %>
 <% end %>

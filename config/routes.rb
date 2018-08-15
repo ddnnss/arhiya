@@ -28,9 +28,5 @@ Rails.application.routes.draw do
   match '/deletetopic(/:topic_id)'  => 'forum#deletetopic', via: [:get]
   match '/closetopic(/:topic_id)'  => 'forum#closetopic', via: [:get]
   match '/pintopic(/:topic_id)'  => 'forum#pintopic', via: [:get]
-  #----------MARKET------------------------
-  match '/newtarkovitem'  => 'market#newtarkovitem', via: [:post]
-  match '/tarkovmarket(/:item_type)' => 'market#tarkovmarket', via: [:get]
-  match '/tarkovitem(/:item_id)'  => 'market#tarkovitem', via: [:get]
-  match '/br(/:player_id)'  => 'market#buyrequest', via: [:get]
+
 end

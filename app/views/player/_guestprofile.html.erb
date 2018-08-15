@@ -36,18 +36,20 @@
             <div class="nk-gap-2"></div>
             <div class="nk-social-profile-info-last-seen">Дата регистрации : <%= @player.created_at.strftime("%d.%m.%Y")%> | Последний вход : <%= @player.player_lastlogin.strftime("%d.%m.%Y")%>  </div>
             <h1 class="nk-social-profile-info-name"><%= @player.player_nickname%></h1>
-            <div class="nk-social-profile-info-username home-game-info" > <%= @player.player_rank%> </div>
+            <div class="nk-social-profile-info-username home-game-info" >
+              Ранг: <%= @player.player_rank%>
+              <br>
+              ID: @<%= @player.player_id%>
+            </div>
 
             <div class="nk-social-profile-info-actions">
-              <% if session[:active] %>
+              <% if logged_in? %>
               <button class="nk-btn nk-btn-lg link-effect-4" data-toggle="modal" data-target=".privatemsg">Личное сообщение</button>
               <% else %>
                   <span class="pull-left nk-btn-color-danger"> ГОСТИ НЕ МОГУТ ОТПРАВЛЯТЬ ЛИЧНЫЕ СООБЩЕНИЯ</span>
               <% end %>
             </div>
-            <%unless @player.player_info == ''%>
-             <div class="nk-social-profile-info-username home-game-info" > <%= @player.player_info%> </div>
-            <%  end %>
+
           </div>
         </div>
       </div>
@@ -70,8 +72,7 @@
           <div class="nk-social-menu d-none d-lg-block">
             <ul>
               <li>  Общий рейтинг : <%= @player.player_votes_summ  == 0 ? 'Нет рейтинга' : @rating.to_s%></li>
-              <li>    Всего покупок : <%= @player.player_buys_count == 0 ? 'Нет покупок' : @player.player_buys_count%></li>
-              <li>   Всего продаж : <%= @player.player_sells_count == 0 ? 'Нет продаж' : @player.player_sells_count%></li>
+
               <li>-</li>
               <li>  VK : <%= @player.player_vk_link%></li>
               <li>  Telegramm : <%= @player.player_tm_link%></li>
@@ -92,8 +93,7 @@
                 <div class="nk-social-menu">
                   <ul>
                     <li>  Общий рейтинг : <%= @player.player_votes_summ  = 0 ? 'Нет рейтинга' : @rating.to_s%></li>
-                    <li>    Всего покупок : <%= @player.player_buys_count == 0 ? 'Нет покупок' : @player.player_buys_count%></li>
-                    <li>   Всего продаж : <%= @player.player_sells_count == 0 ? 'Нет продаж' : @player.player_sells_count%></li>
+
                     <li>-</li>
                     <li>  VK : <%= @player.player_vk_link%></li>
                     <li>  Telegram : <%= @player.player_tm_link%></li>
@@ -110,189 +110,14 @@
       </div>
       <div class="col-lg-9">
         <div class="nk-gap-2 d-none d-lg-block"></div>
-        <div class="nk-tabs">
-          <ul class="nav nav-tabs" role="tablist">
-            <li class="nav-item">
-              <a class="nav-link active" href="#tab-description" role="tab" data-toggle="tab" aria-expanded="true">ТОРГОВЛЯ</a>
-            </li>
 
-            <li class="nav-item">
-              <a class="nav-link" href="#tab-reviews" role="tab" data-toggle="tab">ОТЗЫВЫ <small><%=@comments.nil? ? '(0)' : '(' + @comments.count.to_s + ')'  %></small> </a>
-            </li>
-          </ul>
+        <div class="nk-social-container">
+          <%unless @player.player_info == ''%>
 
-          <div class="tab-content">
+              <%= @player.player_info.html_safe%>
+          <%  end %>
 
-            <!-- START: Tab Description -->
-            <div role="tabpanel" class="tab-pane fade in active show" id="tab-description">
-              <div class="nk-gap-3"></div>
-              <div class="nk-box-3 bg-dark-1">
-
-                <ul class="nk-social-friends">
-                  <% if @player.tarkovitems.blank? %>
-                      <div class="nk-info-box bg-main-1">
-                        <div class="nk-info-box-icon">
-                          <i class="ion-information-circled"></i>
-                        </div>
-                       На продажу пока ничего нет... Приходите позже;)
-                      </div>
-                      <% else %>
-                <% @player.tarkovitems.each do |item|%>
-                      <li >
-                        <div class="nk-social-activity-avatar">
-                          <a href="/tarkovitem/<%= item.id%>"  class="nk-post-image" data-remote="true">
-                            <%if item.item_vip%>
-
-                                <img style=" box-shadow: 0 0 20px #e08821;
-                                    border: 1px solid;
-                                    padding: 15px;
-                                    border-radius: 50%;" src="/images/tarkovitems/<%= item.item_type%>.png" class="nk-img" alt="Купить <%= item.item_name%> ETF">
-                            <%else%>
-                                <img style="
-                                padding: 15px;
-                                " src="/images/tarkovitems/<%= item.item_type%>.png" class="nk-img" alt="Купить <%= item.item_name%> ETF">
-                            <%end%>
-
-                          </a>
-                        </div>
-                        <div class="nk-social-activity-content" style="margin-left: 40px;">
-                          <div class="nk-social-activity-meta" style="font-size: .9em;
-                              background-color: #181818;
-                              padding: 5px 15px;
-                              margin-bottom: 15px;">
-                            <a href="/tarkovitem/<%= item.id%>" data-remote="true" ><%= item.item_name%></a> в наличии <%= item.item_to_sell_count%> шт.
-
-                          </div>
-
-                          <div class="nk-social-activity-actions">
-                            <strong> &#8381;</strong> <%= item.item_price_virt_rub%> | <strong>&#36;</strong> <%= item.item_price_virt_usd%> | <strong>&euro;</strong> <%= item.item_price_virt_eur%> <%= item.item_barter ? '| <span class="nk-btn-color-danger" style="font-weight:bold;">Возможен бартер</span>'.html_safe : '' %>
-
-                          </div>
-
-                        </div>
-                      </li>
-
-
-                <% end%>
-                  <% end %>
-                </ul>
-              </div>
-            </div>
-            <!-- END: Tab Description -->
-
-            <!-- START: Tab Parameters -->
-
-            <!-- END: Tab Parameters -->
-
-            <!-- START: Tab Reviews -->
-            <div role="tabpanel" class="tab-pane fade" id="tab-reviews">
-              <div class="nk-gap-3"></div>
-
-
-              <div >
-                <!-- START: Reply -->
-                <div class="nk-box-3 bg-dark-1">
-                  <h3 class="nk-title h4 text-xs-center">Написать отзыв</h3>
-                  <div class="nk-gap"></div>
-                  <div class="nk-reply mt-0">
-                    <%= form_for :addcomment, url: addcomment_path do |f|%>
-                        <div class="nk-rating">
-                          <input type="radio" id="reviewrate-5" required="required" name="reviewrate" value="5">
-                          <label for="reviewrate-5">
-                            <span><i class="fa fa-star-o"></i></span>
-                            <span><i class="fa fa-star"></i></span>
-                          </label>
-
-                          <input type="radio" id="reviewrate-4" required="required" name="reviewrate" value="4">
-                          <label for="reviewrate-4">
-                            <span><i class="fa fa-star-o"></i></span>
-                            <span><i class="fa fa-star"></i></span>
-                            </i>
-                          </label>
-
-                          <input type="radio" id="reviewrate-3" required="required" name="reviewrate" value="3">
-                          <label for="reviewrate-3">
-                            <span><i class="fa fa-star-o"></i></span>
-                            <span><i class="fa fa-star"></i></span>
-                          </label>
-
-                          <input type="radio" id="reviewrate-2" required="required" name="reviewrate" value="2">
-                          <label for="reviewrate-2">
-                            <span><i class="fa fa-star-o"></i></span>
-                            <span><i class="fa fa-star"></i></span>
-                          </label>
-
-                          <input type="radio" id="reviewrate-1" required="required" name="reviewrate" value="1">
-                          <label for="reviewrate-1">
-                            <span><i class="fa fa-star-o"></i></span>
-                            <span><i class="fa fa-star"></i></span>
-                          </label>
-                        </div>
-
-
-                        <div class="nk-gap-1"></div>
-                        <textarea class="form-control" required name="review_message" rows="1" placeholder="Ваш отзыв" aria-required="true"></textarea>
-                        <input name="review_for" value="<%= @player.id%>" type="hidden" />
-                        <div class="nk-gap-1"></div>
-                        <% if session[:active] %>
-                        <button class="nk-btn nk-btn-lg link-effect-4 pull-right">Отправить отзыв</button>
-                            <% else %>
-                        <span class="pull-right nk-btn-color-danger"> ГОСТИ НЕ МОГУТ ПИСАТЬ ОТЗЫВЫ</span>
-                        <% end %>
-
-                    <% end %>
-                  </div>
-                </div>
-                <!-- END: Reply -->
-              </div>
-
-
-              <div class="nk-gap-3"></div>
-              <div class="nk-comments mb-0">
-                <% unless @comments.blank?  %>
-                    <!-- START: Review -->
-                    <% @comments.each do |comment| %>
-                        <div class="nk-comment">
-                          <div class="nk-comment-avatar">
-                            <a href="#">
-                              <img src="/images/avatars/<%=comment.player.player_avatar %>" alt="">
-                            </a>
-                          </div>
-                          <div class="nk-comment-meta">
-                            <div class="nk-review-rating" data-rating="3.5">
-                              <% comment.comment_rate.to_i.times do %>
-                                  <span class="fa fa-star"></span>
-                              <% end %>
-
-                            </div>
-
-                            <div class="nk-comment-name h5">
-                              <a href="/profile/<%=comment.player.player_nickname_translit %>"><%=comment.player.player_nickname %></a>
-                            </div>
-                            <div class="nk-comment-date">
-                              <%=comment.created_at.strftime("%d.%m.%Y | %H:%M:%S") %>
-                            </div>
-                          </div>
-                          <%=comment.comment_text %>
-
-                        </div>
-                        <!-- END: Review -->
-                    <% end %>
-                <%else%>
-                    <div class="nk-info-box bg-main-1">
-                      <div class="nk-info-box-icon">
-                        <i class="ion-information-circled"></i>
-                      </div>
-                      Отзывов пока никто не оставил. Самое время стать первым)
-                    </div>
-              <% end %>
-              </div>
-            </div>
-            <!-- END: Tab Reviews -->
-
-          </div>
         </div>
-        <!-- END: Tabs -->
 
         <div class="nk-gap-4"></div>
         <div class="nk-gap-4"></div>
@@ -316,13 +141,13 @@
       </div>
       <div class="modal-body">
         <%= form_for  :sendpm, url: sendpm_path , :html => { :id => 'pmform'}, remote: true  do |f|%>
-            <%=f.text_field :message_txt, :placeholder =>'Ваше сообщение', :required => true ,class:'form-control'%>
+            <%=f.text_field :message_txt, :placeholder =>'Ваше сообщение', :required => true ,class:'form-control', style:'height: 200px;'%>
             <div class="nk-gap-2"></div>
             <input  name="player_id" value="<%=@player.id%>" type="hidden" />
 
             <%= submit_tag 'Отправить', class:'nk-btn  nk-btn-color-main-1'%>
         <% end %>
-        <div id="pmsend" style="display: none;">
+        <div id="pmsend" style="display: none; ">
           <div class="nk-info-box bg-success" >
             <div class="nk-info-box-icon">
               <i class="ion-information-circled"></i>
