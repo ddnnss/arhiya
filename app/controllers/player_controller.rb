@@ -10,9 +10,10 @@ class PlayerController < ApplicationController
    # @comments = Comment.where(comment_for_id: @player.id).order('created_at desc')
     if logged_in? && @player.id == current_player.id
     #  @pm = Privatemessage.where(message_for_id: session[:player_id]).order('created_at desc')
-   #   @item_tags = {'Игровая валюта': 1,'Оружие': 2,'Квестовые предметы': 3,'Предметы на обмен': 4,'Снаряжение и одежда': 5,
-    #                'Модули и магазины': 6,'Ценные предметы': 7,'Контейнеры и кейсы': 8,'Медикаменты': 9,'Коллекционные предметы': 10,
-    #                'Жетоны': 11, 'Ключи': 12}
+     @roles = ['tank','heal','dd']
+     @classes = ['dragonknight','sorcerer','templar','nightblade','warden']
+      @alliance = ['aldmeri_dominion','daggerfall_covenant','ebonheart_pact']
+      @game_dlc = ['ESO+','Орсиниум','Гильдия Воров','Темное Братство','Тени Хиста','Морровинд','Рога предела','Заводной Город','Драконьи Кости','Саммерсет']
     end
     if @player.player_votes_count != 0
       @rating = (@player.player_votes_summ / @player.player_votes_count)
@@ -33,11 +34,46 @@ class PlayerController < ApplicationController
       end
       p.update_column(:player_avatar,uploadedFile.original_filename)
     end
+    pve_roles=[]
+    params[:pve_tank].present? ? pve_roles.append(params[:pve_tank]) : nil
+    params[:pve_heal].present? ? pve_roles.append( params[:pve_heal]) : nil
+    params[:pve_dd].present? ? pve_roles.append( params[:pve_dd]) : nil
+    p.update_column(:player_pve_roles,pve_roles.join(','))
+
+    pve_classes=[]
+    params[:pve_dragonknight].present? ? pve_classes.append(params[:pve_dragonknight]) : nil
+    params[:pve_sorcerer].present? ? pve_classes.append(params[:pve_sorcerer]) : nil
+    params[:pve_templar].present? ? pve_classes.append(params[:pve_templar]) : nil
+    params[:pve_nightblade].present? ? pve_classes.append(params[:pve_nightblade]) : nil
+    params[:pve_warden].present? ? pve_classes.append(params[:pve_warden]) : nil
+    p.update_column(:player_pve_class,pve_classes.join(','))
+
+    pvp_roles=[]
+    params[:pvp_tank].present? ? pvp_roles.append(params[:pvp_tank]) : nil
+    params[:pvp_heal].present? ? pvp_roles.append( params[:pvp_heal]) : nil
+    params[:pvp_dd].present? ? pvp_roles.append( params[:pvp_dd]) : nil
+    p.update_column(:player_pvp_roles,pvp_roles.join(','))
+
+    pvp_classes=[]
+    params[:pvp_dragonknight].present? ? pvp_classes.append(params[:pvp_dragonknight]) : nil
+    params[:pvp_sorcerer].present? ? pvp_classes.append(params[:pvp_sorcerer]) : nil
+    params[:pvp_templar].present? ? pvp_classes.append(params[:pvp_templar]) : nil
+    params[:pvp_nightblade].present? ? pvp_classes.append(params[:pvp_nightblade]) : nil
+    params[:pvp_warden].present? ? pvp_classes.append(params[:pvp_warden]) : nil
+    p.update_column(:player_pvp_class,pvp_classes.join(','))
+
+    pvp_side=[]
+    params[:pvp_aldmeri_dominion].present? ? pvp_side.append(params[:pvp_aldmeri_dominion]) : nil
+    params[:pvp_daggerfall_covenant].present? ? pvp_side.append(params[:pvp_daggerfall_covenant]) : nil
+    params[:pvp_ebonheart_pact].present? ? pvp_side.append(params[:pvp_ebonheart_pact]) : nil
+    p.update_column(:player_pvp_side,pvp_side.join(','))
+
+    p.update_column(:player_cp,params[:player_cp])
+    p.update_column(:player_prime_time,params[:player_prime_time])
     p.update_column(:player_vk_link,params[:player_vk_link])
-    p.update_column(:player_tm_link,params[:player_tm_link])
     p.update_column(:player_discord_link,params[:player_discord_link])
-    p.update_column(:player_skype_link,params[:player_skype_link])
     p.update_column(:player_info,params[:player_info])
+
     redirect_to '/profile/'+p.player_nickname_translit
   end
 

@@ -15,7 +15,9 @@ class CreatePlayers < ActiveRecord::Migration[5.1]
       t.string  :player_system_messages, :default => ''
       t.string  :player_cp, :default => ''
       t.string  :player_pve_roles, :default => ''
+      t.string  :player_pve_class, :default => ''
       t.string  :player_pvp_roles, :default => ''
+      t.string  :player_pvp_class, :default => ''
       t.string  :player_pvp_side, :default => ''
       t.string  :player_game_stats, :default => ''
       t.string  :player_prime_time, :default => ''
@@ -34,6 +36,7 @@ class CreatePlayers < ActiveRecord::Migration[5.1]
       t.text    :player_info , :default => ''
       t.text    :player_admin_info , :default => ''
 
+      t.boolean :player_first_edit, :default => false
       t.boolean :player_activated, :default => false
       t.boolean :player_admin, :default => false
       t.boolean :player_banned, :default => false

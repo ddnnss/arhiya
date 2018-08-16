@@ -13,12 +13,14 @@
 ActiveRecord::Schema.define(version: 20180815100800) do
 
   create_table "comments", force: :cascade do |t|
+    t.integer "event_id"
     t.integer "player_id"
     t.string "comment_rate"
     t.text "comment_text"
     t.integer "comment_for_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_comments_on_event_id"
     t.index ["player_id"], name: "index_comments_on_player_id"
   end
 
@@ -73,9 +75,12 @@ ActiveRecord::Schema.define(version: 20180815100800) do
     t.string "event_trial_add_player10", default: ""
     t.string "event_trial_add_player11", default: ""
     t.string "event_trial_add_player12", default: ""
+    t.string "event_link", default: ""
+    t.text "event_info", default: ""
     t.integer "event_creator"
     t.integer "event_votes_count", default: 0
     t.integer "event_votes_summ", default: 0
+    t.boolean "event_end", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["event_name_translit"], name: "index_events_on_event_name_translit"
@@ -102,7 +107,9 @@ ActiveRecord::Schema.define(version: 20180815100800) do
     t.string "player_system_messages", default: ""
     t.string "player_cp", default: ""
     t.string "player_pve_roles", default: ""
+    t.string "player_pve_class", default: ""
     t.string "player_pvp_roles", default: ""
+    t.string "player_pvp_class", default: ""
     t.string "player_pvp_side", default: ""
     t.string "player_game_stats", default: ""
     t.string "player_prime_time", default: ""
@@ -115,6 +122,7 @@ ActiveRecord::Schema.define(version: 20180815100800) do
     t.integer "player_vauchers", default: 0
     t.text "player_info", default: ""
     t.text "player_admin_info", default: ""
+    t.boolean "player_first_edit", default: false
     t.boolean "player_activated", default: false
     t.boolean "player_admin", default: false
     t.boolean "player_banned", default: false

@@ -205,13 +205,77 @@
               <%= f.file_field :player_avatar , class:'form-control', id:'ava'%>
             </div>
           </div>
-            <div class="form-group row">
-              <label for="vk" class="col-3 col-form-label">ПВЕ РОЛИ :</label>
-              <div class="col-sm-9">
-              <input type="checkbox">
 
+            <div class="form-group row">
+              <label for="player_cp" class="col-3 col-form-label">Чемпионский уровень:</label>
+              <div class="col-sm-2">
+
+                <%= text_field_tag 'player_cp', @player.player_cp, id:'player_cp', class:'form-control home-game-info'  %>
+              </div>
+              <label for="player_prime_time" class="col-2 col-form-label">Прайм-тайм:</label>
+              <div class="col-sm-5">
+
+                <%= text_field_tag 'player_prime_time', @player.player_prime_time, id:'player_prime_time', class:'form-control home-game-info'  %>
               </div>
             </div>
+            <hr style="border-top: 1px solid rgba(236, 10, 10, 0.1)">
+            <div class="form-group row">
+              <label for="vk" class="col-3 col-form-label">ПВЕ РОЛИ :</label>
+              <div class="col-sm-9" >
+                <%@roles.each do |r|%>
+                    <div class="cust_checkbox" style="float: left;">
+                      <input type="checkbox" value="<%=r%>" name="pve_<%=r%>"   id="pve_<%=r%>" <%=current_player.player_pve_roles.include?(r) ?  'checked' : ''%> />
+                      <label style="background: url('/images/shared/<%=r%>.png') no-repeat;" for="pve_<%=r%>"></label>
+                    </div>
+                <%end%>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="vk" class="col-3 col-form-label">ПВЕ КЛАССЫ :</label>
+              <div class="col-sm-9" >
+                <%@classes.each do |с|%>
+                    <div class="cust_checkbox" style="float: left;">
+                      <input type="checkbox" value="<%=с%>" name="pve_<%=с%>" id="pve_<%=с%>"  <%=current_player.player_pve_class.include?(с) ?  'checked' : ''%> />
+                      <label style="background: url('/images/shared/<%=с%>.png') no-repeat; background-size: cover;" for="pve_<%=с%>"></label>
+                    </div>
+                <%end%>
+              </div>
+            </div>
+<hr style="border-top: 1px solid rgba(236, 10, 10, 0.1)">
+            <div class="form-group row">
+              <label for="vk" class="col-3 col-form-label">ПВП РОЛИ :</label>
+              <div class="col-sm-9" >
+                <%@roles.each do |r|%>
+                    <div class="cust_checkbox" style="float: left;">
+                      <input type="checkbox" value="<%=r%>" name="pvp_<%=r%>" id="pvp_<%=r%>"  <%=current_player.player_pvp_roles.include?(r) ?  'checked' : ''%>/>
+                      <label style="background: url('/images/shared/<%=r%>.png') no-repeat;" for="pvp_<%=r%>"></label>
+                    </div>
+                <%end%>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="vk" class="col-3 col-form-label">ПВП АЛЬЯНС :</label>
+              <div class="col-sm-9" >
+                <%@alliance.each do |a|%>
+                    <div class="cust_checkbox" style="float: left;">
+                      <input type="checkbox" value="<%=a%>" name="pvp_<%=a%>" id="pvp_<%=a%>"  <%=current_player.player_pvp_side.include?(a) ?  'checked' : ''%>/>
+                      <label style="background: url('/images/shared/<%=a%>.png') no-repeat; background-size: cover;height: 50px;" for="pvp_<%=a%>"></label>
+                    </div>
+                <%end%>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="vk" class="col-3 col-form-label">ПВП КЛАССЫ :</label>
+              <div class="col-sm-9" >
+                <%@classes.each do |с|%>
+                    <div class="cust_checkbox" style="float: left;">
+                      <input type="checkbox" value="<%=с%>" name="pvp_<%=с%>" id="pvp_<%=с%>"  <%=current_player.player_pvp_class.include?(с) ?  'checked' : ''%>/>
+                      <label style="background: url('/images/shared/<%=с%>.png') no-repeat; background-size: cover;" for="pvp_<%=с%>"></label>
+                    </div>
+                <%end%>
+              </div>
+            </div>
+            <hr style="border-top: 1px solid rgba(236, 10, 10, 0.1)">
           <div class="form-group row">
             <label for="vk" class="col-3 col-form-label"> Ссылка на профиль ВК:</label>
             <div class="col-sm-9">

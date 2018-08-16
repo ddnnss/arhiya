@@ -90,7 +90,7 @@
           <li class="<%= @activeforum%>"><a href="/forums"><span class="fa fa-comments"></span> ФОРУМ</a></li>
           <li class="<%= @aboutguild%>"><a href="/forums"><span class="fa fa-comments"></span> О ГИЛЬДИИ</a></li>
           <li class="<%= @helpers%>"><a href="/forums"><span class="fa fa-comments"></span> К КОМУ ОБРАЩАТЬСЯ</a></li>
-          <li class="<%= @calendar%>"><a href="/forums"><span class="fa fa-comments"></span> КАЛЕНДАРЬ СОБЫТИЙ</a></li>
+          <li class="<%= @calendar%>"><a href="/events"><span class="fa fa-comments"></span> КАЛЕНДАРЬ СОБЫТИЙ</a></li>
           <li class="<%= @rating%>"><a href="/forums"><span class="fa fa-comments"></span> РЕЙТИНГИ</a></li>
           <% if logged_in? %>
 
@@ -147,7 +147,7 @@
     <div class="nano-content">
       <div class="nk-nav-table">
         <div class="nk-nav-row">
-          <a href="index.html" class="nk-nav-logo"><%= image_tag(image_path('logo.png'), width: '190', alt: ' Игры про выживание GAMEBOX' ) %></a>
+          <a href="index.html" class="nk-nav-logo"><%= image_tag(image_path('logo.png'), width: '190', alt: 'Гильдия TESO' ) %></a>
         </div>
         <div class="nk-nav-row nk-nav-row-full nk-nav-row-center">
           <ul class="nk-nav">
@@ -197,7 +197,7 @@
 <div id="nk-nav-mobile" class="nk-navbar nk-navbar-side nk-navbar-left-side nk-navbar-overlay-content hidden-lg-up">
   <div class="nano">
     <div class="nano-content">
-      <a href="/" class="nk-nav-logo"><%= image_tag(image_path('logo.png'), width: '190', alt: 'Игры про выживание Survival Games Group' ) %></a>
+      <a href="/" class="nk-nav-logo"><%= image_tag(image_path('logo.png'), width: '190', alt: 'Гильдия TESO' ) %></a>
       <div class="nk-navbar-mobile-content">
         <ul class="nk-nav">
           <!-- Here will be inserted menu from [data-mobile-menu="#nk-nav-mobile"] -->

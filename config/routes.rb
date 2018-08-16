@@ -29,4 +29,8 @@ Rails.application.routes.draw do
   match '/closetopic(/:topic_id)'  => 'forum#closetopic', via: [:get]
   match '/pintopic(/:topic_id)'  => 'forum#pintopic', via: [:get]
 
+  #----------EVENT------------------------
+  match '/events'  => 'event#index', via: [ :get]
+  match '/tamriel_adv_event'  => 'event#tamriel_adv_event', via: [:post]
+
 end
