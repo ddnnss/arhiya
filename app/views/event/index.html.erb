@@ -5,22 +5,24 @@
   <div class="nk-box bg-dark-1 text-white">
     <div class="nk-gap-4"></div>
     <div class="container">
+      <p>
+            <div class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle nk-btn nk-btn-color-white nk-btn-bg-danger" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Новое событие</a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Триал</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target=".tamriel_adv_event">Приключения Тамриэля</a>
+                <a class="dropdown-item" href="#">Данжи/Арена</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Пвп (Сиродил/ИГ)</a>
+                <a class="dropdown-item" href="#">Пвп (БГ)</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Общественное мероприятие</a>
 
-      <div class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle nk-btn nk-btn-color-white nk-btn-bg-danger" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Новое событие</a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">Триал</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#" data-toggle="modal" data-target=".tamriel_adv_event">Приключения Тамриэля</a>
-          <a class="dropdown-item" href="#">Данжи/Арена</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Пвп (Сиродил/ИГ)</a>
-          <a class="dropdown-item" href="#">Пвп (БГ)</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Общественное мероприятие</a>
+              </div>
+            </div>
+      </p>
 
-        </div>
-      </div>
 
       <table class="table table-bordered nk-store-cart-order">
         <thead class="">
@@ -45,8 +47,44 @@
         <tbody>
 
         <tr>
+          <td><%@events1.each do |e|%>
+                <%=e.event_name%> - <%=e.event_name%>
+            <%end%>
+          </td>
+          <td><%@events2.each do |e|%>
+                <%=e.event_name%>
+            <%end%>
+          </td>
+
+          <td><%@events3.each do |e|%>
+                <%=e.event_name%>
+            <%end%>
+          </td>
+
+          <td><%@events4.each do |e|%>
+                <%=e.event_name%>
+            <%end%>
+          </td>
+
+          <td><%@events5.each do |e|%>
+                <%=e.event_name%>
+            <%end%>
+          </td>
+
+          <td><%@events6.each do |e|%>
+                <%=e.event_name%>
+            <%end%>
+          </td>
+
+          <td><%@events7.each do |e|%>
+                <a href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline nk-btn-color-main-1"> <%=e.event_time%> - <%=e.event_name%></a><br>
+
+            <%end%>
+          </td>
+
 
         </tr>
+
 
 
         </tbody>
@@ -58,11 +96,15 @@
     </div>
     <div class="nk-gap-4"></div>
     <div class="nk-gap-4"></div>
+    <div class="nk-gap-4"></div>
+    <div class="nk-gap-4"></div>
+    <div class="nk-gap-4"></div>
+    <div class="nk-gap-4"></div>
   </div>
 </div>
 
 <div class="modal nk-modal fade tamriel_adv_event" id tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" style="top: 30%;">
+  <div class="modal-dialog modal-lg" style="top: 0px;">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title nk-title" id="mySmallModalLabel">Создание Приключения Тамриеля</h4>
@@ -71,32 +113,39 @@
         </button>
       </div>
       <div class="modal-body">
-        <%= form_for  :tamriel_adv_event, url: tamriel_adv_event_path , :html => { :id => 'tamriel_adv_event_form'}, remote: true  do |f|%>
+        <%= form_for  :tamriel_adv_event, url: tamriel_adv_event_path   do |f|%>
             <%=f.text_field :event_name, :placeholder =>'Название события', :required => true ,class:'form-control'%>
             <div class="nk-gap-1"></div>
-            <select name="month" class="form-control">
+            <select name="event_day" class="form-control" required>
               <option disabled="" selected="">Дата события</option>
               <%@current_week.each do |w|%>
                 <%unless Date.today > w%>
                   <option value="<%=w.strftime('%d/%m/%Y')%>"><%=w.strftime('%d/%m/%Y')%></option>
                   <%end%>
               <%end%>
+            </select>
+            <div class="nk-gap-1"></div>
+            <select name="event_time" class="form-control" required>
+              <option disabled="" selected="">Время события</option>
+              <%@event_time.each do |t|%>
+                 <option value="<%=t%>"><%=t%></option>
+              <%end%>
+            </select>
+            <div class="nk-gap-1"></div>
+              Информация о событии:
+
+                <textarea class="nk-summernote"  id="event_info" name="event_info"  rows="18"></textarea>
 
 
-            <input  name="player_id" value="" type="hidden" />
+
+
+            <div class="nk-gap-1"></div>
 
             <%= submit_tag 'Отправить', class:'nk-btn  nk-btn-color-main-1'%>
         <% end %>
-        <div id="pmsend" style="display: none; ">
-          <div class="nk-info-box bg-success" >
-            <div class="nk-info-box-icon">
-              <i class="ion-information-circled"></i>
-            </div>
-            Сообщение отправлено. Спасибо.
-          </div>
-          <button type="button" class="nk-btn" data-dismiss="modal">Закрыть</button>
-        </div>
+
       </div>
     </div>
   </div>
 </div>
+
