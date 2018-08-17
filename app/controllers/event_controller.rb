@@ -8,14 +8,19 @@ class EventController < ApplicationController
     i=0
     7.times do
       @current_week.append(week_start+i)
+      @next_week.append(Date.today.next_week + i)
       i = i+1
     end
-@events1 = Event.where(:event_day => @current_week[0].strftime('%d/%m/%Y'))
-  @events2 = Event.where(:event_day => @current_week[1].strftime('%d/%m/%Y'))
-  @events3 = Event.where(:event_day => @current_week[2].strftime('%d/%m/%Y'))
-  @events4 = Event.where(:event_day => @current_week[3].strftime('%d/%m/%Y'))
-  @events5 = Event.where(:event_day => @current_week[4].strftime('%d/%m/%Y'))
-  @events6= Event.where(:event_day => @current_week[5].strftime('%d/%m/%Y'))
+  if params[:show] == 'next_week'
+    @nw=true
+    @current_week = @next_week
+  end
+@events1 = Event.where(:event_day => @current_week[0].strftime('%d/%m/%Y')).order('event_time asc')
+  @events2 = Event.where(:event_day => @current_week[1].strftime('%d/%m/%Y')).order('event_time asc')
+  @events3 = Event.where(:event_day => @current_week[2].strftime('%d/%m/%Y')).order('event_time asc')
+  @events4 = Event.where(:event_day => @current_week[3].strftime('%d/%m/%Y')).order('event_time asc')
+  @events5 = Event.where(:event_day => @current_week[4].strftime('%d/%m/%Y')).order('event_time asc')
+  @events6= Event.where(:event_day => @current_week[5].strftime('%d/%m/%Y')).order('event_time asc')
   @events7= Event.where(:event_day => @current_week[6].strftime('%d/%m/%Y')).order('event_time asc')
 
   end

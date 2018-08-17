@@ -1,3 +1,10 @@
+.not-active {
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+  color: #cdcdcd;
+}
+
 .cust_checkbox input[type="checkbox"] {
   display: none;
 }
