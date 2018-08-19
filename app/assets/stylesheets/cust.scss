@@ -1,8 +1,44 @@
+.trial {
+  color: #95500C !important;
+  border-color: #95500C !important;
+}
+.tamriel_avd
+{
+  color: #EEC88D !important;
+  border-color: #EEC88D !important;
+}
+.dungeon
+{
+  color:#E5561A !important;
+  border-color:#E5561A !important;
+}
+.sirodil
+{
+  color:#A5260A !important;
+  border-color:#A5260A !important;
+}
+.bg_pvp
+{
+  color:#E66761 !important;
+  border-color:#E66761 !important;
+}
+.guild_event
+{
+  color:#D68A59 !important;
+  border-color:#D68A59 !important;
+}
+.table-bordered {
+  th,
+  td {
+    border: 3px solid #2d2d2d !important;
+  }
+}
+
 .not-active {
   pointer-events: none;
   cursor: default;
   text-decoration: none;
-  color: #cdcdcd;
+  color: #3b3b3b;
 }
 
 .cust_checkbox input[type="checkbox"] {

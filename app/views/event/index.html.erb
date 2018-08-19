@@ -7,7 +7,7 @@
     <div class="container">
 
 
-      <div class="row mb-30">
+      <div class="row mb-15">
         <div class="col-6">
           <div class="nav-item dropdown">
             <a class="nav-link dropdown-toggle nk-btn nk-btn-color-white nk-btn-bg-danger" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Новое событие</a>
@@ -26,11 +26,20 @@
         </div>
         <div class="col-6 text-right">
           <%if @nw%>
-              <a href="/events" class="nk-btn nk-btn-color-white nk-btn-bg-danger ">Текущая неделя</a>
+              <a href="/events" class="nk-btn nk-btn-color-white nk-btn-bg-danger ">Вернуться назад</a>
               <%else%>
               <a href="/events?show=next_week" class="nk-btn nk-btn-color-white nk-btn-bg-danger ">Следующая неделя</a>
               <%end%>
 
+        </div>
+
+        <div style="margin: 15px;">
+          <span>Цветовые обозначения : </span>
+          <span class="tamriel_avd">Приключения Тамриэля</span> |
+          <span class="dungeon">Данжи/Арены</span> |
+          <span class="sirodil">Сиродил/ИГ</span> |
+          <span class="bg_pvp">БГ</span> |
+          <span class="trial">Триал</span>
         </div>
 
       </div>
@@ -40,27 +49,27 @@
 
 
 
-      <table class="table table-bordered nk-store-cart-order">
+      <table  class="table table-bordered nk-store-cart-order">
         <thead class="">
         <tr>
-          <th >Понедельник</th>
-          <th >Вторник</th>
-          <th >Среда</th>
-          <th >Четверг</th>
-          <th >Пятница</th>
-          <th >Суббота</th>
-          <th >Воскресенье</th>
+          <th style="text-align: center;">Понедельник</th>
+          <th style="text-align: center;">Вторник</th>
+          <th style="text-align: center;">Среда</th>
+          <th style="text-align: center;">Четверг</th>
+          <th style="text-align: center;">Пятница</th>
+          <th style="text-align: center;">Суббота</th>
+          <th style="text-align: center;">Воскресенье</th>
         </tr>
         <tr>
 
 
           <%@current_week.each do |w|%>
-          <th ><%=w.strftime('%d/%m/%Y')%></th>
+          <th style="text-align: center;"><%=w.strftime('%d/%m/%Y')%></th>
 
          <%end%>
         </tr>
         </thead>
-        <tbody>
+        <tbody style="text-align: center;">
 
         <tr>
           <td><%@events1.each do |e|%>
@@ -75,7 +84,7 @@
           <td><%@events3.each do |e|%>
                 <%case e.event_type%>
             <%when 'tamriel_adv'%>
-                    <a href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline nk-btn-color-main-1 <%=Date.today > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                    <a href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline nk-btn-color-main-1 <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
                 <%when 'dungeons'%>
                     <a style="color: #fff;" href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline " > <%=e.event_time%> - <%=e.event_name%></a><br>
 
@@ -113,9 +122,17 @@
           <td><%@events7.each do |e|%>
                 <%case e.event_type%>
                   <%when 'tamriel_adv'%>
-                    <a href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline nk-btn-color-main-1 <%=Date.today > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
-                  <%when 'dungeons'%>
-                    <a style="color: #fff;" href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline " > <%=e.event_time%> - <%=e.event_name%></a><br>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline tamriel_avd <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                  <%when 'dungeon'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline dungeon <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'trial'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline trial <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'sirodil'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline sirodil <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'bg_pvp'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline bg_pvp <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'guild_event'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline guild_event <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
 
                 <%end%>
 
