@@ -28,6 +28,26 @@ class EventController < ApplicationController
 
   end
 
+  def event_comment
+  c= Comment.new
+  c.event_id = params[:event_id].to_i
+    c.player_id = current_player.id
+    c.comment_text = params[:event_comment][:comment]
+    c.save
+    case params[:event_type]
+      when 'tamriel_adv'
+        redirect_to '/tamriel_adv_event_apply?event_id=' + params[:event_id]
+      when 'dungeon'
+      when 'trial'
+      when 'sirodil'
+      when 'bg_pvp'
+      when 'guild_event'
+    end
+
+
+
+  end
+
   def tamriel_adv_event
     e = Event.new
 
@@ -45,11 +65,12 @@ class EventController < ApplicationController
 
   end
   def tamriel_adv_event_apply
-    e= Event.find(params[:event_id])
-    if e.nil?
+    @event= Event.find(params[:event_id])
+    if @event.nil?
       redirect_to '/events'
     else
-
+      @creator = Player.find(@event.event_creator)
+      @comments = Comment.where(event: params[:event_id])
       end
 
 

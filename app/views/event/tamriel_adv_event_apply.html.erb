@@ -32,7 +32,7 @@
             <div class="row text-left">
               <div class="col-lg-8">
                 <div class="nk-gap-5 d-none d-lg-block"></div>
-                <h1 class="nk-title">Standard Blog Post</h1>
+                <h1 class="nk-title">Приключения Тамриеля : <%=@event.event_name%></h1>
                 <div class="nk-gap-3 d-none d-lg-block"></div>
                 <div class="nk-gap-5 d-none d-lg-block"></div>
               </div>
@@ -43,35 +43,22 @@
                   <table>
                     <tbody>
                     <tr>
-                      <td><strong>Published:</strong> &nbsp;&nbsp;&nbsp;</td>
-                      <td>Jule 3, 2016</td>
+                      <td><strong>Руководитель : </strong> &nbsp;&nbsp;&nbsp;</td>
+                      <td valign="top" ><a href="/profile/<%=@creator.player_nickname_translit  %>"><%=@creator.player_nickname%></a> </td>
                     </tr>
                     <tr>
-                      <td><strong>Category:</strong> &nbsp;&nbsp;&nbsp;</td>
-                      <td><a href="#">Release</a></td>
+                      <td><strong>Дата и время : </strong> &nbsp;&nbsp;&nbsp;</td>
+                      <td><%=@event.event_day%> | <%=@event.event_time%></td>
                     </tr>
                     <tr>
-                      <td><strong>Written by:</strong> &nbsp;&nbsp;&nbsp;</td>
-                      <td><a href="#">nK</a></td>
+                      <td><strong>Канал Discord : </strong> &nbsp;&nbsp;&nbsp;</td>
+                      <td><%=@event.event_discord%></td>
                     </tr>
                     <tr>
-                      <td><strong>Views:</strong> &nbsp;&nbsp;&nbsp;</td>
-                      <td>4592</td>
-                    </tr>
-                    <tr>
-                      <td><strong>Comments:</strong> &nbsp;&nbsp;&nbsp;</td>
+                      <td><strong>Участников : </strong> &nbsp;&nbsp;&nbsp;</td>
                       <td>0</td>
                     </tr>
-                    <tr>
-                      <td><strong>Likes:</strong> &nbsp;&nbsp;</td>
-                      <td>
-                            <span class="nk-action-heart">
-                                <span class="num">78</span>
-                                <span class="like-icon ion-android-favorite-outline"></span>
-                                <span class="liked-icon ion-android-favorite"></span>
-                            </span>
-                      </td>
-                    </tr>
+
                     </tbody>
                   </table>
                   <div class="nk-gap-5 d-lg-none"></div>
@@ -101,159 +88,52 @@
           <div class="nk-blog-post nk-blog-post-single">
             <!-- START: Post Text -->
             <div class="nk-post-text mt-0">
-              <p>Were you seas fruitful seas under were deep that he every replenish grass creepeth to under saw own stars night you're cattle gathering gathered which fish seasons female there said, seas sea. Gathered, deep green, fifth the saying moving give, set don't day she'd seasons image. Given it doesn't midst first over, abundantly seed appear fish. Great two a yielding brought. Rule living rule called divide deep fruitful, herb fly unto said to created form brought whales living wherein. Deep have man fill creeping you'll replenish you'll beast dry meat. Firmament fly, divided in their have created deep.</p>
-
-              <blockquote class="nk-blockquote">
-                <div class="nk-blockquote-icon">“</div>
-                <em>Creature dry face appear it had gathered earth seasons blessed Don't. Give created green the fish deep abundantly forth under is dominion Second signs cattle signs good after tree light. Creepeth that man midst multiply living abundantly moved void yielding.</em>
-                <div class="nk-blockquote-author">Ben Rodriquez</div>
-              </blockquote>
-
-              <p>Heaven also rule it land earth also creepeth man. Green. Them. Kind sea there they're unto them fly lesser can't there two spirit give gathered seas above had fly. Very firmament fly hath waters beginning lesser. Cattle void signs heaven subdue third herb moving upon open. Dry divided, shall, good his hath day creepeth saw one. Set together sea likeness seed fish so. Greater fifth moved bearing.</p>
-
-              <p>Gathering him. Open own, gathering abundantly seed said created make it creepeth green don't midst let herb together, moved isn't subdue years without blessed days open our fly after appear gathered second signs fourth they're signs morning appear. There can't two let. Female land tree spirit living brought god. Fowl Second. Great divided. Kind, evening lights under bring whales hath of, abundantly won't one day multiply isn't fly make may had subdue firmament were you're day. Man seasons sixth face winged. God meat rule together tree.</p>
+              Информация о мероприятии :
+              <%=@event.event_info.html_safe%>
 
 
-              <!-- START: Post Meta -->
-              <div class="nk-post-tags">
-                Tags: &nbsp;
-                <a href="#">Image</a>
-                <a href="#">Demonstrate</a>
-                <a href="#">Tags</a>
-              </div>
-              <!-- END: Post Meta -->
+
+              <div class="nk-gap-2"></div>
+              <hr style="border-top: 1px solid rgba(236, 10, 10, 0.1)">
             </div>
             <!-- END: Post Text -->
 
-            <!-- START: Post Author -->
-            <div class="nk-post-author">
-              <div class="nk-post-author-photo">
-                <a href="#"><img src="https://cdn-html.nkdev.info/godlike/assets/images/avatar-1.jpg" alt=""></a>
-              </div>
-
-              <h4 class="nk-post-author-name h5"><a href="#">Lesa Cruz</a></h4>
-
-              <div class="nk-post-author-info">
-                Said air of given appear open saying which of. Make all fish. Given own So, without grass god. Day beast open second without have. Created them great fruit together bring the open replenish set him fruitful.
-              </div>
-            </div>
-            <!-- END: Post Author -->
 
 
             <!-- START: Comments -->
-            <div class="nk-comments" id="comments">
-              <h3 class="nk-title h4 text-center">4 Comments</h3>
-              <div class="nk-gap-2"></div>
+            <div style="padding-top: 0px !important;" class="nk-comments" id="comments">
+              <h3 class="nk-title h4 text-center">Комментарии</h3>
 
               <!-- START: Comment -->
+              <%@comments.each do |c| %>
               <div class="nk-comment">
                 <div class="nk-comment-avatar">
-                  <a href="#"><img src="https://cdn-html.nkdev.info/godlike/assets/images/avatar-2.jpg" alt=""></a>
+                  <a href="/profile/<%=c.player.player_nickname_translit  %>"><img src="/images/avatars/<%=c.player.player_avatar %>" alt=""></a>
                 </div>
                 <div class="nk-comment-meta">
-                  <div class="nk-comment-name h5"><a href="#">Kurt Tucker</a></div>
-                  <div class="nk-comment-date">20 September, 2017</div>
+                  <div class="nk-comment-name h5"><a href="/profile/<%=c.player.player_nickname_translit  %>"><%=c.player.player_nickname%></a></div>
+                  <div class="nk-comment-date"><%=c.created_at.strftime('%d.%m.%Y | %H:%M:%S')%></div>
                 </div>
-                <p>Of. Lesser it good moved tree under living male under day The evening. Waters creeping gathered give also grass beginning.</p>
-                <div class="text-right">
-            <span class="nk-action-heart liked">
-                <span class="like-icon ion-android-favorite-outline"></span>
-                <span class="liked-icon ion-android-favorite"></span>
-                <span class="num">14</span>
-            </span>
-                  <div class="nk-comment-reply"><a href="#"><i class="ion-reply"></i> Reply</a></div>
-                </div>
+                <p><%=c.comment_text%></p>
 
-                <!-- START: Comment -->
-                <div class="nk-comment">
-                  <div class="nk-comment-avatar">
-                    <a href="#"><img src="https://cdn-html.nkdev.info/godlike/assets/images/avatar-1.jpg" alt=""></a>
-                  </div>
-                  <div class="nk-comment-meta">
-                    <div class="nk-comment-name h5"><a href="#">Lesa Cruz</a></div>
-                    <div class="nk-comment-date">20 September, 2017</div>
-                  </div>
-                  <p>Fourth give grass creature. Whose fowl. His which male which yielding fly won't creature after beast male. Itself. Life heaven whales over given fly whales lesser, day winged one after.</p>
-                  <div class="text-right">
-                <span class="nk-action-heart">
-                    <span class="like-icon ion-android-favorite-outline"></span>
-                    <span class="liked-icon ion-android-favorite"></span>
-                    <span class="num">3</span>
-                </span>
-                    <div class="nk-comment-reply"><a href="#"><i class="ion-reply"></i> Reply</a></div>
-                  </div>
-
-                  <!-- START: Comment -->
-                  <div class="nk-comment">
-                    <div class="nk-comment-avatar">
-                      <a href="#"><img src="https://cdn-html.nkdev.info/godlike/assets/images/avatar-3.jpg" alt=""></a>
-                    </div>
-                    <div class="nk-comment-meta">
-                      <div class="nk-comment-name h5"><a href="#">Katie Anderson</a></div>
-                      <div class="nk-comment-date">21 September, 2017</div>
-                    </div>
-                    <p>Given signs fifth female air and second face earth one is. Whose greater behold had after he whales forth cattle Thing said kind after his.</p>
-                    <p>Male upon thing had us hath doesn't great male fifth us. Every whales own given open upon divided life i which blessed subdue moving give.</p>
-                    <div class="text-right">
-                    <span class="nk-action-heart">
-                        <span class="like-icon ion-android-favorite-outline"></span>
-                        <span class="liked-icon ion-android-favorite"></span>
-                        <span class="num">0</span>
-                    </span>
-                      <div class="nk-comment-reply"><a href="#"><i class="ion-reply"></i> Reply</a></div>
-                    </div>
-                  </div>
-                  <!-- END: Comment -->
-                </div>
-                <!-- END: Comment -->
               </div>
               <!-- END: Comment -->
-
-              <!-- START: Comment -->
-              <div class="nk-comment">
-                <div class="nk-comment-avatar">
-                  <a href="#"><img src="https://cdn-html.nkdev.info/godlike/assets/images/avatar-4.jpg" alt=""></a>
-                </div>
-                <div class="nk-comment-meta">
-                  <div class="nk-comment-name h5"><a href="#">Luke Fuller</a></div>
-                  <div class="nk-comment-date">21 September, 2017</div>
-                </div>
-                <p>To set. Lights likeness after, stars void in doesn't subdue.</p>
-                <div class="text-right">
-            <span class="nk-action-heart liked">
-                <span class="like-icon ion-android-favorite-outline"></span>
-                <span class="liked-icon ion-android-favorite"></span>
-                <span class="num">1</span>
-            </span>
-                  <div class="nk-comment-reply"><a href="#"><i class="ion-reply"></i> Reply</a></div>
-                </div>
-              </div>
-              <!-- END: Comment -->
-
+              <%end%>
 
               <!-- START: Reply -->
               <div class="nk-reply">
-                <h3 class="nk-title h4 text-center">Post your comment</h3>
+                <h3 class="nk-title h4 text-center">Оставить комментарий</h3>
                 <div class="nk-gap-2"></div>
-                <form action="#" class="nk-form nk-form-style-1" novalidate="novalidate">
-                  <div class="row vertical-gap">
-                    <div class="col-md-4">
-                      <input type="email" class="form-control required" name="email" placeholder="Email *">
-                    </div>
-                    <div class="col-md-4">
-                      <input type="text" class="form-control required" name="name" placeholder="Name *">
-                    </div>
-                    <div class="col-md-4">
-                      <input type="text" class="form-control" name="name" placeholder="Website">
-                    </div>
-                  </div>
-                  <div class="nk-gap-1"></div>
-                  <textarea class="form-control required" name="message" rows="5" placeholder="Message *" aria-required="true"></textarea>
-                  <div class="nk-gap-1"></div>
-                  <div class="nk-form-response-success"></div>
-                  <div class="nk-form-response-error"></div>
-                  <button class="nk-btn nk-btn-lg link-effect-4 ready"><span class="link-effect-inner"><span class="link-effect-l"><span>Post comment</span></span><span class="link-effect-r"><span>Post comment</span></span><span class="link-effect-shade"><span>Post comment</span></span></span></button>
-                </form>
+                <%=form_for :event_comment, url:event_comment_path do |f|%>
+                    <%=f.text_area :comment, :placeholder =>'Комментарий', :required => true ,class:'form-control'%>
+                    <div class="nk-gap-2"></div>
+
+                    <input  name="event_id" value="<%=@event.id%>" type="hidden" />
+                    <input  name="event_type" value="<%=@event.event_type%>" type="hidden" />
+
+                    <%= submit_tag 'Отправить', class:'nk-btn  nk-btn-color-main-1'%>
+                <%end%>
+
               </div>
               <!-- END: Reply -->
             </div>

@@ -141,7 +141,7 @@
       </div>
       <div class="modal-body">
         <%= form_for  :sendpm, url: sendpm_path , :html => { :id => 'pmform'}, remote: true  do |f|%>
-            <%=f.text_field :message_txt, :placeholder =>'Ваше сообщение', :required => true ,class:'form-control', style:'height: 200px;'%>
+            <%=f.text_field :message_txt, :placeholder =>'Ваше сообщение', :required => true ,class:'form-control'%>
             <div class="nk-gap-2"></div>
             <input  name="player_id" value="<%=@player.id%>" type="hidden" />
 
