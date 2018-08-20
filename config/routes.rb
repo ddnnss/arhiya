@@ -32,5 +32,6 @@ Rails.application.routes.draw do
   #----------EVENT------------------------
   match '/events'  => 'event#index', via: [ :get]
   match '/tamriel_adv_event'  => 'event#tamriel_adv_event', via: [:post]
+  match '/tamriel_adv_event_apply'  => 'event#tamriel_adv_event_apply', via: [:get]
 
 end

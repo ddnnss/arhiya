@@ -6,40 +6,37 @@
     <div class="nk-gap-4"></div>
     <div class="container">
 
-
-      <div class="row mb-15">
-        <div class="col-6">
-          <div class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle nk-btn nk-btn-color-white nk-btn-bg-danger" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Новое событие</a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Триал</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#" data-toggle="modal" data-target=".tamriel_adv_event">Приключения Тамриэля</a>
-              <a class="dropdown-item" href="#">Данжи/Арена</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Пвп (Сиродил/ИГ)</a>
-              <a class="dropdown-item" href="#">Пвп (БГ)</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Общественное мероприятие</a>
-            </div>
-          </div>
+      <div class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle nk-btn nk-btn-color-white nk-btn-bg-danger" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Новое событие</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">Триал</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#" data-toggle="modal" data-target=".tamriel_adv_event">Приключения Тамриэля</a>
+          <a class="dropdown-item" href="#">Данжи/Арена</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Пвп (Сиродил/ИГ)</a>
+          <a class="dropdown-item" href="#">Пвп (БГ)</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Общественное мероприятие</a>
         </div>
-        <div class="col-6 text-right">
-          <%if @nw%>
-              <a href="/events" class="nk-btn nk-btn-color-white nk-btn-bg-danger ">Вернуться назад</a>
-              <%else%>
-              <a href="/events?show=next_week" class="nk-btn nk-btn-color-white nk-btn-bg-danger ">Следующая неделя</a>
-              <%end%>
-
-        </div>
-
-        <div style="margin: 15px;">
+      </div>
+      <div class="row ">
+        <div class="col-sm-9">
           <span>Цветовые обозначения : </span>
           <span class="tamriel_avd">Приключения Тамриэля</span> |
           <span class="dungeon">Данжи/Арены</span> |
           <span class="sirodil">Сиродил/ИГ</span> |
           <span class="bg_pvp">БГ</span> |
           <span class="trial">Триал</span>
+        </div>
+        <div class="col-sm-3 text-right">
+          <%if @nw%>
+              <a style="bottom: 7px;" href="/events" class="nk-btn nk-btn-color-white nk-btn-bg-danger ">Вернуться назад</a>
+              <%else%>
+              <a style="bottom: 7px;" href="/events?show=next_week" class="nk-btn nk-btn-color-white nk-btn-bg-danger ">Следующая неделя</a>
+              <%end%>
+
+
         </div>
 
       </div>
@@ -73,20 +70,56 @@
 
         <tr>
           <td><%@events1.each do |e|%>
-                <%=e.event_name%> - <%=e.event_name%>
+                <%case e.event_type%>
+            <%when 'tamriel_adv'%>
+                    <a  href="/tamriel_adv_event_apply?event_id=<%=e.id%>"  class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline tamriel_avd <%=Date.today.strftime('%d/%m/%Y') > e.event_day || Time.now.strftime('%H:%M') > e.event_time ? 'not-active' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'dungeon'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline dungeon <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'trial'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline trial <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'sirodil'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline sirodil <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'bg_pvp'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline bg_pvp <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'guild_event'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline guild_event <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+
+                <%end%>
             <%end%>
           </td>
           <td><%@events2.each do |e|%>
-                <%=e.event_name%>
+                <%case e.event_type%>
+            <%when 'tamriel_adv'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline tamriel_avd <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'dungeon'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline dungeon <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'trial'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline trial <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'sirodil'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline sirodil <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'bg_pvp'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline bg_pvp <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'guild_event'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline guild_event <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+
+                <%end%>
             <%end%>
           </td>
 
           <td><%@events3.each do |e|%>
                 <%case e.event_type%>
             <%when 'tamriel_adv'%>
-                    <a href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline nk-btn-color-main-1 <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
-                <%when 'dungeons'%>
-                    <a style="color: #fff;" href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline " > <%=e.event_time%> - <%=e.event_name%></a><br>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline tamriel_avd <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'dungeon'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline dungeon <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'trial'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline trial <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'sirodil'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline sirodil <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'bg_pvp'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline bg_pvp <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'guild_event'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline guild_event <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
 
                 <%end%>
             <%end%>
@@ -95,9 +128,17 @@
           <td><%@events4.each do |e|%>
                 <%case e.event_type%>
             <%when 'tamriel_adv'%>
-                    <a href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline nk-btn-color-main-1 <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'not-active' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
-                <%when 'dungeons'%>
-                    <a style="color: #fff;" href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline " > <%=e.event_time%> - <%=e.event_name%></a><br>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline tamriel_avd <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'dungeon'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline dungeon <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'trial'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline trial <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'sirodil'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline sirodil <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'bg_pvp'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline bg_pvp <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'guild_event'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline guild_event <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
 
                 <%end%>
             <%end%>
@@ -115,15 +156,10 @@
           </td>
 
           <td><%@events6.each do |e|%>
-                <%=e.event_name%>
-            <%end%>
-          </td>
-
-          <td><%@events7.each do |e|%>
                 <%case e.event_type%>
-                  <%when 'tamriel_adv'%>
+            <%when 'tamriel_adv'%>
                     <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline tamriel_avd <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
-                  <%when 'dungeon'%>
+                <%when 'dungeon'%>
                     <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline dungeon <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
                 <%when 'trial'%>
                     <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline trial <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
@@ -133,6 +169,26 @@
                     <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline bg_pvp <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
                 <%when 'guild_event'%>
                     <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline guild_event <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+
+                <%end%>
+            <%end%>
+          </td>
+
+          <td><%@events7.each do |e|%>
+                <%case e.event_type%>
+                  <%when 'tamriel_adv'%>
+
+                    <a  href="/tamriel_adv_event_apply?event_id=<%=e.id%>" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline tamriel_avd <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'not-active' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                  <%when 'dungeon'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline dungeon <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'not-active' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'trial'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline trial <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'not-active' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'sirodil'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline sirodil <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'not-active' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'bg_pvp'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline bg_pvp <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'not-active' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'guild_event'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline guild_event <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'not-active' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
 
                 <%end%>
 
@@ -161,7 +217,7 @@
   </div>
 </div>
 
-<div class="modal nk-modal fade tamriel_adv_event" id tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div class="modal nk-modal fade tamriel_adv_event"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" style="top: 0px;">
     <div class="modal-content">
       <div class="modal-header">
@@ -186,13 +242,22 @@
             <select name="event_time" class="form-control" required>
               <option disabled="" selected="">Время события</option>
               <%@event_time.each do |t|%>
+
                  <option value="<%=t%>"><%=t%></option>
+
+              <%end%>
+            </select>
+            <div class="nk-gap-1"></div>
+            <select name="event_discord" class="form-control" required>
+              <option disabled="" selected="">Канал в Discord</option>
+              <%@event_discord.each do |t|%>
+                  <option value="<%=t%>"><%=t%></option>
               <%end%>
             </select>
             <div class="nk-gap-1"></div>
               Информация о событии:
 
-                <textarea class="nk-summernote"  id="event_info" name="event_info"  rows="18"></textarea>
+                <textarea class="nk-summernote"  id="event_info" name="event_info"  required="required" rows="18"></textarea>
 
 
 
@@ -206,4 +271,3 @@
     </div>
   </div>
 </div>
-

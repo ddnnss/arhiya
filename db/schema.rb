@@ -26,8 +26,8 @@ ActiveRecord::Schema.define(version: 20180815100800) do
 
   create_table "events", force: :cascade do |t|
     t.string "event_name"
-    t.string "event_name_translit"
     t.string "event_type"
+    t.string "event_discord"
     t.string "event_day"
     t.string "event_time"
     t.string "event_tamriel_adventure_players", default: ""
@@ -76,14 +76,15 @@ ActiveRecord::Schema.define(version: 20180815100800) do
     t.string "event_trial_add_player11", default: ""
     t.string "event_trial_add_player12", default: ""
     t.string "event_link", default: ""
-    t.text "event_info", default: ""
+    t.text "event_info", default: "Дополнительная информация о мероприятии не указана"
     t.integer "event_creator"
     t.integer "event_votes_count", default: 0
     t.integer "event_votes_summ", default: 0
     t.boolean "event_end", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["event_name_translit"], name: "index_events_on_event_name_translit"
+    t.index ["event_creator"], name: "index_events_on_event_creator"
+    t.index ["event_end"], name: "index_events_on_event_end"
     t.index ["event_type"], name: "index_events_on_event_type"
   end
 

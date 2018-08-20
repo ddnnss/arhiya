@@ -1,6 +1,6 @@
 .trial {
-  color: #95500C !important;
-  border-color: #95500C !important;
+  color: #F3DA0B !important;
+  border-color: #F3DA0B !important;
 }
 .tamriel_avd
 {
@@ -14,8 +14,8 @@
 }
 .sirodil
 {
-  color:#A5260A !important;
-  border-color:#A5260A !important;
+  color:#FF181D !important;
+  border-color:#FF181D !important;
 }
 .bg_pvp
 {
@@ -37,8 +37,9 @@
 .not-active {
   pointer-events: none;
   cursor: default;
-  text-decoration: none;
-  color: #3b3b3b;
+  text-decoration: line-through !important;
+  color: #3b3b3b !important;
+  border-color:#3b3b3b !important;
 }
 
 .cust_checkbox input[type="checkbox"] {

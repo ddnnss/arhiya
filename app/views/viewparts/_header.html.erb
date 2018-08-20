@@ -27,6 +27,16 @@
         <div class="nk-navbar">
           <ul class="nk-nav">
             <% if logged_in? %>
+               <li class="">
+                 <a href="#" data-nav-toggle="#nk-side" >
+                 <span class="fa fa-id-badge">
+                   <% if player_pm.count.to_i > 0 %>
+                   <span style="right: 0px !important;" class="nk-badge"><%=player_pm.count%></span>
+                <% end %>
+                 </span> <%= current_player.player_nickname%>
+                      </a>
+                    </li>
+                <li> | </li>
 
                 <li class="single-icon">
                   <a href="/logout" >
@@ -92,22 +102,6 @@
           <li class="<%= @helpers%>"><a style="padding: 5px 10px !important;" href="/forums"><span class="fa fa-comments"></span> К КОМУ ОБРАЩАТЬСЯ</a></li>
           <li class="<%= @calendar%>"><a style="padding: 5px 10px !important;" href="/events"><span class="fa fa-comments"></span> КАЛЕНДАРЬ СОБЫТИЙ</a></li>
           <li class="<%= @rating%>"><a style="padding: 5px 10px !important;" href="/forums"><span class="fa fa-comments"></span> РЕЙТИНГИ</a></li>
-          <% if logged_in? %>
-
-          <li class="">
-            <a href="#" data-nav-toggle="#nk-side" >
-
-                 <span class="fa fa-id-badge">
-                   <% if player_pm.count.to_i > 0 %>
-                   <span style="right: 0px !important;" class="nk-badge"><%=player_pm.count%></span>
-                <% end %>
-                 </span> <%= current_player.player_nickname%>
-          </a>
-
-          </li>
-
-              <%end%>
-
 
 
            </ul>

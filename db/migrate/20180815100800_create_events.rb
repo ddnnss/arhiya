@@ -2,8 +2,8 @@ class CreateEvents < ActiveRecord::Migration[5.1]
   def change
     create_table :events do |t|
       t.string :event_name
-      t.string :event_name_translit, index: true
       t.string :event_type, index: true
+      t.string :event_discord
       t.string :event_day
       t.string :event_time
 
@@ -59,13 +59,13 @@ class CreateEvents < ActiveRecord::Migration[5.1]
       t.string :event_trial_add_player12, :default => ''
 
       t.string :event_link, :default => ''
-      t.text   :event_info, :default => ''
+      t.text   :event_info, :default => 'Дополнительная информация о мероприятии не указана'
 
-      t.integer :event_creator
+      t.integer :event_creator, index: true
       t.integer :event_votes_count, :default => 0
       t.integer :event_votes_summ, :default => 0
 
-      t.boolean :event_end, :default => false
+      t.boolean :event_end, index: true, :default => false
 
       t.timestamps
     end
