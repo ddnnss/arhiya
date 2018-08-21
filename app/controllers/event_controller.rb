@@ -70,9 +70,24 @@ class EventController < ApplicationController
       redirect_to '/events'
     else
       @creator = Player.find(@event.event_creator)
+      @event.event_tamriel_adventure_players.include?(current_player.player_nickname_translit) ? @applyed = true : @applyed = false
       @comments = Comment.where(event: params[:event_id])
+       if params[:player].present?
+          players = @event.event_tamriel_adventure_players.split(',')
+          players.append(params[:player])
+          @event.update_column( :event_tamriel_adventure_players,  players.join(','))
+          redirect_to '/tamriel_adv_event_apply?event_id=' + params[:event_id]
+       end
+
       end
 
 
+  end
+  def event_abort
+    if params[:event]=='1'
+      players = @event.event_tamriel_adventure_players.split(',')
+      players.delete(params[:player])
+      @event.update_column( :event_tamriel_adventure_players,  players.join(','))
+    end
   end
 end

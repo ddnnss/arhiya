@@ -62,7 +62,16 @@
                     </tbody>
                   </table>
                   <div class="nk-gap-5 d-lg-none"></div>
+                  <%if logged_in?%>
+                      <%if @applyed%>
+                          <a href="/tamriel_adv_event_apply?event_id=<%=@event.id%>&player=<%=current_player.player_nickname_translit%>&action=abort" class="nk-btn nk-btn-color-danger">Отменить заявку</a>
+                      <%else%>
+                          <a href="/tamriel_adv_event_apply?event_id=<%=@event.id%>&player=<%=current_player.player_nickname_translit%>" class="nk-btn nk-btn-color-success">Принять участие</a>
+                      <%end%>
+
+                  <%end%>
                 </aside>
+
               </div>
             </div>
 
@@ -131,7 +140,7 @@
                     <input  name="event_id" value="<%=@event.id%>" type="hidden" />
                     <input  name="event_type" value="<%=@event.event_type%>" type="hidden" />
 
-                    <%= submit_tag 'Отправить', class:'nk-btn  nk-btn-color-main-1'%>
+                    <%= submit_tag 'Отправить', class:'nk-btn nk-btn-color-main-1', style:'border: 1px solid;'%>
                 <%end%>
 
               </div>
@@ -254,5 +263,5 @@
           .nk-footer-parallax
           .nk-footer-parallax-opacity
   -->
- 
+
 </div>
