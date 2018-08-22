@@ -12,7 +12,7 @@
           <a class="dropdown-item" href="#">Триал</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#" data-toggle="modal" data-target=".tamriel_adv_event">Приключения Тамриэля</a>
-          <a class="dropdown-item" href="#">Данжи/Арена</a>
+          <a class="dropdown-item" href="#" data-toggle="modal" data-target=".dungeon_event">Данжи/Арена</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Пвп (Сиродил/ИГ)</a>
           <a class="dropdown-item" href="#">Пвп (БГ)</a>
@@ -72,7 +72,7 @@
           <td><%@events1.each do |e|%>
                 <%case e.event_type%>
             <%when 'tamriel_adv'%>
-                    <a  href="/tamriel_adv_event_apply?event_id=<%=e.id%>"  class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline tamriel_avd <%=Date.today.strftime('%d/%m/%Y') > e.event_day || Time.now.strftime('%H:%M') > e.event_time ? 'not-active' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                    <a  href="/tamriel_adv_event_apply/<%=e.id%>"  class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline tamriel_avd <%=Date.today.strftime('%d/%m/%Y') > e.event_day || Time.now.strftime('%H:%M') > e.event_time ? 'not-active' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
                 <%when 'dungeon'%>
                     <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline dungeon <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
                 <%when 'trial'%>
@@ -109,9 +109,9 @@
           <td><%@events3.each do |e|%>
                 <%case e.event_type%>
             <%when 'tamriel_adv'%>
-                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline tamriel_avd <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                    <a  href="/tamriel_adv_event_apply/<%=e.id%>"  class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline tamriel_avd <%=Date.today.strftime('%d/%m/%Y') >= e.event_day && Time.now.strftime('%H:%M') > e.event_time ? 'not-active' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
                 <%when 'dungeon'%>
-                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline dungeon <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                    <a  href="/dungeon_event_apply/<%=e.id%>"  class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline dungeon <%=Date.today.strftime('%d/%m/%Y') >= e.event_day && Time.now.strftime('%H:%M') > e.event_time ? 'not-active' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
                 <%when 'trial'%>
                     <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline trial <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
                 <%when 'sirodil'%>
@@ -128,7 +128,7 @@
           <td><%@events4.each do |e|%>
                 <%case e.event_type%>
             <%when 'tamriel_adv'%>
-                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline tamriel_avd <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                    <a  href="/tamriel_adv_event_apply/<%=e.id%>"  class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline tamriel_avd <%=Date.today.strftime('%d/%m/%Y') > e.event_day && Time.now.strftime('%H:%M') > e.event_time ? 'not-active' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
                 <%when 'dungeon'%>
                     <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline dungeon <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
                 <%when 'trial'%>
@@ -217,57 +217,5 @@
   </div>
 </div>
 
-<div class="modal nk-modal fade tamriel_adv_event"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" style="top: 0px;">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title nk-title" id="mySmallModalLabel">Создание Приключения Тамриеля</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span class="ion-android-close"></span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <%= form_for  :tamriel_adv_event, url: tamriel_adv_event_path   do |f|%>
-            <%=f.text_field :event_name, :placeholder =>'Название события', :required => true ,class:'form-control'%>
-            <div class="nk-gap-1"></div>
-            <select name="event_day" class="form-control" required>
-              <option disabled="" selected="">Дата события</option>
-              <%@current_week.each do |w|%>
-                <%unless Date.today > w%>
-                  <option value="<%=w.strftime('%d/%m/%Y')%>"><%=w.strftime('%d/%m/%Y')%></option>
-                  <%end%>
-              <%end%>
-            </select>
-            <div class="nk-gap-1"></div>
-            <select name="event_time" class="form-control" required>
-              <option disabled="" selected="">Время события</option>
-              <%@event_time.each do |t|%>
-
-                 <option value="<%=t%>"><%=t%></option>
-
-              <%end%>
-            </select>
-            <div class="nk-gap-1"></div>
-            <select name="event_discord" class="form-control" required>
-              <option disabled="" selected="">Канал в Discord</option>
-              <%@event_discord.each do |t|%>
-                  <option value="<%=t%>"><%=t%></option>
-              <%end%>
-            </select>
-            <div class="nk-gap-1"></div>
-              Информация о событии:
-
-                <textarea class="nk-summernote"  id="event_info" name="event_info"  required="required" rows="18"></textarea>
-
-
-
-
-            <div class="nk-gap-1"></div>
-
-            <%= submit_tag 'Отправить', class:'nk-btn  nk-btn-color-main-1'%>
-        <% end %>
-
-      </div>
-    </div>
-  </div>
-</div>
+<%=render 'viewparts/tamriel_adv_modal'%>
+<%=render 'viewparts/dungeon_modal'%>

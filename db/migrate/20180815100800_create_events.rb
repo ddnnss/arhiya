@@ -10,10 +10,12 @@ class CreateEvents < ActiveRecord::Migration[5.1]
       t.string :event_tamriel_adventure_players, :default => ''
       t.string :event_guild_players, :default => ''
 
+      t.string :event_pvp_sirodil_all_players, :default => ''
       t.string :event_pvp_sirodil_tank_players, :default => ''
       t.string :event_pvp_sirodil_heal_players, :default => ''
       t.string :event_pvp_sirodil_dd_players, :default => ''
 
+      t.string :event_pvp_bg_all_players, :default => ''
       t.string :event_pvp_bg_main_player1, :default => ''
       t.string :event_pvp_bg_main_player2, :default => ''
       t.string :event_pvp_bg_main_player3, :default => ''
@@ -23,6 +25,7 @@ class CreateEvents < ActiveRecord::Migration[5.1]
       t.string :event_pvp_bg_add_player3, :default => ''
       t.string :event_pvp_bg_add_player4, :default => ''
 
+      t.string :event_pve_all_players, :default => ''
       t.string :event_pve_main_player1, :default => ''
       t.string :event_pve_main_player2, :default => ''
       t.string :event_pve_main_player3, :default => ''
@@ -32,6 +35,7 @@ class CreateEvents < ActiveRecord::Migration[5.1]
       t.string :event_pve_add_player3, :default => ''
       t.string :event_pve_add_player4, :default => ''
 
+      t.string :event_trial_all_players, :default => ''
       t.string :event_trial_main_player1, :default => ''
       t.string :event_trial_main_player2, :default => ''
       t.string :event_trial_main_player3, :default => ''

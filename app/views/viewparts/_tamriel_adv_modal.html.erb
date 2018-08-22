@@ -1,0 +1,60 @@
+<div class="modal nk-modal fade tamriel_adv_event"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" style="top: 0px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title nk-title" id="mySmallModalLabel">Создание Приключения Тамриеля</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span class="ion-android-close"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= form_for  :tamriel_adv_event, url: tamriel_adv_event_path   do |f|%>
+            <%=f.text_field :event_name, :placeholder =>'Название события', :required => true ,class:'form-control'%>
+            <div class="nk-gap-1"></div>
+            <div class="row">
+              <div class="col-6">
+                <select name="event_day" class="form-control" required>
+                  <option disabled="" selected="">Дата события</option>
+                  <%@current_week.each do |w|%>
+                      <%unless Date.today > w%>
+                          <option value="<%=w.strftime('%d/%m/%Y')%>"><%=w.strftime('%d/%m/%Y')%></option>
+                      <%end%>
+                  <%end%>
+                </select>
+              </div>
+              <div class="col-6">
+                <select name="event_time" class="form-control" required>
+                  <option disabled="" selected="">Время события</option>
+                  <%@event_time.each do |t|%>
+
+                      <option value="<%=t%>"><%=t%></option>
+
+                  <%end%>
+                </select>
+              </div>
+            </div>
+            <div class="nk-gap-1"></div>
+            <select name="event_discord" class="form-control" required>
+              <option disabled="" selected="">Канал в Discord</option>
+              <%@event_discord.each do |t|%>
+                  <option value="<%=t%>"><%=t%></option>
+              <%end%>
+            </select>
+            <div class="nk-gap-1"></div>
+            Информация о событии:
+
+            <textarea  class="nk-summernote"  id="event_info" name="event_info"  required="required" rows="5"></textarea>
+
+
+
+
+            <div class="nk-gap-1"></div>
+
+            <%= submit_tag 'Отправить', class:'nk-btn  nk-btn-color-main-1',style:'border: 1px solid;'%>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>
+

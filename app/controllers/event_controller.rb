@@ -50,7 +50,6 @@ class EventController < ApplicationController
 
   def tamriel_adv_event
     e = Event.new
-
     e.event_name = params[:tamriel_adv_event][:event_name]
     e.event_day = params[:event_day]
     e.event_time = params[:event_time]
@@ -65,29 +64,124 @@ class EventController < ApplicationController
 
   end
   def tamriel_adv_event_apply
-    @event= Event.find(params[:event_id])
+    unless params[:event_id].present?
+      redirect_to '/events'
+      return
+    end
+    @event= Event.find_by(id: params[:event_id])
     if @event.nil?
       redirect_to '/events'
     else
       @creator = Player.find(@event.event_creator)
+      if logged_in?
       @event.event_tamriel_adventure_players.include?(current_player.player_nickname_translit) ? @applyed = true : @applyed = false
+      end
       @comments = Comment.where(event: params[:event_id])
+      @players = @event.event_tamriel_adventure_players.split(',')
+      @similar = Event.where(event_type: 'tamriel_adv').order('event_time asc')
        if params[:player].present?
           players = @event.event_tamriel_adventure_players.split(',')
           players.append(params[:player])
           @event.update_column( :event_tamriel_adventure_players,  players.join(','))
-          redirect_to '/tamriel_adv_event_apply?event_id=' + params[:event_id]
+          redirect_to '/tamriel_adv_event_apply/' + params[:event_id]
        end
+      end
+  end
+  def dungeon_event
+    e = Event.new
+    e.event_name = params[:dungeon_event][:event_name]
+    e.event_link = params[:dungeon_event][:event_link]
+    e.event_day = params[:event_day]
+    e.event_time = params[:event_time]
+    e.event_type = 'dungeon'
+    e.event_discord = params[:event_discord]
+    e.event_creator = current_player.id
+    e.event_pve_main_player1 = params[:event_pve_main_player1]
+    e.event_pve_main_player2 = params[:event_pve_main_player2]
+    e.event_pve_main_player3 = params[:event_pve_main_player3]
+    e.event_pve_main_player4 = params[:event_pve_main_player4]
+    e.event_pve_add_player1 = params[:event_pve_add_player1]
+    e.event_pve_add_player2 = params[:event_pve_add_player2]
+    e.event_pve_add_player3 = params[:event_pve_add_player3]
+    e.event_pve_add_player4 = params[:event_pve_add_player4]
+    unless params[:event_info] == ''
+      e.event_info = params[:event_info]
+    end
+    e.save
+    redirect_to events_path
+  end
 
+  def dungeon_event_apply
+    unless params[:event_id].present?
+      redirect_to '/events'
+      return
+    end
+    @event= Event.find_by(id: params[:event_id])
+    if @event.nil?
+      redirect_to '/events'
+    else
+      @creator = Player.find(@event.event_creator)
+      if logged_in?
+        @event.event_pve_all_players.split(',').include?(current_player.player_nickname_translit) ? @applyed = true : @applyed = false
       end
 
+      if @event.event_pve_main_player1.split(',').count == 2
+        @main_player1_empty = false
+        @main_player1_role = @event.event_pve_main_player1.split(',')[0]
+        case @main_player1_role
+          when 'tank'
+            @role1_img = 'tank.png'
+          when 'heal'
+            @role1_img = 'heal.png'
+          when 'dd'
+            @role1_img = 'dd.png'
+        end
+        @main_player1_player = @event.event_pve_main_player1.split(',')[1]
+        else
+        @main_player1_empty = true
+        @main_player1_role = @event.event_pve_main_player1.split(',')[0]
+        case @main_player1_role
+          when 'tank'
+            @role1_img = 'tank.png'
+          when 'heal'
+            @role1_img = 'heal.png'
+          when 'dd'
+            @role1_img = 'dd.png'
+        end
 
+    end
+
+
+
+
+      @comments = Comment.where(event: params[:event_id])
+      @players = @event.event_tamriel_adventure_players.split(',')
+      @similar = Event.where(event_type: 'dungeon').order('event_time asc')
+      if params[:player].present?
+        players = @event.event_tamriel_adventure_players.split(',')
+        players.append(params[:player])
+        @event.update_column( :event_tamriel_adventure_players,  players.join(','))
+        redirect_to '/tamriel_adv_event_apply/' + params[:event_id]
+      end
+    end
   end
+
+
+
+
+
   def event_abort
-    if params[:event]=='1'
-      players = @event.event_tamriel_adventure_players.split(',')
+    event= Event.find_by(id: params[:event_id])
+    if event.nil?
+      redirect_to '/events'
+    else
+    case params[:event_type]
+     when '1'
+      players = event.event_tamriel_adventure_players.split(',')
       players.delete(params[:player])
-      @event.update_column( :event_tamriel_adventure_players,  players.join(','))
+      event.update_column( :event_tamriel_adventure_players,  players.join(','))
+      redirect_to '/tamriel_adv_event_apply/' + params[:event_id]
+    end
     end
   end
 end
