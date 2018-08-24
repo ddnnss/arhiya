@@ -29,11 +29,19 @@ class EventController < ApplicationController
   end
 
   def event_comment
-  c= Comment.new
+  c = Comment.new
+  p = Player.find(params[:event_creator])
   c.event_id = params[:event_id].to_i
     c.player_id = current_player.id
     c.comment_text = params[:event_comment][:comment]
+
+  c.comment_rate=params[:review_rate]
     c.save
+  cur_rating = p.player_votes_summ
+  cur_votes_count = p.player_votes_count
+
+  p.update_column(:player_votes_summ, cur_rating + params[:review_rate].to_i)
+  p.update_column(:player_votes_count, cur_votes_count + 1)
     case params[:event_type]
       when 'tamriel_adv'
         redirect_to '/tamriel_adv_event_apply?event_id=' + params[:event_id]
@@ -60,7 +68,7 @@ class EventController < ApplicationController
      e.event_info = params[:event_info]
     end
     e.save
-    redirect_to events_path
+    redirect_to '/events'
 
   end
   def tamriel_adv_event_apply
@@ -74,14 +82,14 @@ class EventController < ApplicationController
     else
       @creator = Player.find(@event.event_creator)
       if logged_in?
-      @event.event_tamriel_adventure_players.include?(current_player.player_nickname_translit) ? @applyed = true : @applyed = false
+      @event.event_tamriel_adventure_players.include?(current_player.id.to_s) ? @applyed = true : @applyed = false
       end
       @comments = Comment.where(event: params[:event_id])
-      @players = @event.event_tamriel_adventure_players.split(',')
+      @players = Player.where(id: @event.event_tamriel_adventure_players)
       @similar = Event.where(event_type: 'tamriel_adv').order('event_time asc')
-       if params[:player].present?
+       if params[:apply].present?
           players = @event.event_tamriel_adventure_players.split(',')
-          players.append(params[:player])
+          players.append(current_player.id.to_s)
           @event.update_column( :event_tamriel_adventure_players,  players.join(','))
           redirect_to '/tamriel_adv_event_apply/' + params[:event_id]
        end
@@ -96,14 +104,11 @@ class EventController < ApplicationController
     e.event_type = 'dungeon'
     e.event_discord = params[:event_discord]
     e.event_creator = current_player.id
-    e.event_pve_main_player1 = params[:event_pve_main_player1]
-    e.event_pve_main_player2 = params[:event_pve_main_player2]
-    e.event_pve_main_player3 = params[:event_pve_main_player3]
-    e.event_pve_main_player4 = params[:event_pve_main_player4]
-    e.event_pve_add_player1 = params[:event_pve_add_player1]
-    e.event_pve_add_player2 = params[:event_pve_add_player2]
-    e.event_pve_add_player3 = params[:event_pve_add_player3]
-    e.event_pve_add_player4 = params[:event_pve_add_player4]
+    pve_main_players = Hash.new
+    pve_main_players[params[:event_pve_main_player1]] = ''
+    pve_main_players[params[:event_pve_main_player2]] = ''
+    pve_main_players[params[:event_pve_main_player2]] = ''
+
     unless params[:event_info] == ''
       e.event_info = params[:event_info]
     end
@@ -178,7 +183,7 @@ class EventController < ApplicationController
     case params[:event_type]
      when '1'
       players = event.event_tamriel_adventure_players.split(',')
-      players.delete(params[:player])
+      players.delete(current_player.id.to_s)
       event.update_column( :event_tamriel_adventure_players,  players.join(','))
       redirect_to '/tamriel_adv_event_apply/' + params[:event_id]
     end

@@ -5,12 +5,6 @@ class CreateComments < ActiveRecord::Migration[5.1]
       t.belongs_to  :player
       t.string      :comment_rate
       t.text        :comment_text
-
-      t.integer     :comment_for_id
-
-
-
-
       t.timestamps
     end
   end

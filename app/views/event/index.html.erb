@@ -33,7 +33,7 @@
           <%if @nw%>
               <a style="bottom: 7px;" href="/events" class="nk-btn nk-btn-color-white nk-btn-bg-danger ">Вернуться назад</a>
               <%else%>
-              <a style="bottom: 7px;" href="/events?show=next_week" class="nk-btn nk-btn-color-white nk-btn-bg-danger ">Следующая неделя</a>
+              <a style="bottom: 7px;" href="/events/next_week" class="nk-btn nk-btn-color-white nk-btn-bg-danger ">Следующая неделя</a>
               <%end%>
 
 
@@ -128,7 +128,7 @@
           <td><%@events4.each do |e|%>
                 <%case e.event_type%>
             <%when 'tamriel_adv'%>
-                    <a  href="/tamriel_adv_event_apply/<%=e.id%>"  class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline tamriel_avd <%=Date.today.strftime('%d/%m/%Y') > e.event_day && Time.now.strftime('%H:%M') > e.event_time ? 'not-active' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                    <a  href="/tamriel_adv_event_apply/<%=e.id%>"  class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline tamriel_avd"   > <%=e.event_time%> - <%=e.event_name%></a><br>
                 <%when 'dungeon'%>
                     <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline dungeon <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
                 <%when 'trial'%>
@@ -147,9 +147,17 @@
           <td><%@events5.each do |e|%>
                 <%case e.event_type%>
             <%when 'tamriel_adv'%>
-                    <a href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline nk-btn-color-main-1 <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
-                <%when 'dungeons'%>
-                    <a style="color: #fff;" href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline " > <%=e.event_time%> - <%=e.event_name%></a><br>
+                    <a  href="/tamriel_adv_event_apply/<%=e.id%>"  class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline tamriel_avd <%=Date.today.strftime('%d/%m/%Y') >= e.event_day && Time.now.strftime('%H:%M') > e.event_time ? 'not-active' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'dungeon'%>
+                    <a  href="/dungeon_event_apply/<%=e.id%>"  class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline dungeon <%=Date.today.strftime('%d/%m/%Y') >= e.event_day && Time.now.strftime('%H:%M') > e.event_time ? 'not-active' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'trial'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline trial <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'sirodil'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline sirodil <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'bg_pvp'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline bg_pvp <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
+                <%when 'guild_event'%>
+                    <a  href="#" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline guild_event <%=Date.today.strftime('%d/%m/%Y') > e.event_day ? 'disabled' : ''%>"   > <%=e.event_time%> - <%=e.event_name%></a><br>
 
                 <%end%>
             <%end%>
