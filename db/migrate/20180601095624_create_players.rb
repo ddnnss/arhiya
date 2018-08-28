@@ -4,13 +4,15 @@ class CreatePlayers < ActiveRecord::Migration[5.1]
       t.string  :player_email, index: true
       t.string  :player_id, index: true
       t.string  :player_nickname
+      t.string  :player_nickname_color, :default => '#FFFFFF'
       t.string  :player_nickname_translit, index: true
       t.string  :player_password
       t.string  :player_avatar, :default => 'noavatar.png'
-      t.string  :player_rank , :default => 'Комрад'
+      t.string  :player_rank , :default => 'Новичек'
       t.string  :player_vk_link, :default => ''
       t.string  :player_discord_link, :default => ''
       t.string  :player_money_history, :default => ''
+
       t.text    :player_shop_history
       t.text    :player_cart
       
@@ -27,6 +29,10 @@ class CreatePlayers < ActiveRecord::Migration[5.1]
       t.boolean :player_admin, :default => false
       t.boolean :player_banned, :default => false
       t.boolean :player_welcome_bonus, :default => false
+      t.string  :player_temp1
+      t.string  :player_temp2
+      t.string  :player_temp3
+      t.string  :player_temp4
       t.timestamps
     end
   end

@@ -14,6 +14,10 @@ class CreateTopics < ActiveRecord::Migration[5.1]
       t.boolean :topic_show_homepage, :default => false, index: true
       t.boolean :topic_pinned, :default => false
       t.boolean :topic_closed, :default => false
+      t.string  :topic_temp1
+      t.string  :topic_temp2
+      t.string  :topic_temp3
+      t.string  :topic_temp4
      t.timestamps
     end
   end
