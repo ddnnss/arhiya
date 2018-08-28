@@ -35,13 +35,16 @@ ActiveRecord::Schema.define(version: 20180828072407) do
     t.string "player_nickname_translit"
     t.string "player_password"
     t.string "player_avatar", default: "noavatar.png"
-    t.string "player_rank", default: "Гость"
-    t.string "player_discord_link", default: "Нет данных"
+    t.string "player_rank", default: "Комрад"
+    t.string "player_vk_link", default: ""
+    t.string "player_discord_link", default: ""
+    t.string "player_money_history", default: ""
     t.text "player_shop_history"
     t.text "player_cart"
     t.date "player_lastlogin"
     t.integer "player_wallet", default: 0
     t.text "player_info", default: ""
+    t.text "player_admin_info", default: ""
     t.boolean "player_first_edit", default: false
     t.boolean "player_activated", default: false
     t.boolean "player_admin", default: false

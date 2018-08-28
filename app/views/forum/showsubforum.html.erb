@@ -48,7 +48,7 @@ Additional Classes:
 
     <!-- START: Pagination -->
     <div class="row">
-      <% if session[:active] %>
+      <% if logged_in? %>
         <div class="col-md-3 push-md-9 text-xs-right">
           <button class="nk-btn nk-btn-lg link-effect-4" data-toggle="modal" data-target=".new_topic_modal">Новая тема</button>
 
@@ -145,7 +145,7 @@ Additional Classes:
 
     <!-- START: Pagination -->
     <div class="row">
-      <% if session[:active] %>
+      <% if logged_in? %>
         <div class="col-md-3 push-md-9 text-xs-right">
           <button class="nk-btn nk-btn-lg link-effect-4" data-toggle="modal" data-target=".new_topic_modal">Новая тема</button>
         </div>

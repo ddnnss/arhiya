@@ -60,7 +60,7 @@ Additional Classes:
           <a href="/deletetopic/<%=@topic.id %>" class="nk-btn nk-btn-lg nk-btn-bg-danger link-effect-4">Удалить тему</a>
         </div>
       <% end %>
-      <% if session[:active] && @topic.topic_closed == false%>
+      <% if logged_in? && @topic.topic_closed == false%>
       <div class="col-md-6 text-xs-right">
         <a href="#forum-reply" class="nk-btn nk-btn-lg link-effect-4 nk-anchor pull-right">Новое сообщение</a>
       </div>
@@ -131,7 +131,7 @@ Additional Classes:
       <%= will_paginate @posts, :container => false %>
     </div>
 
-    <% if session[:active] and @topic.topic_closed == false %>
+    <% if logged_in? and @topic.topic_closed == false %>
       <div id="forum-reply"></div>
       <div class="nk-gap-4"></div>
       <!-- START: Reply -->

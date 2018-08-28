@@ -20,14 +20,15 @@
 <!-- START: Page Background -->
 <div class="nk-page-background op-5" data-bg-mp4="<%= asset_path('bg-2.mp4') %>" data-bg-webm="<%= asset_path('bg-2.webm') %>" data-bg-ogv="<%= asset_path('bg-2.ogv') %>" data-bg-poster="<%= asset_path('bg-2.jpg') %>"></div>
 <!-- END: Page Background -->
-<!-- START: Page Border -->
+<!-- START: Page Border
 <div class="nk-page-border">
   <div class="nk-page-border-t"></div>
-  <div class="nk-page-border-r"></div>
+
+</div>-->
+<!-- END: Page Border
+ <div class="nk-page-border-r"></div>
   <div class="nk-page-border-b"></div>
-  <div class="nk-page-border-l"></div>
-</div>
-<!-- END: Page Border -->
+  <div class="nk-page-border-l"></div> -->
 
 <div class="nk-main">
   <% if flash[:activatesuccess] %>
@@ -84,53 +85,29 @@ Additional Classes:
 
             <!-- SLIDE  -->
 
-            <li data-index="rs-<%= rand(100..999) %>" data-transition="slideoverhorizontal" data-slotamount="7" data-easein="default" data-easeout="default" data-masterspeed="1500" data-thumb="images/homepage/slide1.jpg" data-rotate="0" data-saveperformance="off">
-
-              <img src="images/homepage/slide1.jpg" alt="" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
-              <!-- SLIDE descr start  -->
-              <div class="container hidden-sm-down" style="padding: 50px 50px;">
-                <div style="background-color: rgba(21, 19, 19, 0.75);
-                    padding: 50px;">
-                  <h2 class="nk-title h3">ESCAPE FROM TARKOV</h2>
-                  <div class="nk-title-sep"></div>
-
-
-                    <p class="home-game-info">Одна из игр, которые нам полюбились, - тактический шутер от первого лица Escape from Tarkov.</p>
-                  <p class="home-game-info"> Попробуйте себя в роли бойца ЧВК или мародёра, преследующих только свои цели, в постапокалиптическом городе Норвинской особой экономической зоны.</p>
-                  <p class="home-game-info">  Время пришло. Get ready for escape, бойцы.</p>
-                  <hr style="border-bottom: 1px dotted;">
-                  <div class="nk-gap-1"></div>
-                    <a href="" class="nk-btn  nk-btn-color-main-1 "><span> Подробнее о игре</span></a> &nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="https://vk.com/igrovoe_soobshestvo_arhiya" class="nk-btn " target="_blank"><span> Группа ВК</span></a>
-                    <a href="/tarkovmarket" class="nk-btn  "><span> Торговая площадка</span></a>
-
-                    </div>
-              </div>
-              <!-- SLIDE descr end  -->
-            </li>
             <!-- SLIDE  -->
           <!-- SLIDE  -->
 
           <li data-index="rs-<%= rand(100..999) %>" data-transition="slideoverhorizontal" data-slotamount="7" data-easein="default" data-easeout="default" data-masterspeed="1500" data-thumb="images/homepage/slide2.jpg" data-rotate="0" data-saveperformance="off">
 
-            <img src="images/homepage/slide2.jpg" alt="" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
+            <img src="/images/homepage/slide2.jpg" alt="" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
             <!-- SLIDE descr start  -->
             <div class="container hidden-sm-down" style="padding: 50px 50px;">
               <div style="background-color: rgba(21, 19, 19, 0.75);
-                  padding: 50px;">
+                  padding: 35px;">
                 <h2 class="nk-title h3">SCUM</h2>
                 <div class="nk-title-sep"></div>
 
 
                 <p class="home-game-info">Смертная казнь или 15 минут славы…? - девиз реалити-шоу SCUM. Некогда обитамый остров превратился в съемочную площадку самого жёсткого , но с бешенными рейтингами шоу.</p>
 
-                <p class="home-game-info">Современные гладиаторские бои приговоренных к смерти заключенных, которых парашютируют на остров небольшими группами и оставляют их выстраивать свое жестокое общество.</p>
+                <p class="home-game-info">Современные гладиаторские бои приговоренных к смерти заключенных которых парашютируют на остров небольшими группами и оставляют их выстраивать свое жестокое общество.</p>
 
                 <p class="home-game-info">24/7 только хардкор, только SCUM</p>
 
                 <hr style="border-bottom: 1px dotted;">
                 <div class="nk-gap-1"></div>
-                <a href="" class="nk-btn  nk-btn-color-main-1 "><span> Подробнее о игре</span></a> &nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="" class="nk-btn  nk-btn-color-main-1 "><span> Подробнее об игре</span></a> &nbsp;&nbsp;&nbsp;&nbsp;
                 <a href="https://vk.com/game.scum" class="nk-btn " target="_blank"><span> Группа ВК</span></a>
                 <a href="https://store.steampowered.com/app/513710/SCUM/" class="nk-btn " target="_blank"><span> Игра в Steam</span></a>
 
@@ -140,11 +117,41 @@ Additional Classes:
           </li>
           <!-- SLIDE  -->
           <!-- SLIDE  -->
+          <li data-index="rs-<%= rand(100..999) %>" data-transition="slideoverhorizontal" data-slotamount="7" data-easein="default" data-easeout="default" data-masterspeed="1500" data-thumb="images/homepage/slide1.jpg" data-rotate="0" data-saveperformance="off">
+
+            <img src="/images/homepage/slide1.jpg" alt="" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
+            <!-- SLIDE descr start  -->
+            <div class="container hidden-sm-down" style="padding: 50px 50px;">
+              <div style="background-color: rgba(21, 19, 19, 0.75);
+                  padding: 50px;">
+                <h2 class="nk-title h3">ИГРОВОЙ СЕРВЕР</h2>
+                <div class="nk-title-sep"></div>
+
+
+                <p class="home-game-info">
+                  Почему вы захотите играть у нас?
+
+                </p>
+                <p class="home-game-info">На сервере одновременно сможет играть до 60 человек. <br>
+              Сервер запущен на официальном железе разработчика.<br>
+                Защита от DDoS атак.<br>
+               За сервером будет следить отзывчивая администрация. <br>
+                Мы запускаемся специально для СНГ комьюнити!</p>
+                <hr style="border-bottom: 1px dotted;">
+                <div class="nk-gap-1"></div>
+                <a href="" class="nk-btn  nk-btn-color-main-1 "><span> Как подключиться?</span></a> &nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+              </div>
+            </div>
+            <!-- SLIDE descr end  -->
+          </li>
 
           <li data-index="rs-<%= rand(100..999) %>" data-transition="slideoverhorizontal" data-slotamount="7" data-easein="default" data-easeout="default" data-masterspeed="1500" data-thumb="http://gallery.pub.goha.ru/ghgals1453193597/trnetrh202p04rp8eu3i1fasud1qaap44mdcu8ld/news/2016/01/19/escapefromtarkov/m4a1/Escape%20from%20Tarkov.jpg" data-rotate="0" data-saveperformance="off">
 
-            <img src="http://gallery.pub.goha.ru/ghgals1453193597/trnetrh202p04rp8eu3i1fasud1qaap44mdcu8ld/news/2016/01/19/escapefromtarkov/m4a1/Escape%20from%20Tarkov.jpg" alt="" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
-            <!-- SLIDE descr start  -->
+            <img src="/images/homepage/slide3.jpg" alt="" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
+            <!-- SLIDE descr start
             <div class="container hidden-sm-down" style="padding: 10% 50px;">
               <div style="    background-color: rgba(21, 19, 19, 0.65);
                   padding: 30px;">
@@ -162,7 +169,7 @@ Additional Classes:
 
               </div>
             </div>
-            <!-- SLIDE descr end  -->
+            <!-- SLIDE descr end  -->-->
           </li>
           <!-- SLIDE  -->
         </ul>
@@ -179,23 +186,23 @@ Additional Classes:
     <div class="row vertical-gap lg-gap">
       <div class="col-md-4">
         <div class="nk-ibox">
-          <div class="nk-ibox-icon nk-ibox-icon-circle"><span class="ion-happy"></span></div>
+          <div class="nk-ibox-icon nk-ibox-icon-circle"><span class="ion-ios-game-controller-b"></span></div>
           <div class="nk-ibox-cont">
-            <h2 class="nk-ibox-title">С нами не заскучаешь!</h2>Мы собираем только самую интересную информацию об играх и пересказываем в информативном виде.</div>
+            <h2 class="nk-ibox-title">Качество — наша главная особенность!</h2>Наше оборудование находится в лучших датацентрах Европы и России. И это обеспечивает прекрасный пинг практически для всех регионов РФ, СНГ и Европы.</div>
         </div>
       </div>
       <div class="col-md-4">
         <div class="nk-ibox">
           <div class="nk-ibox-icon nk-ibox-icon-circle"><span class="ion-android-contacts"></span></div>
           <div class="nk-ibox-cont">
-            <h2 class="nk-ibox-title">Мы открыты для предложений</h2>6 из 8 сотрудников администрации получили свою должность благодаря своей инициативности и теперь помогают осуществлять Ваши идеи.</div>
+            <h2 style="margin-bottom: 64px;" class="nk-ibox-title">Всегда на связи</h2>В нашей группе ВК и на нашем сайте всегда сможно найти самую свежую и актуальную информацию и новости по игре.</div>
         </div>
       </div>
       <div class="col-md-4">
         <div class="nk-ibox">
-          <div class="nk-ibox-icon nk-ibox-icon-circle"><span class="ion-coffee"></span></div>
+          <div class="nk-ibox-icon nk-ibox-icon-circle"><span class="ion-happy"></span></div>
           <div class="nk-ibox-cont">
-            <h2 class="nk-ibox-title"> У нас есть печеньки!</h2>Для участников сообщества постоянно проводятся розыгрыши и раздачи ценных игровых предметов.</div>
+            <h2 style="margin-bottom: 64px;" class="nk-ibox-title">Стремимся стать лучше</h2>Мы всегда открыты для Ваших предложений и вопросов, связаться с нами можно в любой момент через сайт или группы ВК.</div>
         </div>
       </div>
     </div>
@@ -209,15 +216,15 @@ Additional Classes:
 
       <div class="nk-gap-2"></div>
       <div class="text-center">
-        <h3 class="nk-title-back">ИГРОВОЕ СООБЩЕСТВО</h3>
-        <h2 class="nk-title">АРХИЯ</h2>
+        <h3 class="nk-title-back">ИГРОВОЙ СЕРВЕР</h3>
+        <h2 class="nk-title">SCUM</h2>
 
       </div>
       <div class="nk-gap-2"></div>
       <p class="lead">
-        Мы приглашаем игроков для совместной игры в Escape From Tarkov и Scum. На данный момент наш <a href="https://discord.gg/3KvT9xY">Дискорд-сервер</a>
-        насчитывает более 1200 участников, и их количество постоянно увеличивается. На его просторах мы проводим розыгрыши лута и игр,
-        раздачи полезных предметов и локальные квесты.</p>
+        Мы приглашаем игроков для совместной игры в Scum. На нашем <a href="https://discord.gg/Yq2Kfzr">Дискорд-сервере</a>
+        всегда можно найти новых друзей для совместной охоты, а также новых врагов :). На просторах нашего сервера мы проводим различные ивенты, а в группе ВК конкурсы с ценными внутриигровыми призами.
+        </p>
 
       <p class="lead">Наша задача - обеспечить приятное времяпровождение в игре через взаимодействие с приятными людьми.</p>
 

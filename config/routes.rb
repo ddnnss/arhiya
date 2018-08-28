@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   match '/editplayer'  => 'player#editplayer', via: [:post]
   match '/sendpm'  => 'player#sendpm', via: [:post]
   match '/deletepm(:/pm_id)'  => 'player#deletepm', via: [:post]
+  match '/activate(/:player_id)' => 'player#activate', via: [:get]
  #----------ADMIN------------------------
   match '/admin/forum'  => 'admin#forum_admin', via: [:get]
   match '/admin/addtopic'  => 'admin#addtopic', via: [:get]
@@ -29,13 +30,6 @@ Rails.application.routes.draw do
   match '/closetopic(/:topic_id)'  => 'forum#closetopic', via: [:get]
   match '/pintopic(/:topic_id)'  => 'forum#pintopic', via: [:get]
 
-  #----------EVENT------------------------
-  match '/events(/:show)'  => 'event#index', via: [ :get]
-  match '/tamriel_adv_event'  => 'event#tamriel_adv_event', via: [:post]
-  match '/dungeon_event'  => 'event#dungeon_event', via: [:post]
-  match '/event_comment'  => 'event#event_comment', via: [:post]
-  match '/tamriel_adv_event_apply(/:event_id)(/:apply)'  => 'event#tamriel_adv_event_apply', via: [:get]
-  match '/dungeon_event_apply(/:event_id)(/:player)(/:role)'  => 'event#dungeon_event_apply', via: [:get]
-  match '/event_abort(/:event_type)(/:event_id)(/:role)'  => 'event#event_abort', via: [:get]
+
 
 end

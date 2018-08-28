@@ -1,5 +1,5 @@
 class ForumController < ApplicationController
-  before_action :checkpm
+
 
   def checkpm
     if session[:active]

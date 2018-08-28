@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+<p>Добро пожаловать на сайт игрового сервера SCUM, для продолжения работы на сайте необходимо подтвердить адрес эл. почты</p>
+<p>Пожалуста перейдите по <a href="http://192.168.1.44:3000/activate/<%= @user.player_id %>">ссылке</a> для активации аккаунта.</p>
+
+<p>Ваш логин : <%= @user.player_email %></p>
+<p>Ваш пароль : <%= @user.player_password %></p>
+
+</body>
+</html>

@@ -38,8 +38,7 @@
             <h1 class="nk-social-profile-info-name"><%= @player.player_nickname%></h1>
             <div class="nk-social-profile-info-username home-game-info" >
               Ранг: <%= @player.player_rank%>
-              <br>
-              ID: @<%= @player.player_id%>
+
             </div>
 
             <div class="nk-social-profile-info-actions">
@@ -71,13 +70,13 @@
 
           <div class="nk-social-menu d-none d-lg-block">
             <ul>
-              <li>  Общий рейтинг : <%= @player.player_votes_summ  == 0 ? 'Нет рейтинга' : @rating.to_s%></li>
+
 
               <li>-</li>
               <li>  VK : <%= @player.player_vk_link%></li>
-              <li>  Telegramm : <%= @player.player_tm_link%></li>
+
               <li>  Discord : <%= @player.player_discord_link%></li>
-              <li>  Skype : <%= @player.player_skype_link%></li>
+
 
             </ul>
           </div>
@@ -92,13 +91,13 @@
               <div id="nk-social-menu-mobile-1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="nk-social-menu-mobile-1-heading">
                 <div class="nk-social-menu">
                   <ul>
-                    <li>  Общий рейтинг : <%= @player.player_votes_summ  = 0 ? 'Нет рейтинга' : @rating.to_s%></li>
+
 
                     <li>-</li>
                     <li>  VK : <%= @player.player_vk_link%></li>
-                    <li>  Telegram : <%= @player.player_tm_link%></li>
+
                     <li>  Discord : <%= @player.player_discord_link%></li>
-                    <li>  Skype : <%= @player.player_skype_link%></li>
+
                   </ul>
                 </div>
               </div>
