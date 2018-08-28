@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180815100800) do
+ActiveRecord::Schema.define(version: 20180828072407) do
 
   create_table "comments", force: :cascade do |t|
     t.integer "event_id"
@@ -21,67 +21,6 @@ ActiveRecord::Schema.define(version: 20180815100800) do
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_comments_on_event_id"
     t.index ["player_id"], name: "index_comments_on_player_id"
-  end
-
-  create_table "events", force: :cascade do |t|
-    t.string "event_name"
-    t.string "event_type"
-    t.string "event_discord"
-    t.string "event_day"
-    t.string "event_time"
-    t.string "event_tamriel_adventure_players", default: ""
-    t.string "event_guild_players", default: ""
-    t.string "event_pvp_sirodil_all_players", default: ""
-    t.string "event_pvp_sirodil_tank_players", default: ""
-    t.string "event_pvp_sirodil_heal_players", default: ""
-    t.string "event_pvp_sirodil_dd_players", default: ""
-    t.string "event_pvp_bg_all_players", default: ""
-    t.string "event_pvp_bg_main_player1", default: ""
-    t.string "event_pvp_bg_main_player2", default: ""
-    t.string "event_pvp_bg_main_player3", default: ""
-    t.string "event_pvp_bg_main_player4", default: ""
-    t.string "event_pvp_bg_add_player1", default: ""
-    t.string "event_pvp_bg_add_player2", default: ""
-    t.string "event_pvp_bg_add_player3", default: ""
-    t.string "event_pvp_bg_add_player4", default: ""
-    t.text "event_pve_main_players"
-    t.text "event_pve_add_players"
-    t.string "event_trial_all_players", default: ""
-    t.string "event_trial_main_player1", default: ""
-    t.string "event_trial_main_player2", default: ""
-    t.string "event_trial_main_player3", default: ""
-    t.string "event_trial_main_player4", default: ""
-    t.string "event_trial_main_player5", default: ""
-    t.string "event_trial_main_player6", default: ""
-    t.string "event_trial_main_player7", default: ""
-    t.string "event_trial_main_player8", default: ""
-    t.string "event_trial_main_player9", default: ""
-    t.string "event_trial_main_player10", default: ""
-    t.string "event_trial_main_player11", default: ""
-    t.string "event_trial_main_player12", default: ""
-    t.string "event_trial_add_player1", default: ""
-    t.string "event_trial_add_player2", default: ""
-    t.string "event_trial_add_player3", default: ""
-    t.string "event_trial_add_player4", default: ""
-    t.string "event_trial_add_player5", default: ""
-    t.string "event_trial_add_player6", default: ""
-    t.string "event_trial_add_player7", default: ""
-    t.string "event_trial_add_player8", default: ""
-    t.string "event_trial_add_player9", default: ""
-    t.string "event_trial_add_player10", default: ""
-    t.string "event_trial_add_player11", default: ""
-    t.string "event_trial_add_player12", default: ""
-    t.string "event_link", default: ""
-    t.text "event_info", default: "Дополнительная информация о мероприятии не указана"
-    t.integer "event_creator"
-    t.integer "event_votes_count", default: 0
-    t.integer "event_votes_summ", default: 0
-    t.boolean "event_end", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["event_creator"], name: "index_events_on_event_creator"
-    t.index ["event_end"], name: "index_events_on_event_end"
-    t.index ["event_type"], name: "index_events_on_event_type"
   end
 
   create_table "forums", force: :cascade do |t|
@@ -97,42 +36,22 @@ ActiveRecord::Schema.define(version: 20180815100800) do
     t.string "player_password"
     t.string "player_avatar", default: "noavatar.png"
     t.string "player_rank", default: "Гость"
-    t.string "player_skype_link", default: "Нет данных"
-    t.string "player_vk_link", default: "Нет данных"
-    t.string "player_tm_link", default: "Нет данных"
     t.string "player_discord_link", default: "Нет данных"
-    t.string "player_system_messages", default: ""
-    t.string "player_cp", default: ""
-    t.string "player_pve_roles", default: ""
-    t.string "player_pve_class", default: ""
-    t.string "player_pvp_roles", default: ""
-    t.string "player_pvp_class", default: ""
-    t.string "player_pvp_side", default: ""
-    t.string "player_game_stats", default: ""
-    t.string "player_prime_time", default: ""
-    t.string "player_events", default: ""
+    t.text "player_shop_history"
+    t.text "player_cart"
     t.date "player_lastlogin"
-    t.integer "player_votes_count", default: 0
-    t.integer "player_votes_summ", default: 0
-    t.integer "player_event_coming", default: 0
-    t.integer "player_gold", default: 0
-    t.integer "player_vauchers", default: 0
+    t.integer "player_wallet", default: 0
     t.text "player_info", default: ""
-    t.text "player_admin_info", default: ""
     t.boolean "player_first_edit", default: false
     t.boolean "player_activated", default: false
     t.boolean "player_admin", default: false
     t.boolean "player_banned", default: false
-    t.boolean "player_event_starter", default: false
+    t.boolean "player_welcome_bonus", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["player_email"], name: "index_players_on_player_email"
-    t.index ["player_event_coming"], name: "index_players_on_player_event_coming"
-    t.index ["player_events"], name: "index_players_on_player_events"
-    t.index ["player_gold"], name: "index_players_on_player_gold"
     t.index ["player_id"], name: "index_players_on_player_id"
     t.index ["player_nickname_translit"], name: "index_players_on_player_nickname_translit"
-    t.index ["player_vauchers"], name: "index_players_on_player_vauchers"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -153,6 +72,17 @@ ActiveRecord::Schema.define(version: 20180815100800) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["player_id"], name: "index_privatemessages_on_player_id"
+  end
+
+  create_table "scum_items", force: :cascade do |t|
+    t.string "scum_item_image"
+    t.string "scum_item_price"
+    t.string "scum_item_name"
+    t.string "scum_item_name_translit"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["scum_item_name"], name: "index_scum_items_on_scum_item_name"
+    t.index ["scum_item_name_translit"], name: "index_scum_items_on_scum_item_name_translit"
   end
 
   create_table "subforums", force: :cascade do |t|

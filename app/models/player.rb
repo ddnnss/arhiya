@@ -1,17 +1,17 @@
 class Player < ApplicationRecord
-
+  serialize :player_shop_history, JSON
+  serialize :player_cart, JSON
   has_many :topics
-
-  has_many :comments,:dependent => :destroy
   has_many :privatemessages,:dependent => :destroy
   has_many :posts ,:through => :topics
+  has_many :comments
 
   validates :player_email,
             format: { with:/.+@.+\..+/i,message: 'Неправильный формат почты'},
             :uniqueness => {:message => 'Данный адрес уже зарегистрирован'}
   validates :player_id,
-            :uniqueness => {:message => 'Данный ID уже зарегистрирован '},
-            :presence => {:message => 'Не указан ID игрока '}
+            :uniqueness => {:message => 'Данный STEAM ID уже зарегистрирован '},
+            :presence => {:message => 'Не указан STEAM ID игрока '}
   validates :player_nickname,
             :uniqueness => {:message => 'Данный ник уже занят '},
             :presence => {:message => 'Не указан ник '}
@@ -20,6 +20,5 @@ class Player < ApplicationRecord
 
   def downcase_fields
     self.player_email.downcase!
-    self.player_id.downcase!
   end
 end

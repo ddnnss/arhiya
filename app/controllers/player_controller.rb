@@ -178,7 +178,7 @@ class PlayerController < ApplicationController
 
         respond_to do |format|
 
-          @res=@user.errors[:player_nickname][0].to_s + @user.errors[:player_email][0].to_s+ @user.errors[:player_id][0].to_s
+          @res=@user.errors[:player_nickname][0].to_s + @user.errors[:player_email][0].to_s + @user.errors[:player_id][0].to_s
 
 
           format.js
