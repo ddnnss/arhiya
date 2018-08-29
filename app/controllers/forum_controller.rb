@@ -10,14 +10,17 @@ class ForumController < ApplicationController
   end
 
   def index
+    @title = 'ФОРУМ'
     @activeforum = 'active'
     @forums=Forum.all
     t=Topic.all
     t.empty? ? @empty=true : @empty=false
   end
   def showsubforum
+
     @activeforum = 'active'
     @subforum = Subforum.find_by_subforum_name_translit(params[:subforum_name])
+    @title = @subforum.subforum_name
     @topic =  @subforum.topics.paginate(:page => params[:page], :per_page => 6).where.not(topic_pinned: true).order('updated_at desc')
     @pinnedtopic = @subforum.topics.where(topic_pinned: true).order('updated_at desc')
 
@@ -30,7 +33,7 @@ class ForumController < ApplicationController
   def showtopic
     @activeforum = 'active'
     @topic = Topic.find_by(topic_name_translit: params[:topic_name])
-
+    @title = @topic.topic_name
     @topic.update_column(:topic_views, @topic.topic_views + 1)
     @posts = @topic.posts.paginate(:page => params[:page], :per_page => 6)
   end

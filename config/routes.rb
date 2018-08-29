@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
 
   root 'page#index'
+  match '/videos' => 'page#videos', via: [:get]
   #----------PLAYER------------------------
   match '/login'  => 'player#login', via: [:post]
   match '/registration'  => 'player#registration', via: [:post]

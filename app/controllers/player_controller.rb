@@ -3,6 +3,7 @@ class PlayerController < ApplicationController
 
 
   def playerprofile
+    @title = 'ПРОФИЛЬ ИГРОКА'
     @player = Player.find_by_player_nickname_translit(params[:player_nickname])
     unless @player
       redirect_to root_path
@@ -86,7 +87,7 @@ class PlayerController < ApplicationController
           if user.player_admin
             session[:admin] = true
             if user.player_rank == 'Комрад'
-              user.update_column( :player_rank , 'ГРЕШНИК')
+              user.update_column( :player_rank , 'CЕРВЕР-АДМИН')
             end
           end
           respond_to do |format|
