@@ -44,7 +44,7 @@ class ForumController < ApplicationController
       t.subforum_id = params[:subforum_id]
       t.topic_name = params[:addtopic][:topic_name]
       t.topic_name_caps = params[:addtopic][:topic_name].mb_chars.upcase
-      t.topic_name_translit = Translit.convert(params[:addtopic][:topic_name].gsub(' ','-').gsub(/[?!*.,:;\/ ]/, ''), :english)
+      t.topic_name_translit = Translit.convert(params[:addtopic][:topic_name].gsub(' ','-').gsub('ь','').gsub('ъ','').gsub(/[?!*.,:;\/`"']/, ''), :english)
       t.topic_icon = params[:topic_icon]
       if params.permit(:showhome).to_h[:showhome] == 'show'
         t.topic_show_homepage = true
