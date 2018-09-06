@@ -6,6 +6,9 @@ class CreateWhitelists < ActiveRecord::Migration[5.1]
       t.string :player_email
       t.boolean :added, :default => false
       t.boolean :banned, :default => false
+      t.string :temp1
+      t.string :temp1
+      t.string :temp1
 
       t.timestamps
     end

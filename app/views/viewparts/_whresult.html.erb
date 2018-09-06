@@ -11,10 +11,39 @@
       <div class="modal-body">
         <p>
           <%if flash[:wh_send]%>
-          <%=flash[:wh_send]%>
+
+            <div class="nk-info-box bg-success">
+              <div class="nk-info-box-icon">
+                <i class="ion-alert-circled"></i>
+              </div>
+              <%=flash[:wh_send]%>
+            </div>
+            <%if flash[:wh_reg_err]%>
+                <div class="nk-info-box bg-danger">
+                  <div class="nk-info-box-icon">
+                    <i class="ion-alert-circled"></i>
+                  </div>
+                  <%=flash[:wh_reg_err]%>
+                </div>
+            <%end%>
+            <%if flash[:wh_reg_ok]%>
+                <div class="nk-info-box bg-success">
+                  <div class="nk-info-box-icon">
+                    <i class="ion-alert-circled"></i>
+                  </div>
+                  <%=flash[:wh_reg_ok]%>
+                </div>
+            <%end%>
+
           <%end%>
           <%if flash[:wh_error]%>
+            <div class="nk-info-box bg-danger">
+              <div class="nk-info-box-icon">
+                <i class="ion-alert-circled"></i>
+              </div>
               <%=flash[:wh_error]%>
+            </div>
+
           <%end%>
 
         </p>

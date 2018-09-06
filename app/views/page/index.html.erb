@@ -140,8 +140,10 @@ Additional Classes:
                 </p>
                 <hr style="border-bottom: 1px dotted;">
                 <div class="nk-gap-1"></div>
-                <a href="" class="nk-btn  nk-btn-color-main-1 "><span>Сообщить о проблеме</span></a> &nbsp;&nbsp;&nbsp;&nbsp;
-
+                <a href="" class="nk-btn  nk-btn-color-main-1 "><span>Сообщить о проблеме</span></a> &nbsp;
+                <%unless player_wh%>
+                <a href="/whitelist" class="nk-btn  nk-btn-color-danger "><span>Заявка в WhiteList</span></a> &nbsp;&nbsp;&nbsp;
+                <%end%>
 
 
               </div>

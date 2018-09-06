@@ -17,8 +17,6 @@ ActiveRecord::Schema.define(version: 20180906114743) do
     t.integer "player_id"
     t.string "comment_rate"
     t.text "comment_text"
-    t.string "comment_temp1"
-    t.string "comment_temp2"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_comments_on_event_id"
@@ -28,21 +26,16 @@ ActiveRecord::Schema.define(version: 20180906114743) do
   create_table "forums", force: :cascade do |t|
     t.string "forum_name"
     t.integer "forum_show_order", default: 1
-    t.string "forum_temp1"
-    t.string "forum_temp2"
-    t.string "forum_temp3"
-    t.string "forum_temp4"
   end
 
   create_table "players", force: :cascade do |t|
     t.string "player_email"
     t.string "player_id"
     t.string "player_nickname"
-    t.string "player_nickname_color", default: "#FFFFFF"
     t.string "player_nickname_translit"
     t.string "player_password"
     t.string "player_avatar", default: "noavatar.png"
-    t.string "player_rank", default: "Новичек"
+    t.string "player_rank", default: "Комрад"
     t.string "player_vk_link", default: ""
     t.string "player_discord_link", default: ""
     t.string "player_money_history", default: ""
@@ -57,10 +50,6 @@ ActiveRecord::Schema.define(version: 20180906114743) do
     t.boolean "player_admin", default: false
     t.boolean "player_banned", default: false
     t.boolean "player_welcome_bonus", default: false
-    t.string "player_temp1"
-    t.string "player_temp2"
-    t.string "player_temp3"
-    t.string "player_temp4"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["player_email"], name: "index_players_on_player_email"
@@ -72,10 +61,6 @@ ActiveRecord::Schema.define(version: 20180906114743) do
     t.integer "topic_id"
     t.integer "player_id"
     t.text "post_text"
-    t.string "post_temp1"
-    t.string "post_temp2"
-    t.string "post_temp3"
-    t.string "post_temp4"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["player_id"], name: "index_posts_on_player_id"
@@ -97,10 +82,6 @@ ActiveRecord::Schema.define(version: 20180906114743) do
     t.string "scum_item_price"
     t.string "scum_item_name"
     t.string "scum_item_name_translit"
-    t.string "scum_item_temp1"
-    t.string "scum_item_temp2"
-    t.string "scum_item_temp3"
-    t.string "scum_item_temp4"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["scum_item_name"], name: "index_scum_items_on_scum_item_name"
@@ -113,10 +94,6 @@ ActiveRecord::Schema.define(version: 20180906114743) do
     t.string "subforum_name"
     t.string "subforum_icon"
     t.string "subforum_name_translit"
-    t.string "subforum_temp1"
-    t.string "subforum_temp2"
-    t.string "subforum_temp3"
-    t.string "subforum_temp4"
     t.index ["forum_id"], name: "index_subforums_on_forum_id"
     t.index ["subforum_name_translit"], name: "index_subforums_on_subforum_name_translit"
   end
@@ -135,10 +112,6 @@ ActiveRecord::Schema.define(version: 20180906114743) do
     t.boolean "topic_show_homepage", default: false
     t.boolean "topic_pinned", default: false
     t.boolean "topic_closed", default: false
-    t.string "topic_temp1"
-    t.string "topic_temp2"
-    t.string "topic_temp3"
-    t.string "topic_temp4"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["player_id"], name: "index_topics_on_player_id"
@@ -153,6 +126,7 @@ ActiveRecord::Schema.define(version: 20180906114743) do
     t.string "player_email"
     t.boolean "added", default: false
     t.boolean "banned", default: false
+    t.string "temp1"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
