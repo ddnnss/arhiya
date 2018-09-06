@@ -9,6 +9,18 @@ class AdminController < ApplicationController
     @topic_type = ['Первый взгляд','Обновление','Премьера','Патч','Гайд','Новости','Событие','Интересная тема']
   end
 
+  def whitelist
+    @wh=Whitelist.all
+
+  end
+  def whadd
+    w = Whitelist.find_by_player_id(params[:steam_id])
+    w.update_column(:added,true)
+    UserMailer.whapply(w.player_email).deliver_later
+    redirect_to admin_whitelist_path
+
+  end
+
 
   def addforum
     if params[:addmain] == 'add'

@@ -1,0 +1,31 @@
+<div class="nk-main">
+  <div class="nk-box bg-dark-1 text-white">
+
+    <div class="container">
+      <table class="table table-bordered">
+<tr>
+  <td>#</td>
+  <td>НИК</td>
+  <td>STEAM ID</td>
+  <td>ВНЕСЕН</td>
+  <td>ЗАБАНЕН</td>
+</tr>
+          <%@wh.each do |wh|%>
+            <tr>
+              <td><%=wh.id%></td>
+              <td><%=wh.player_nick%></td>
+              <%if wh.added%>
+                  <td><%=wh.player_id%> </td>
+                  <%else%>
+                  <td><a href="/admin/whadd?steam_id=<%=wh.player_id%>"><%=wh.player_id%></a> </td>
+                  <%end%>
+
+              <td><%=wh.added%></td>
+              <td><%=wh.banned%></td>
+            </tr>
+          <%end%>
+
+      </table>
+    </div>
+  </div>
+</div>

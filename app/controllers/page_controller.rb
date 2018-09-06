@@ -8,12 +8,17 @@ class PageController < ApplicationController
 
 
 
+
   end
 
   def videos
     @title = 'ИГРОВОЕ ВИДЕО'
     @activevideo = 'active'
 @videos = ['2F8xGIMomHM','rXoSmlB-JJc','UZGI_4qGiu0','xSqiIEDP09Y','K19lXMOeG2I','laJT-AeZjjk','-kka0NVEGcs','XKQsc249IiI']
+  end
+
+  def whitelist
+
   end
 
 end
