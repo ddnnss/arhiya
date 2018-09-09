@@ -1,0 +1,63 @@
+<!-- START: Page Background -->
+<div class="nk-page-background op-5" data-bg-mp4="<%= asset_path('bg-2.mp4') %>" data-bg-webm="<%= asset_path('bg-2.webm') %>" data-bg-ogv="<%= asset_path('bg-2.ogv') %>" data-bg-poster="<%= asset_path('bg-2.jpg') %>"></div>
+<!-- END: Page Background -->
+
+<div class="nk-main">
+
+  <div class="nk-header-title nk-header-title-sm nk-header-title-parallax-opacity">
+
+    <div class="nk-header-text-bottom">
+      <div class="nk-breadcrumbs text-xs-center">
+        <ul>
+          <li><a href="/">ГЛАВНАЯ</a></li>
+          <li>
+            <span>ЧАВО</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+  <div class="container">
+    <div class="nk-gap-4"></div>
+
+    <div class="nk-box bg-dark-1 text-white">
+      <div class="nk-gap-4"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 offset-md-1">
+
+            <div class="nk-accordion" id="accordion-1" role="tablist" aria-multiselectable="true">
+             <%@faq.each do |f| %>
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="accordion-1-<%=f.id%>-heading">
+                  <a style="    font-size: 20px !important;" class="collapsed menu_item" data-toggle="collapse" data-parent="#accordion-1" href="#accordion-1-<%=f.id%>" aria-expanded="true" aria-controls="accordion-1-<%=f.id%>">
+                    <%=f.question%>
+                  </a>
+                </div>
+                <div id="accordion-1-<%=f.id%>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="accordion-3-1-heading">
+                  <div class="nk-gap-1"></div>
+                  <%=f.answer.html_safe%>
+                  <div class="nk-gap-1"></div>
+                  <%= f.link.nil? ? '': 'yes'%>
+                </div>
+              </div>
+          <%end%>
+
+          </div>
+        </div>
+      </div>
+      <div class="nk-gap-4"></div>
+      <div class="nk-gap-4"></div>
+    </div>
+
+
+
+  </div>
+</div>
+  <div class="nk-gap-4"></div>
+</div>

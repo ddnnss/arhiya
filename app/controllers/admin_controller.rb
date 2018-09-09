@@ -13,6 +13,22 @@ class AdminController < ApplicationController
     @wh=Whitelist.all
 
   end
+
+  def faq
+    @faq = Faq.all
+  end
+  def addfaq
+    f = Faq.new
+    f.answer = params[:answer]
+    f.question =params[:question]
+    f.question_caps = params[:question].mb_chars.upcase
+    if params[:link].present?
+      f.link = params[:link]
+    end
+    f.save
+    redirect_to '/admin/faq'
+
+  end
   def whadd
     w = Whitelist.find_by_player_id(params[:steam_id])
     w.update_column(:added,true)

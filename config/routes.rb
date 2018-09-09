@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   root 'page#index'
   match '/videos' => 'page#videos', via: [:get]
   match '/whitelist' => 'page#whitelist', via: [:get]
+  match '/faq' => 'page#faq', via: [:get]
+  match '/wiki' => 'page#wiki', via: [:get]
   #----------PLAYER------------------------
   match '/login'  => 'player#login', via: [:post]
   match '/registration'  => 'player#registration', via: [:post]
@@ -19,6 +21,8 @@ Rails.application.routes.draw do
   match '/admin/addtopic'  => 'admin#addtopic', via: [:get]
   match '/admin/whitelist'  => 'admin#whitelist', via: [:get]
   match '/admin/whadd'  => 'admin#whadd', via: [:get]
+  match '/addfaq'  => 'admin#addfaq', via: [:post]
+  match '/admin/faq'  => 'admin#faq', via: [:get]
   match '/addforum'  => 'admin#addforum', via: [:post, :get]
 
   #----------FORUM------------------------

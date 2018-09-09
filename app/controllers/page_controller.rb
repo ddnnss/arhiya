@@ -11,6 +11,14 @@ class PageController < ApplicationController
 
   end
 
+  def faq
+    @activefaq = 'active'
+    @faq = Faq.all
+  end
+
+  def wiki
+    @activewiki = 'active'
+  end
   def videos
     @title = 'ИГРОВОЕ ВИДЕО'
     @activevideo = 'active'

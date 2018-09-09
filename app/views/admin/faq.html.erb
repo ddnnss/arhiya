@@ -1,0 +1,49 @@
+<div class="nk-main">
+  <div class="nk-box bg-dark-1 text-white">
+
+    <div class="container">
+      <table class="table table-bordered">
+        <tr>
+          <td>#</td>
+          <td>Название</td>
+
+        </tr>
+        <%@faq.each do |f|%>
+            <tr>
+              <td><%=f.id%></td>
+              <td><%=f.question%></td>
+
+            </tr>
+        <%end%>
+
+      </table>
+
+      <div class="nk-gap-1"></div>
+      Добавить новый раздел:
+
+      <%= form_for  :faq, url: addfaq_path do |f|%>
+
+
+          <input type="text" name="question" required class="form-control  home-game-info" placeholder="ВОПРОС">
+          <div class="nk-gap-1"></div>
+          <input type="text" name="link"  class="form-control  home-game-info" placeholder="ССЫЛКА">
+
+          <br>
+          <span class=" home-game-info">ОТВЕТ :</span>
+
+          <textarea class="nk-summernote  home-game-info"   required="required" name="answer" rows="10"></textarea>
+
+
+          <div class="nk-gap-2"></div>
+
+
+
+
+          <button  type="submit" class="nk-btn nk-btn-color-main-1 link-effect-4">Добавить </button>
+
+      <% end %>
+
+
+    </div>
+  </div>
+</div>

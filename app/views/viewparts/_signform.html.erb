@@ -8,7 +8,7 @@
     <div class="row">
       <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3">
         <div class="nk-sign-form-container">
-          <div class="nk-sign-form-toggle h3"><a href="#" class="nk-sign-form-login-toggle active">Войти</a> <a href="#" class="nk-sign-form-register-toggle">Регистрация</a></div>
+          <div class="nk-sign-form-toggle h3"><a href="#" class="nk-sign-form-login-toggle active menu_item">Войти</a> <a href="#" class="nk-sign-form-register-toggle menu_item">Регистрация</a></div>
           <div class="nk-gap-2"></div>
           <!-- START: Login Form -->
           <%= form_for :login, url: login_path,:html => {:class => 'nk-sign-form-login active', :id => 'loginform'}, remote: true do |f| %>
@@ -26,7 +26,7 @@
 
               <div class="nk-gap-2"></div>
 
-              <button type="submit" id="loginbutt" class="nk-btn nk-btn-color-white link-effect-4 pull-right">Отправить</button>
+              <button type="submit" id="loginbutt" class="menu_item nk-btn nk-btn-color-white pull-right ">Отправить</button>
               <div class="clearfix"></div>
               <div class="nk-gap-1"></div><a class="nk-sign-form-lost-toggle pull-right home-game-info" href="#">Забыли пароль?</a>
           <% end%>

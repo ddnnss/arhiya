@@ -1,7 +1,15 @@
 .menu_item{
-  -webkit-mask-image: url(/images/grit.png);
+  font-family: bigf !important;
+  font-size: 25px;
+  -webkit-mask: url('/images/grit.png');
+  -webkit-mask-image: url('/images/grit.png');
 }
+.new_text_1{
+  font-family: bigf !important;
+  font-size: 16px;
+
 }
+
 .trial {
   color: #F3DA0B !important;
   border-color: #F3DA0B !important;

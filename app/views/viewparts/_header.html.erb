@@ -39,7 +39,7 @@
                 <li> | </li>
 
                 <li class="single-icon">
-                  <a href="/logout" >
+                  <a href="/logout" class="menu_item" >
                 <span class="fa fa-sign-out">
                     </span>
                     ВЫХОД
@@ -50,7 +50,7 @@
 
             <% else %>
                 <li class="single-icon">
-                  <a href="#" class="nk-sign-toggle no-link-effect">
+                  <a href="#" class=" menu_item nk-sign-toggle no-link-effect">
                 <span class="nk-icon-toggle">
                   <span class="nk-icon-toggle-front">
                     <span class="fa fa-sign-in">
@@ -90,7 +90,7 @@
 </a>
 
         <ul class="nk-nav nk-nav-right hidden-md-down" data-nav-mobile="#nk-nav-mobile">
-          <li class="<%= @activehome%>"><a style="padding: 5px 10px !important;" class="no-link-effect" href="/">ГЛАВНАЯ</a>
+          <li class="<%= @activehome%>"><a style="padding: 5px 10px !important;" class="no-link-effect menu_item" href="/">ГЛАВНАЯ</a>
 
           </li>
           <!--      <li class=""><a href="/games">БАЗА ИГР</a>
@@ -99,9 +99,9 @@
 
           </li>
 
-          <li class="<%= @activeforum%> " ><a style="padding: 5px 10px !important;" class="no-link-effect" href="/forums">ОБСУЖДЕНИЯ</a></li>
-          <li class="<%= @activeforum%>"><a style="padding: 5px 10px !important;" class="no-link-effect" href="/forums">SCUM WIKI</a></li>
-          <li class="<%= @activeforum%>"><a style="padding: 5px 10px !important;" class="no-link-effect" href="/forums">ЧАВО</a></li>
+          <li class="<%= @activeforum%> " ><a style="padding: 5px 10px !important;" class="no-link-effect menu_item" href="/forums">ОБСУЖДЕНИЯ</a></li>
+          <li class="<%= @activewiki%>"><a style="padding: 5px 10px !important;" class="no-link-effect menu_item" href="/wiki">SCUM WIKI</a></li>
+          <li class="<%= @activefaq%>"><a style="padding: 5px 10px !important;" class="no-link-effect menu_item" href="/faq">ЧАВО</a></li>
 
          
 
