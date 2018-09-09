@@ -50,29 +50,31 @@ Additional Classes:
 
         <li style="    padding-top: 40px;
             padding-bottom: 40px;
-        background-image: url(<%=image_path('forum_head.png') %>);
+        background-image: url('/images/line.jpg');
         background-size: cover;">
 
           <div class="nk-forum-title" >
-            <h3 ><%=forum.forum_name %></h3>
+            <h3 class="menu_item" ><%=forum.forum_name %></h3>
           </div>
           <hr/>
+
           <% forum.subforums.each do |subforum| %>
+
 
           <li style="    padding-top: 30px;
               padding-bottom: 30px;
-              background-color:#060606;">
+              background-color:#060606; <%=forum.subforums.first.id == subforum.id  ?  ' background-image: url(/images/line1.jpg);': ''%>">
             <div class="nk-forum-icon">
               <span class="<%= subforum.subforum_icon %>"></span>
             </div>
             <div class="nk-forum-title">
-              <h3><a href="/forum/<%= subforum.subforum_name_translit%>"><%= subforum.subforum_name %></a></h3>
+              <h3><a class=" new_text_1" href="/forum/<%= subforum.subforum_name_translit%>"><%= subforum.subforum_name %></a></h3>
 
             </div>
-            <div class="nk-forum-count">
+            <div class="nk-forum-count new_text_1">
               <%= subforum.topics.count %> тем
             </div>
-            <div class="nk-forum-count">
+            <div class="nk-forum-count new_text_1">
               <%= subforum.posts.count %> сообщений
             </div>
             <% unless subforum.posts.blank? %>
@@ -80,10 +82,10 @@ Additional Classes:
               <img src="/images/avatars/<%= subforum.posts.last.player.player_avatar %>" alt="<%= subforum.posts.last.player.player_nickname %>">
             </div>
             <div class="nk-forum-activity">
-              <div class="nk-forum-activity-title" title="<%= subforum.posts.last.player.player_nickname %>">
+              <div class="nk-forum-activity-title new_text_1" title="<%= subforum.posts.last.player.player_nickname %>">
                 <a href="/topic/<%= subforum.topics.last.topic_name_translit%>#post<%= subforum.posts.last.id%>"><%= subforum.topics.last.topic_name%></a>
               </div>
-              <div class="nk-forum-activity-date">
+              <div class="nk-forum-activity-date new_text_1">
                 <%= subforum.posts.last.updated_at.strftime("%d.%m.%Y | %H:%M:%S") %>
               </div>
             </div>

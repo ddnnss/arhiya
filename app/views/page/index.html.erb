@@ -257,13 +257,13 @@ Additional Classes:
         <div class="nk-blog-post" data-mouse-parallax-z="5" data-mouse-parallax-speed="1">
           <div class="nk-post-thumb">
             <div class="nk-post-type"><span class="<%=topic.topic_home_icon %>"></span></div>
-            <div class="nk-post-category"><a href="#"> <%=topic.topic_home_type %></a></div>
+            <div class="nk-post-category"><a class="menu_item"  href="#"> <%=topic.topic_home_type %></a></div>
             <a href="/topic/<%=topic.topic_name_translit %>"><img class="nk-img-stretch" src="images/homepage/<%= topic.topic_home_image %>" alt="РУССКОЕ СООБЩЕСТВО И РУССКИЙ СЕРВЕР ИГРЫ SCUM GAME"></a>
           </div>
           <div class="nk-post-content">
             <div data-mouse-parallax-z="2" class="parallaxed" style="transform: translate3d(-10px, 3.78743px, 0px);">
-              <h2 class="nk-post-title h1"> <a href="/topic/<%=topic.topic_name_translit %>"><%=topic.topic_name%></a></h2>
-              <div class="nk-post-date"><%= topic.created_at.strftime("%d.%m.%Y | %H:%M:%S") %></div>
+              <h2 class="nk-post-title h1"> <a class="menu_item" style="font-size: 40px !important;" href="/topic/<%=topic.topic_name_translit %>"><%=topic.topic_name%></a></h2>
+              <div class="nk-post-date new_text_1"><%= topic.created_at.strftime("%d.%m.%Y | %H:%M:%S") %></div>
             </div>
           </div>
 
