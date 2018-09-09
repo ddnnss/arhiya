@@ -61,8 +61,8 @@ Additional Classes:
           <% forum.subforums.each do |subforum| %>
 
 
-          <li style="    padding-top: 30px;
-              padding-bottom: 30px;
+          <li style="    padding-top: 25px;
+              padding-bottom: 25px;
               background-color:#060606; <%=forum.subforums.first.id == subforum.id  ?  ' background-image: url(/images/line1.jpg);': ''%>">
             <div class="nk-forum-icon">
               <span class="<%= subforum.subforum_icon %>"></span>
@@ -85,7 +85,7 @@ Additional Classes:
               <div class="nk-forum-activity-title new_text_1" title="<%= subforum.posts.last.player.player_nickname %>">
                 <a href="/topic/<%= subforum.topics.last.topic_name_translit%>#post<%= subforum.posts.last.id%>"><%= subforum.topics.last.topic_name%></a>
               </div>
-              <div class="nk-forum-activity-date new_text_1">
+              <div class="nk-forum-activity-date new_text_1" style="font-size: 12px !important;">
                 <%= subforum.posts.last.updated_at.strftime("%d.%m.%Y | %H:%M:%S") %>
               </div>
             </div>
