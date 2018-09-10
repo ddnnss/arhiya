@@ -33,8 +33,15 @@
   <div class="container">
     <div class="nk-gap-4"></div>
 
+    <div class="nk-info-box bg-main-1">
+      <div class="nk-info-box-icon">
+        <i class="ion-information-circled"></i>
+      </div>
+      Чтобы узнать свой STEAMID64 перейдите по <a class="nk-btn nk-btn-sm nk-btn-rounded nk-btn-outline nk-btn-color-main-1" href="https://steamid.io/" target="_blank">ЭТОЙ ССЫЛКЕ</a>
+    </div>
+
    <%=form_for :wh, url: whadd_path do |f|%>
-        <%= f.number_field 'player_id', placeholder:'STEAM ID (например: 7656119807XXXXXXX)' ,:required => true, class:'form-control home-game-info'%>
+        <%= f.number_field 'player_id', placeholder:'STEAMID64 (например: 7656119807XXXXXXX)' ,:required => true, class:'form-control home-game-info'%>
         <div class="nk-gap-2"></div>
         <%= f.text_field 'player_nick', placeholder:'Игровой ник. Ник после входа на сервер менять нельзя!' ,:required => true, class:'form-control home-game-info'%>
         <div class="nk-gap-2"></div>

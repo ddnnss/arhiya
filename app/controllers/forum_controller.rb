@@ -38,7 +38,7 @@ class ForumController < ApplicationController
     @posts = @topic.posts.paginate(:page => params[:page], :per_page => 6)
   end
   def addtopic
-
+ if logged_in?
       t = Topic.new
       t.player_id=session[:player_id]
       t.subforum_id = params[:subforum_id]
@@ -70,7 +70,9 @@ class ForumController < ApplicationController
       p.save
 
       redirect_to '/forum/' + t.subforum.subforum_name_translit
-
+ else
+   redirect_to '/'
+   end
 
 
 
