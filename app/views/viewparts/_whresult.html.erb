@@ -17,6 +17,11 @@
                 <i class="ion-alert-circled"></i>
               </div>
               <%=flash[:wh_send]%>
+              <br>
+              <p style="    padding: 10px;
+                  font-size: 22px;
+                  background-color: #0e0e0e;
+                  border-radius: 5px;">Также проверить статус вашего STEAM ID можно по <a href="/id_check/<%=flash[:steamid]%>" target="_blank"> этой ссылке</a></p>
             </div>
             <%if flash[:wh_reg_err]%>
                 <div class="nk-info-box bg-danger">

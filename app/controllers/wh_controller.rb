@@ -24,8 +24,8 @@ class WhController < ApplicationController
         w.player_email= params[:wh][:player_email]
         w.save
         UserMailer.newapply.deliver_later
-        flash[:wh_send] = 'Заявка на внесение в WhiteList отправлена. Заявка обрабатывается в течении 1-15 минут. После внесения ID в WhiteList, на почту придет уведомление.'
-
+        flash[:wh_send] = 'Заявка на внесение в WhiteList отправлена.'
+        flash[:steamid] = params[:wh][:player_id]
         if params[:reg] == 'on'
 
 
@@ -40,10 +40,12 @@ class WhController < ApplicationController
             @p.player_nickname_translit=Translit.convert(params[:wh][:player_nick].gsub(' ','-').gsub('ь','').gsub('ъ','').gsub(/[?!*.,:;\/`"']/, ''), :english)
             @p.save!
             UserMailer.activation(@p).deliver_later
+            flash[:steamid] = params[:wh][:player_id]
             flash[:wh_reg_ok] = 'Аккаунт зарегистрирован. Письмо с инструкцией по активации отправлено (возможно оно попадет в спам)'
-            flash[:wh_send] = 'Заявка на внесение в WhiteList отправлена. Заявка обрабатывается в течении 1-15 минут. После внесения ID в WhiteList, на почту придет уведомление.'
+            flash[:wh_send] = 'Заявка на внесение в WhiteList отправлена.'
           else
-            flash[:wh_send] = 'Заявка на внесение в WhiteList отправлена. Заявка обрабатывается в течении 1-15 минут. После внесения ID в WhiteList, на почту придет уведомление.'
+            flash[:steamid] = params[:wh][:player_id]
+            flash[:wh_send] = 'Заявка на внесение в WhiteList отправлена. '
             flash[:wh_reg_err] = 'Введеный адрес почты уже зарегистрирован в системе!'
           end
 

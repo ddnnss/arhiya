@@ -160,7 +160,6 @@ ActiveRecord::Schema.define(version: 20180909080319) do
     t.string "player_email"
     t.boolean "added", default: false
     t.boolean "banned", default: false
-    t.string "temp1"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

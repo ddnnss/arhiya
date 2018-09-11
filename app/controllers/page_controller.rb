@@ -29,4 +29,19 @@ class PageController < ApplicationController
 
   end
 
+  def idcheck
+    ww = Whitelist.find_by_player_id(params[:steam_id])
+    unless ww.blank?
+
+      if ww.added
+        flash[:wh_ок] = 'Этот STEAM ID внеснен в WhiteList сервера. Приятной игры.'
+      else
+        flash[:wh_error] = 'Этот STEAM ID еще находится на рассмотрении.'
+      end
+
+    else
+      flash[:wh_error] = 'Этот STEAM ID не найден'
+    end
+  end
+
 end
