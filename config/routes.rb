@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   match '/id_check(/:steam_id)' => 'page#idcheck', via: [:get]
   match '/faq' => 'page#faq', via: [:get]
   match '/wiki' => 'page#wiki', via: [:get]
+  match '/dbot' => 'page#dbot', via: [:get]
   #----------PLAYER------------------------
   match '/login'  => 'player#login', via: [:post]
   match '/registration'  => 'player#registration', via: [:post]
