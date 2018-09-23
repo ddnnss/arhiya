@@ -51,34 +51,6 @@ class PageController < ApplicationController
   def dbot
 
 
-      bot = Discordrb::Commands::CommandBot.new token: 'NDkyNDIyNzA1OTkyMTcxNTIw.DoWQmg.zVJhZ5TSZU6OuSlTPEs1eIfcp4o', client_id: 492422705992171520, prefix: '!'
-
-      bot.command :help do |event|
-        event << '**Управление IGC ботом**'
-        event << '!ss - Информация о игровом сервере (количество игроков, ранг, название и IP-адрес)'
-        event << '!ii - Информация о сообществе (группа ВК, сайт ...)'
-        event << '!sr - Информация о рестартах'
-        event << '!se - Информация о мероприятиях на сервере'
-      end
-
-      bot.command :ss do |event|
-          url = 'https://www.battlemetrics.com/servers/scum/2648150'
-          html = open(url)
-          doc = Nokogiri::HTML(html)
-          players = doc.xpath('//*[@id="serverPage"]/div[1]/div/dl/dd[2]').text
-          rank = doc.xpath('//*[@id="serverPage"]/div[1]/div/dl/dd[1]').text
-          name = doc.xpath('//*[@id="serverPage"]/div[1]/div/dl/dd[1]').text
-          ip = doc.xpath('//*[@id="serverPage"]/div[1]/div/dl/dd[1]').text
-          event << '**Название сервера** : ' + name.to_s
-          event << '**Ранг сервера** : ' + rank.to_s
-          event << '**Игроков** : ' + players.to_s
-          event << '**IP сервера** : ' + ip.to_s
-
-
-      end
-
-    bot.run
-
 
   end
 
