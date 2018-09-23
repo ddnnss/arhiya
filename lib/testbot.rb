@@ -16,7 +16,7 @@ class Event < ActiveRecord::Base
 end
 ActiveRecord::Base.establish_connection(
     adapter: 'sqlite3',
-    database: 'C:\Users\ххх\RubymineProjects\arhiya\db\development.sqlite3'
+    database: '..\db\development.sqlite3'
 )
 
 bot = Discordrb::Commands::CommandBot.new token: 'NDkyNDIyNzA1OTkyMTcxNTIw.DoWQmg.zVJhZ5TSZU6OuSlTPEs1eIfcp4o', client_id: 492422705992171520, prefix: '!'
