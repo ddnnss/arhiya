@@ -95,7 +95,7 @@ bot.command :ei do |event,eid|
   event << '**Название мероприятия** :' + ee.name
   event << '**Дата и время проведения** : '  +  ee.date + '/' + ee.time
   event << '**Описание мероприятия** :' + ee.info
-  
+
   event << '**Участники мероприятия**'
 
   ee.players.each do |k,v|
