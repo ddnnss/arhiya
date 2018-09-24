@@ -1,6 +1,8 @@
 class CreatePlayers < ActiveRecord::Migration[5.1]
   def change
     create_table :players do |t|
+      t.belongs_to :squad
+      t.belongs_to :event
       t.string  :player_email, index: true
       t.string  :player_id, index: true
       t.string  :player_nickname
@@ -19,11 +21,12 @@ class CreatePlayers < ActiveRecord::Migration[5.1]
       t.date    :player_lastlogin
 
       t.integer :player_wallet , :default => 0
+
     
       t.text    :player_info , :default => ''
       t.text    :player_admin_info , :default => ''
-    
 
+      t.boolean :squad_leader , :default => false
       t.boolean :player_first_edit, :default => false
       t.boolean :player_activated, :default => false
       t.boolean :player_admin, :default => false

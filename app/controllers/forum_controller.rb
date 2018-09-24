@@ -48,7 +48,7 @@ class ForumController < ApplicationController
       t.topic_name_translit = Translit.convert(params[:addtopic][:topic_name].gsub(' ','-').gsub('ь','').gsub('ъ','').gsub(/[?!*.,:;\/`"']/, ''), :english)
       temp = Topic.find_by_topic_name_translit(t.topic_name_translit)
       unless temp.blank?
-        t.topic_name_translit = Translit.convert(params[:addtopic][:topic_name].gsub(' ','-').gsub('ь','').gsub('ъ','').gsub(/[?!*.,:;\/`"']/, ''), :english) + [*('a'..'z'),*('0'..'9')].shuffle[0,4].join
+        t.topic_name_translit = Translit.convert(params[:addtopic][:topic_name].gsub(' ','-').gsub('ь','').gsub('ъ','').gsub(/[?!*.,:;\/`"']/, ''), :english) + '-' + [*('0'..'9')].shuffle[0,3].join
       end
       t.topic_icon = params[:topic_icon]
       if params.permit(:showhome).to_h[:showhome] == 'show'

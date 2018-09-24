@@ -126,11 +126,12 @@ class PlayerController < ApplicationController
       if @user.valid? ##check user
         @user.player_password = [*('a'..'z'),*('0'..'9')].shuffle[0,8].join
         @user.player_nickname_translit =Translit.convert(params[:registration][:player_nickname].gsub(' ','-').gsub(/[?!*.,:; ]/, ''), :english)
+
         @user.save
 
        UserMailer.activation(@user).deliver_later
         respond_to do |format|
-          @res='Письмо с инструкцией по активации отправлено (возможно оно попадет в спам)'
+          @res='Письмо с инструкцией по активации отправлено (возможно оно попадет в спам). Если письмо не придет в течении 15-30 минут, свяжитесь в дискорде с Грешником'
           @status = 'ok'
           format.js
         end           ##end respond
@@ -139,7 +140,7 @@ class PlayerController < ApplicationController
 
         respond_to do |format|
 
-          @res=@user.errors[:player_nickname][0].to_s + @user.errors[:player_email][0].to_s + @user.errors[:player_id][0].to_s
+          @res=@user.errors[:player_nickname][0].to_s + @user.errors[:player_email][0].to_s + @user.errors[:player_id][0].to_s + @user.errors[:player_discord_link][0].to_s
 
 
           format.js
@@ -187,7 +188,7 @@ class PlayerController < ApplicationController
 
 private
   def user_data
-    params.require(:registration).permit(:player_id,:player_email, :player_nickname)
+    params.require(:registration).permit(:player_id,:player_email,:player_discord_link, :player_nickname)
   end
 
 end

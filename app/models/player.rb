@@ -5,6 +5,8 @@ class Player < ApplicationRecord
   has_many :privatemessages,:dependent => :destroy
   has_many :posts ,:through => :topics
   has_many :comments
+  belongs_to :squad
+  belongs_to :event
 
   validates :player_email,
             format: { with:/.+@.+\..+/i,message: 'Неправильный формат почты'},
@@ -15,6 +17,9 @@ class Player < ApplicationRecord
   validates :player_nickname,
             :uniqueness => {:message => 'Данный ник уже занят '},
             :presence => {:message => 'Не указан ник '}
+  validates :player_discord_link,
+            :uniqueness => {:message => 'Данный DiscordID уже занят '},
+            :presence => {:message => 'Не указан DiscordID '}
 
   before_save :downcase_fields
 

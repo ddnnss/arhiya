@@ -3,11 +3,10 @@ Rails.application.routes.draw do
 
   root 'page#index'
   match '/videos' => 'page#videos', via: [:get]
-  match '/whitelist' => 'page#whitelist', via: [:get]
-  match '/id_check(/:steam_id)' => 'page#idcheck', via: [:get]
+
   match '/faq' => 'page#faq', via: [:get]
   match '/wiki' => 'page#wiki', via: [:get]
-  match '/dbot' => 'page#dbot', via: [:get]
+
   #----------PLAYER------------------------
   match '/login'  => 'player#login', via: [:post]
   match '/registration'  => 'player#registration', via: [:post]
@@ -21,8 +20,8 @@ Rails.application.routes.draw do
  #----------ADMIN------------------------
   match '/admin/forum'  => 'admin#forum_admin', via: [:get]
   match '/admin/addtopic'  => 'admin#addtopic', via: [:get]
-  match '/admin/whitelist'  => 'admin#whitelist', via: [:get]
-  match '/admin/whadd'  => 'admin#whadd', via: [:get]
+
+
   match '/addfaq'  => 'admin#addfaq', via: [:post]
   match '/admin/faq'  => 'admin#faq', via: [:get]
   match '/addforum'  => 'admin#addforum', via: [:post, :get]
@@ -40,8 +39,9 @@ Rails.application.routes.draw do
   match '/closetopic(/:topic_id)'  => 'forum#closetopic', via: [:get]
   match '/pintopic(/:topic_id)'  => 'forum#pintopic', via: [:get]
 
-  #----------WHITELIST------------------------
-  match '/whadd'  => 'wh#addtowhitelist', via: [:post]
+  #----------SQUAD------------------------
+  match '/newsquad'  => 'page#newsquad', via: [:post]
+
 
 
 

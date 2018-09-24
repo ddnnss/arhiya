@@ -65,9 +65,11 @@
                 <i class="ion-alert-circled"></i>
               </div>
             </div>
-              <%= f.text_field 'player_id', placeholder:'STEAM ID (без https://steamcommunity.com/id)' ,:required => true, class:'form-control home-game-info'%>
+              <%= f.number_field 'player_id', placeholder:'STEAM ID 64 (76561198XXXXXXXXX)' ,:required => true, class:'form-control home-game-info',minlength: '17'%>
               <div class="nk-gap-1"></div>
-              <%= f.text_field 'player_nickname', placeholder:'Ник' ,:required => true, class:'form-control home-game-info'%>
+              <%= f.text_field 'player_discord_link', placeholder:'Discord ID (НИК#9999)' ,:required => true, class:'form-control home-game-info'%>
+              <div class="nk-gap-1"></div>
+              <%= f.text_field 'player_nickname', placeholder:'Игровой ник' ,:required => true, class:'form-control home-game-info'%>
 
               <div class="nk-gap-1"></div>
               <%= f.text_field 'player_email', placeholder:'Почта' ,:required => true, class:'form-control home-game-info'%>

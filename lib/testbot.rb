@@ -12,8 +12,15 @@ ActiveRecord::Base.logger = Logger.new(STDERR)
 
 
 class Event < ActiveRecord::Base
-  serialize :players, JSON
+#  serialize :players, JSON
 end
+class Player < ApplicationRecord::Base
+
+end
+class Squad < ApplicationRecord::Base
+  has_many :players
+end
+
 ActiveRecord::Base.establish_connection(
     adapter: 'sqlite3',
     database: '..\db\development.sqlite3'

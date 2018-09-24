@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180921192321) do
+ActiveRecord::Schema.define(version: 20180924195148) do
 
   create_table "comments", force: :cascade do |t|
     t.integer "event_id"
@@ -26,14 +26,15 @@ ActiveRecord::Schema.define(version: 20180921192321) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.string "number"
-    t.string "creator"
-    t.string "name"
-    t.string "time"
-    t.string "date"
-    t.string "link", default: ""
-    t.text "info", default: ""
-    t.text "players", default: ""
+    t.string "event_number"
+    t.string "event_creator"
+    t.string "event_name"
+    t.time "event_time"
+    t.date "event_date"
+    t.string "event_link", default: ""
+    t.text "event_info", default: ""
+    t.boolean "event_group", default: false
+    t.boolean "event_active", default: true
   end
 
   create_table "faqs", force: :cascade do |t|
@@ -53,6 +54,8 @@ ActiveRecord::Schema.define(version: 20180921192321) do
   end
 
   create_table "players", force: :cascade do |t|
+    t.integer "squad_id"
+    t.integer "event_id"
     t.string "player_email"
     t.string "player_id"
     t.string "player_nickname"
@@ -70,6 +73,7 @@ ActiveRecord::Schema.define(version: 20180921192321) do
     t.integer "player_wallet", default: 0
     t.text "player_info", default: ""
     t.text "player_admin_info", default: ""
+    t.boolean "squad_leader", default: false
     t.boolean "player_first_edit", default: false
     t.boolean "player_activated", default: false
     t.boolean "player_admin", default: false
@@ -81,9 +85,11 @@ ActiveRecord::Schema.define(version: 20180921192321) do
     t.string "player_temp4"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_players_on_event_id"
     t.index ["player_email"], name: "index_players_on_player_email"
     t.index ["player_id"], name: "index_players_on_player_id"
     t.index ["player_nickname_translit"], name: "index_players_on_player_nickname_translit"
+    t.index ["squad_id"], name: "index_players_on_squad_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -123,6 +129,19 @@ ActiveRecord::Schema.define(version: 20180921192321) do
     t.datetime "updated_at", null: false
     t.index ["scum_item_name"], name: "index_scum_items_on_scum_item_name"
     t.index ["scum_item_name_translit"], name: "index_scum_items_on_scum_item_name_translit"
+  end
+
+  create_table "squads", force: :cascade do |t|
+    t.integer "event_id"
+    t.string "squad_name"
+    t.string "squad_name_translit"
+    t.string "squad_avatar"
+    t.string "squad_rating"
+    t.text "squad_info"
+    t.boolean "squad_recruting", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_squads_on_event_id"
   end
 
   create_table "subforums", force: :cascade do |t|
