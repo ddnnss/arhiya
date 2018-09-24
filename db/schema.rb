@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20180921192321) do
 
   create_table "events", force: :cascade do |t|
     t.string "number"
+    t.string "creator"
     t.string "name"
     t.string "time"
     t.string "date"
