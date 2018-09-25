@@ -40,7 +40,7 @@ Rails.application.routes.draw do
   match '/pintopic(/:topic_id)'  => 'forum#pintopic', via: [:get]
 
   #----------SQUAD------------------------
-  match '/newsquad'  => 'page#newsquad', via: [:post]
+  match '/newsquad'  => 'squad#newsquad', via: [:post]
 
 
 

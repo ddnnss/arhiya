@@ -254,38 +254,40 @@
       <div class="modal-body">
         <%= form_for :squad, url: newsquad_path  do |f| %>
             <div class="nk-gap-2"></div>
-            <%=f.text_field  :player_avatar,  type:'hidden'%>
             <div class="form-group row">
-              <label for="ava" class="col-3 col-form-label">Ваш аватар (желательно 215x215)<br>
-                <img  src="/images/avatars/<%=@player.player_avatar %>" width="100px" alt="">
+              <label for="squad_avatar" class="col-3 col-form-label">Аватар отряда (желательно 215x215)<br>
+
               </label>
               <div class="col-sm-9">
-                <%= f.file_field :player_avatar , class:'form-control', id:'ava'%>
+                <%= f.file_field :squad_avatar ,:required => true, class:'form-control', id:'squad_avatar'%>
               </div>
             </div>
 
 
 
-            <hr style="border-top: 1px solid rgba(236, 10, 10, 0.1)">
+
             <div class="form-group row">
-              <label for="vk" class="col-3 col-form-label"> Ссылка на профиль ВК:</label>
+              <label for="squad_name" class="col-3 col-form-label">Название отряда:</label>
               <div class="col-sm-9">
 
-                <%= text_field_tag 'player_vk_link', @player.player_vk_link, id:'vk', class:'form-control home-game-info'  %>
+                <%= f.text_field :squad_name,:required => true, id:'squad_name', class:'form-control home-game-info'  %>
               </div>
             </div>
 
             <div class="form-group row">
-              <label for="dis" class="col-3 col-form-label"> Discord ID *:</label>
-              <div class="col-sm-9">
-                <%= text_field_tag 'player_discord_link', @player.player_discord_link, id:'dis', :required => true, class:'form-control home-game-info'  %>
+              <label for="squad_recruting" class="col-3 col-form-label">Набор открыт ?:</label>
+              <div class="col-sm-1">
+
+                <%= f.check_box :squad_recruting, id:'squad_recruting', class:'form-control home-game-info', checked: 'checked'  %>
+
               </div>
             </div>
 
+
             <div class="form-group row">
-              <label for="player_info" class="col-3 col-form-label">Информация о себе:</label>
+              <label for="squad_info" class="col-3 col-form-label">Дополнительная нформация :</label>
               <div class="col-sm-9">
-                <textarea class="nk-summernote"  id="player_info" name="player_info"  rows="18"></textarea>
+                <textarea class="nk-summernote"  id="squad_info" name="squad_info"  rows="18"></textarea>
               </div>
             </div>
 
@@ -297,7 +299,7 @@
 
 
 
-            <button  type="submit" class="nk-btn nk-btn-color-main-1 link-effect-4">Внести изменения</button>
+            <button  type="submit" class="nk-btn nk-btn-color-main-1 link-effect-4">Создать отряд</button>
 
         <% end %>
       </div>
@@ -305,8 +307,3 @@
   </div>
 </div>
 
-<script type="application/javascript">
-    $("#player_info").summernote('code',"<%= j @player.player_info.html_safe  %>");
-
-
-</script>

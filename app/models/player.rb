@@ -6,7 +6,7 @@ class Player < ApplicationRecord
   has_many :posts ,:through => :topics
   has_many :comments
   belongs_to :squad
-  belongs_to :event
+
 
   validates :player_email,
             format: { with:/.+@.+\..+/i,message: 'Неправильный формат почты'},

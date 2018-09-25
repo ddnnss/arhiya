@@ -4,6 +4,8 @@ class CreateEvents < ActiveRecord::Migration[5.1]
       t.string :event_number
       t.string :event_creator
       t.string :event_name
+      t.string :event_squads, :default => ''
+      t.string :event_players, :default => ''
       t.time   :event_time
       t.date :event_date
       t.string :event_link, :default => ''

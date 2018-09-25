@@ -29,6 +29,8 @@ ActiveRecord::Schema.define(version: 20180924195148) do
     t.string "event_number"
     t.string "event_creator"
     t.string "event_name"
+    t.string "event_squads", default: ""
+    t.string "event_players", default: ""
     t.time "event_time"
     t.date "event_date"
     t.string "event_link", default: ""
@@ -55,7 +57,6 @@ ActiveRecord::Schema.define(version: 20180924195148) do
 
   create_table "players", force: :cascade do |t|
     t.integer "squad_id"
-    t.integer "event_id"
     t.string "player_email"
     t.string "player_id"
     t.string "player_nickname"
@@ -85,7 +86,6 @@ ActiveRecord::Schema.define(version: 20180924195148) do
     t.string "player_temp4"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["event_id"], name: "index_players_on_event_id"
     t.index ["player_email"], name: "index_players_on_player_email"
     t.index ["player_id"], name: "index_players_on_player_id"
     t.index ["player_nickname_translit"], name: "index_players_on_player_nickname_translit"
@@ -132,16 +132,15 @@ ActiveRecord::Schema.define(version: 20180924195148) do
   end
 
   create_table "squads", force: :cascade do |t|
-    t.integer "event_id"
     t.string "squad_name"
     t.string "squad_name_translit"
     t.string "squad_avatar"
     t.string "squad_rating"
+    t.integer "squad_leader"
     t.text "squad_info"
     t.boolean "squad_recruting", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["event_id"], name: "index_squads_on_event_id"
   end
 
   create_table "subforums", force: :cascade do |t|
@@ -182,17 +181,6 @@ ActiveRecord::Schema.define(version: 20180924195148) do
     t.index ["subforum_id"], name: "index_topics_on_subforum_id"
     t.index ["topic_name_translit"], name: "index_topics_on_topic_name_translit"
     t.index ["topic_show_homepage"], name: "index_topics_on_topic_show_homepage"
-  end
-
-  create_table "whitelists", force: :cascade do |t|
-    t.string "player_id"
-    t.string "player_nick"
-    t.string "player_email"
-    t.boolean "added", default: false
-    t.boolean "banned", default: false
-    t.string "temp1"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
 end

@@ -29,9 +29,7 @@ class PageController < ApplicationController
 @videos = ['2F8xGIMomHM','rXoSmlB-JJc','UZGI_4qGiu0','xSqiIEDP09Y','K19lXMOeG2I','laJT-AeZjjk','-kka0NVEGcs','XKQsc249IiI']
   end
 
-  def newsquad
-    
-  end
+
 
 
 

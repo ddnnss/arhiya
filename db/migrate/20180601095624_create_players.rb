@@ -2,7 +2,6 @@ class CreatePlayers < ActiveRecord::Migration[5.1]
   def change
     create_table :players do |t|
       t.belongs_to :squad
-      t.belongs_to :event
       t.string  :player_email, index: true
       t.string  :player_id, index: true
       t.string  :player_nickname

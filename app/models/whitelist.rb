@@ -1,2 +1,0 @@
-class Whitelist < ApplicationRecord
-end
