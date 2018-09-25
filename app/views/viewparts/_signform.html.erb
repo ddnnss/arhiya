@@ -72,7 +72,7 @@
               <%= f.text_field 'player_nickname', placeholder:'Игровой ник' ,:required => true, class:'form-control home-game-info'%>
 
               <div class="nk-gap-1"></div>
-              <%= f.text_field 'player_email', placeholder:'Почта' ,:required => true, class:'form-control home-game-info'%>
+              <%= f.text_field 'player_email', placeholder:'Почта (желательно на gmail.com)' ,:required => true, class:'form-control home-game-info'%>
 
               <div class="nk-gap-2"></div>
               <%= image_tag(image_path('capthca/'+@n1.to_s+'.png'), class: 'capctha',alt:'')%>

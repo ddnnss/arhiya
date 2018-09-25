@@ -14,11 +14,15 @@ ActiveRecord::Base.logger = Logger.new(STDERR)
 class Event < ActiveRecord::Base
 #  serialize :players, JSON
 end
-class Player < ApplicationRecord::Base
+
+class Squad < ActiveRecord::Base
 
 end
-class Squad < ApplicationRecord::Base
-  has_many :players
+class Player < ActiveRecord::Base
+
+end
+class Privatemessage < ActiveRecord::Base
+
 end
 
 ActiveRecord::Base.establish_connection(
@@ -29,16 +33,16 @@ ActiveRecord::Base.establish_connection(
 bot = Discordrb::Commands::CommandBot.new token: 'NDkyNDIyNzA1OTkyMTcxNTIw.DoWQmg.zVJhZ5TSZU6OuSlTPEs1eIfcp4o', client_id: 492422705992171520, prefix: '!'
 
 bot.command :hh do |event|
-  event.user.pm ('**Доступные команды**
-  !ss - Информация о игровом сервере (количество игроков, ранг, название и IP-адрес)
-  !ii - Информация о сообществе (группа ВК, сайт) ...
-  !sr - Информация о рестартах
-  !se - Информация о мероприятиях на сервере
-  !ei - Информация о конкретном мероприятии в формате : !ei[пробел]НОМЕР МЕРОПРИЯТИЯ (например : !ei 1)
+  event.user.pm ('**Доступные команды IGC-БОТА**
+  !server - Информация о игровом сервере (количество игроков, ранг, название и IP-адрес)
+  !squads - Информация о отрядах
+  !squad_app - Заявка на вступление в отряд в формате : !squad_app[пробел]НОМЕР ОТРЯДА (например : !squad_app 1). Регистрация на сайте http://www.gamescum.ru обязательна!!!
+  !events - Информация о мероприятиях на сервере
+  !event - Информация о конкретном мероприятии в формате : !event[пробел]НОМЕР МЕРОПРИЯТИЯ (например : !event 1)
   !ea - Запись на мероприятие в формате : !e[пробел]НОМЕР МЕРОПРИЯТИЯ[пробел]НИК В ИГРЕ или STEAMID 64 если в нике русские буквы (например : !e 1 GRESHNIK или !e 1 76561198XXXXXXXXX)')
 end
 
-bot.command :ss do |event|
+bot.command :server do |event|
   url = 'https://www.battlemetrics.com/servers/scum/2648150'
   html = open(url)
   doc = Nokogiri::HTML(html)
@@ -50,19 +54,17 @@ bot.command :ss do |event|
   event << '**Ранг сервера** : ' + rank.to_s
   event << '**Игроков** : ' + players.to_s
   event << '**IP сервера** : ' + ip.to_s
+  event << '----------------------------------'
+  event << '12 реальных часов - 1 игровой день'
+  event << '**Рестарты сервера в: 00:00 и 12:00 МСК**'
+  event << '----------------------------------'
+  event << '**Группа ВК** : https://vk.com/igcommunity'
+  event << '**Сайт** : http://www.gamescum.ru/'
 end
 
-bot.command :ii do |event|
-  event.user.pm ('**Группа ВК** : https://vk.com/igcommunity
-**Сайт** : http://www.gamescum.ru/')
 
-end
-bot.command :sr do |event|
-  event.user.pm ('12 реальных часов - 1 игровой день
- **Рестарты сервера в: 00:00 и 12:00 МСК**')
 
-end
-bot.command :se do |event|
+bot.command :events do |event|
 
 e= Event.all
 e.each do |ee|
@@ -70,6 +72,52 @@ e.each do |ee|
 
 end
 return nil
+end
+bot.command :squads do |event|
+
+  s= Squad.all
+  s.each do |ss|
+    p = Player.find(ss.squad_leader)
+    event <<  'Номер п/п : ' + ss.id.to_s + ' | ' +'Название отряда : ' + ss.squad_name + ' | ' + (ss.squad_recruting ? 'Набор в отряд открыт' : 'Набор в отряд закрыт') + ' | ' +' Лидер отряда : ' +  'http://localhost:3000/profile/'+p.player_nickname_translit
+
+  end
+  return nil
+end
+
+bot.command :squad_app do |event,squad_id|
+  p = Player.find_by_player_discord_link(event.user.name + '#' +event.user.tag)
+  if p.nil?
+    event.user.pm ('Похоже ты не зарегистрирован на сайте или при регистрации указал не правильный DISCORD ID')
+  else
+      s= Squad.find_by_id(squad_id)
+      if s.nil?
+        event.user.pm ('Нет отряда с таким номером, набери !squads и уточни еще раз номер отряда')
+      else
+        if s.squad_recruting
+            if s.squad_in_request.split(',').include? p.id.to_s
+              event.user.pm ('Ты уже подавал заявку на вступление. Свяжись с лидером отряда, чтобы ускорить этот процесс')
+            else
+              s.update_column(:squad_in_request,s.squad_in_request.split(',').append( p.id.to_s).join(','))
+              leader = Player.find(s.squad_leader)
+              m= Privatemessage.new
+              m.player_id = p.id.to_s
+              m.message_for_id = leader.id.to_s
+              m.message_text ='Заявка на вступление в отряд от <a href="http://localhost:3000/profile/' + p.player_nickname_translit+'">' + p.player_nickname + '</a>'
+              m.save
+              event.user.pm ('Заявка подана. Ты получишь личное сообщение на сайте и письмо на почту, как только заявка будет рассмотрена.')
+
+
+            end
+        else
+          event.user.pm ('Отряд не ведет набор новых бойцов в данный момент')
+        end
+
+
+      end
+  end
+
+
+  return nil
 end
 
 bot.command :ea do |event,eid,steam_nick|

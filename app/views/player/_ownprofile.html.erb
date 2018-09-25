@@ -63,9 +63,12 @@
 
           <div class="nk-social-menu d-none d-lg-block">
             <ul>
-              <li>  <a href="#" class="nk-btn nk-btn-lg nk-btn-bg-warning" data-toggle="modal" data-target=".edit-player-modal">РЕДАКТИРОВАТЬ</a> </li>
-              <li>  <a href="#" class="nk-btn nk-btn-lg nk-btn-bg-danger" data-toggle="modal" data-target=".create-squad-modal">СОЗДАТЬ ОТРЯД</a> </li>
-
+              <li>  <a href="#" class="nk-btn nk-btn-lg nk-btn-bg-warning" data-toggle="modal" data-target=".edit-player-modal">РЕДАКТИРОВАТЬ ПРОФИЛЬ</a> </li>
+              <%if current_player.squad.squad_leader == current_player.id%>
+              <li>  <a href="#" class="nk-btn nk-btn-lg nk-btn-bg-danger" data-toggle="modal" data-target=".create-squad-modal">РЕДАКТИРОВАТЬ ОТРЯД</a> </li>
+                  <%else%>
+                  <li>  <a href="#" class="nk-btn nk-btn-lg nk-btn-bg-danger" data-toggle="modal" data-target=".create-squad-modal">СОЗДАТЬ ОТРЯД</a> </li>
+<%end%>
             </ul>
           </div>
 
@@ -100,6 +103,11 @@
             <li class="nav-item">
               <a class="nav-link active" href="#tab-description" role="tab" data-toggle="tab" aria-expanded="true">УЧАСТИЕ В СОБЫТИЯХ</a>
             </li>
+            <%if current_player.squad.squad_leader == current_player.id%>
+            <li class="nav-item">
+              <a class="nav-link " href="#tab-squad" role="tab" data-toggle="tab" aria-expanded="true">ОТРЯД</a>
+            </li>
+            <%end%>
             <li class="nav-item">
               <a class="nav-link " href="#tab-pm" role="tab" data-toggle="tab" aria-expanded="true">ЛИЧНЫЕ СООБЩЕНИЯ <small><%=player_pm.nil? ? '(0)' : '(' + player_pm.count.to_s + ')'  %></small></a>
             </li>
@@ -116,7 +124,68 @@
 
             </div>
             <!-- END: Tab Description -->
+            <div role="tabpanel" class="tab-pane fade  show" id="tab-squad">
+              <div class="nk-gap-3"></div>
+              <div class="nk-box-3  bg-dark-1 ">
 
+
+                   <p align="center">ЗАЯВКИ НА ВСТУПЛЕНИЕ</p>
+                    <table class="table table-bordered">
+                      <tr>
+                        <td align="center">НИК</td>
+                        <td align="center">STEAM</td>
+                        <td align="center">DISCORD</td>
+                        <td align="center">#</td>
+                        <td align="center">#</td>
+                      </tr>
+                    <%if @requests%>
+                          <%@req_players.each do |p|%>
+                              <tr>
+                                <td><a href="/profile/<%=p.player_nickname_translit%>"><%=p.player_nickname%></a></td>
+                                <td><a href="https://steamcommunity.com/profiles/<%=p.player_id%>" target="_blank"> <%=p.player_id%></a></td>
+                                <td><%=p.player_discord_link%></td>
+                                <td> <a href="#" class="nk-btn nk-btn-sm nk-btn-bg-success" >ПРИНЯТЬ</a></td>
+                                <td> <a href="#" class="nk-btn nk-btn-sm nk-btn-bg-danger" >ОТКЛОНИТЬ</a></td>
+                              </tr>
+                          <%end%>
+                      <%else%>
+                          <tr>
+                            <td>ЗАЯВОК НЕТ</td>
+
+                          </tr>
+                      <%end%>
+
+                    </table>
+
+
+
+                    <p align="center">СОСТАВ ОТРЯДА</p>
+                <table class="table table-bordered">
+                  <tr>
+                    <td align="center">НИК</td>
+                    <td align="center">STEAM</td>
+                    <td align="center">DISCORD</td>
+                    <td align="center">#</td>
+
+                  </tr>
+
+                      <%@sostav.each do |p|%>
+                          <tr>
+                            <td><a href="/profile/<%=p.player_nickname_translit%>"><%=p.player_nickname%></a></td>
+                            <td><a href="https://steamcommunity.com/profiles/<%=p.player_id%>" target="_blank"> <%=p.player_id%></a></td>
+                            <td><%=p.player_discord_link%></td>
+
+                            <td> <a href="#" class="nk-btn nk-btn-sm nk-btn-bg-danger" >УДАЛИТЬ</a></td>
+                          </tr>
+                      <%end%>
+
+
+                </table>
+
+
+              </div>
+
+            </div>
             <!-- START: Tab pm -->
             <div role="tabpanel" class="tab-pane fade " id="tab-pm">
               <div class="nk-gap-3"></div>
@@ -142,7 +211,7 @@
                               <a href="/profile/<%=pm.player.player_nickname_translit%>">От : <%=pm.player.player_nickname%></a>
                             </div>
                             <div class="nk-social-messages-excerpt">
-                              <%=pm.message_text%>
+                              <%=pm.message_text.html_safe%>
                             </div>
                           </td>
                         </tr>

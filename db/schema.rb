@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 20180924195148) do
     t.string "player_vk_link", default: ""
     t.string "player_discord_link", default: ""
     t.string "player_money_history", default: ""
+    t.string "player_squad_request", default: ""
     t.text "player_shop_history"
     t.text "player_cart"
     t.date "player_lastlogin"
@@ -137,6 +138,7 @@ ActiveRecord::Schema.define(version: 20180924195148) do
     t.string "squad_avatar"
     t.string "squad_rating"
     t.integer "squad_leader"
+    t.string "squad_in_request", default: ""
     t.text "squad_info"
     t.boolean "squad_recruting", default: false
     t.datetime "created_at", null: false
