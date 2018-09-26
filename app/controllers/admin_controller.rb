@@ -25,6 +25,45 @@ class AdminController < ApplicationController
     redirect_to '/admin/faq'
 
   end
+  def events
+    @events = Event.all
+    @event_type = ['Война роботов','Бегущие стволы','Бегущие стволы 2','Убей их всех','Штурм','Наемники',
+                   'Лучший стрелок','Побег','Ринг с зомби','Ринг с медведем','Бои на ринге (8угольник)','Ящики']
+    @event_time = ['00:00','01:00','02:00','03:00','04:00','05:00','06:00','07:00','08:00','09:00','10:00','11:00','12:00',
+                   '13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00']
+    @current_week = []
+    week_start = Date.today.beginning_of_week
+    i=0
+    7.times do
+      @current_week.append(week_start+i)
+
+      i = i+1
+    end
+
+
+  end
+  def addevent
+    e = Event.new
+    e.event_creator = current_player.id
+    e.event_name = params[:event_name]
+    e.event_time = params[:event_time]
+    e.event_date = params[:event_date]
+    e.event_info = params[:event_info]
+    if params[:event_group].present?
+      e.event_group = true
+    end
+    e.save
+    redirect_to '/admin/events'
+
+  end
+
+  def eventinfo
+    @event_info = Event.find_by_id(params[:id])
+
+    @event_players = Player.where(:id => @event_info.event_players.split(','))
+    @event_squads = Squad.where(id: @event_info.event_squads)
+
+  end
 
 
   def addforum

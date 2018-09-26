@@ -15,12 +15,14 @@ Rails.application.routes.draw do
   match '/addcomment'  => 'player#addcomment', via: [:post]
   match '/editplayer'  => 'player#editplayer', via: [:post]
   match '/sendpm'  => 'player#sendpm', via: [:post]
-  match '/deletepm(:/pm_id)'  => 'player#deletepm', via: [:post]
+  match '/deletepm(:/pm_id)'  => 'player#deletepm', via: [:get]
   match '/activate(/:player_id)' => 'player#activate', via: [:get]
  #----------ADMIN------------------------
   match '/admin/forum'  => 'admin#forum_admin', via: [:get]
   match '/admin/addtopic'  => 'admin#addtopic', via: [:get]
-
+  match '/addevent'  => 'admin#addevent', via: [:post]
+  match '/admin/events'  => 'admin#events', via: [:get]
+  match '/admin/eventinfo'  => 'admin#eventinfo', via: [:get]
 
   match '/addfaq'  => 'admin#addfaq', via: [:post]
   match '/admin/faq'  => 'admin#faq', via: [:get]

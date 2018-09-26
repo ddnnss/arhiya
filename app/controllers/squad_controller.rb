@@ -38,10 +38,14 @@ class SquadController < ApplicationController
       else
         tmp = s.squad_in_request.split(',')
         tmp1 = tmp - [params[:player_id]]
-        logger.info (tmp)
-        logger.info (tmp1)
         s.update_column(:squad_in_request , tmp1.join(','))
         p.update_column(:squad_id,params[:squad_id].to_i)
+        UserMailer.squadapp(p.player_email).deliver_later
+        m= Privatemessage.new
+        m.player_id = s.squad_leader
+        m.message_for_id = p.id
+        m.message_text = 'Привет, ты добавлен в отряд.'
+        m.save
         redirect_to '/profile/'+current_player.player_nickname_translit
       end
 

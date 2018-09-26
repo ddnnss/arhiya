@@ -1,0 +1,85 @@
+<div class="nk-main">
+  <div class="nk-box bg-dark-1 text-white">
+
+    <div class="container">
+      <table class="table table-bordered">
+        <tr>
+
+          <td>Название</td>
+          <td>Дата</td>
+          <td>Время</td>
+        </tr>
+        <%@events.each do |e|%>
+            <tr>
+              <td><a href="/admin/eventinfo?id=<%=e.id%>"><%=e.event_name%></a> </td>
+              <td><%=e.event_date%></td>
+              <td><%=e.event_time%></td>
+
+
+            </tr>
+        <%end%>
+
+      </table>
+
+      <div class="nk-gap-1"></div>
+      Добавить новое событие:
+      <div class="nk-gap-1"></div>
+      <%= form_for  :event, url: addevent_path do |f|%>
+
+
+
+
+<div class="row">
+  <div class="col-4">
+    Название:
+    <select class="form-control" name="event_name">
+      <%@event_type.each do |n|%>
+          <option value="<%=n%>"><%=n%></option>
+      <%end%>
+    </select>
+  </div>
+
+
+            <div class="col-4">
+              Время:
+              <select class="form-control" name="event_time">
+                <%@event_time.each do |t|%>
+                    <option <%=t >= Time.now ? 'selected' : '' %> value="<%=t%>"><%=t%></option>
+                <%end%>
+              </select>
+
+          </div>
+
+            <div class="col-4">
+              Дата:
+              <select class="form-control" name="event_date">
+                <%@current_week.each do |w|%>
+                    <option <%=w == Date.today ? 'selected' : '' %> value="<%=w.strftime('%d/%m/%Y')%>"><%=w.strftime('%d/%m/%Y')%></option>
+                <%end%>
+              </select>
+            </div>
+
+          </div>
+
+          <div class="nk-gap-1"></div>
+Событие групповое?
+<input type="checkbox" name="event_group">
+          <div class="nk-gap-1"></div>
+          <span class=" home-game-info">Описание события :</span>
+
+          <textarea class="nk-summernote  home-game-info"    name="event_info" rows="10"></textarea>
+
+
+          <div class="nk-gap-2"></div>
+
+
+
+
+          <button  type="submit" class="nk-btn nk-btn-color-main-1 link-effect-4">Добавить </button>
+
+      <% end %>
+
+
+    </div>
+  </div>
+</div>

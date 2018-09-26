@@ -6,9 +6,9 @@ class UserMailer < ApplicationMailer
     mail(to: @user.player_email,subject: "Регистрация на сайте GAMESCUM")
   end
 
-  def whapply(mail)
+  def squadapp(mail)
 
-    mail(to: mail,subject: "Добавление в WhiteList")
+    mail(to: mail,subject: "Добавление в отряд")
   end
 
   def resetpassword(user)

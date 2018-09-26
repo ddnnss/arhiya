@@ -115,7 +115,7 @@
             <%end%>
                 <%end%>
             <li class="nav-item">
-              <a class="nav-link " href="#tab-pm" role="tab" data-toggle="tab" aria-expanded="true">ЛИЧНЫЕ СООБЩЕНИЯ <small><%=player_pm.nil? ? '(0)' : '(' + player_pm.count.to_s + ')'  %></small></a>
+              <a class="nav-link " href="#tab-pm" role="tab" data-toggle="tab" aria-expanded="true">ЛИЧНЫЕ СООБЩЕНИЯ (<span id="pm_count"><small><%=player_pm.nil? ? '0' :  player_pm.count.to_s  %></small></span>)</a>
             </li>
 
 
@@ -208,7 +208,7 @@
 
                           <td class="nk-social-messages-description">
                             <div class="nk-social-messages-since"><%=pm.created_at.strftime("%d.%m.%Y | %H:%M:%S")%></div>
-                            <a href="#" class="nk-social-messages-remove"><span class="ion-trash-b"></span></a>
+                            <a href="/deletepm?pm_id=<%=pm.id%>" data-remote="true" class="nk-social-messages-remove"><span class="ion-trash-b"></span></a>
 
                             <div class="nk-social-messages-from">
                               <a href="/profile/<%=pm.player.player_nickname_translit%>"><img src="/images/avatars/<%=pm.player.player_avatar%>" alt="<%=pm.player.player_nickname%>" title="<%=pm.player.player_nickname%>"></a>

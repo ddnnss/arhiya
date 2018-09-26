@@ -23,7 +23,7 @@ unless @player.squad_id.nil?
         end
 
         @sostav = Player.where(:squad_id => s.id)
-       
+
 
       end
 end
@@ -70,6 +70,14 @@ end
       end
   end
   def deletepm
+
+    pm = Privatemessage.find(params[:pm_id])
+    pm.destroy
+    respond_to do |format|
+      @pm_id = params[:pm_id]
+
+      format.js
+    end
 
   end
   def addcomment
@@ -193,11 +201,11 @@ end
       session[:player_id] = u.id
       u.update_column(:player_lastlogin, Date.today)
       flash[:activatesuccess] = 'Аккаунт активирован.'
-      redirect_to root_path and return
+      redirect_to '/'
 
     else
       flash[:activateerror] = 'Аккаунт уже активирован.'
-      redirect_to root_path and return
+      redirect_to '/'
     end
   end
 
