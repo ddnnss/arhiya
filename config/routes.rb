@@ -41,6 +41,7 @@ Rails.application.routes.draw do
 
   #----------SQUAD------------------------
   match '/newsquad'  => 'squad#newsquad', via: [:post]
+  match '/squadadd(/:squad_id/:player_id)'  => 'squad#squadadd', via: [:get]
 
 
 

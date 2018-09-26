@@ -26,4 +26,25 @@ class SquadController < ApplicationController
 
 
   end
+
+  def squadadd
+    s = Squad.find_by_id(params[:squad_id])
+    if s.nil?
+      redirect_to '/'
+    else
+      p = Player.find_by_id(params[:player_id])
+      if p.nil?
+        redirect_to '/'
+      else
+        tmp = s.squad_in_request.split(',')
+        tmp1 = tmp - [params[:player_id]]
+        logger.info (tmp)
+        logger.info (tmp1)
+        s.update_column(:squad_in_request , tmp1.join(','))
+        p.update_column(:squad_id,params[:squad_id].to_i)
+        redirect_to '/profile/'+current_player.player_nickname_translit
+      end
+
+    end
+  end
 end

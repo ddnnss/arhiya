@@ -12,6 +12,7 @@ class PlayerController < ApplicationController
     if logged_in? && @player.id == current_player.id
     #  @pm = Privatemessage.where(message_for_id: session[:player_id]).order('created_at desc')
 
+unless @player.squad_id.nil?
       if current_player.squad.squad_leader == current_player.id
         s = Squad.find(current_player.squad.id)
         if s.squad_in_request == ''
@@ -25,7 +26,7 @@ class PlayerController < ApplicationController
        
 
       end
-
+end
     end
 
   end
