@@ -74,14 +74,13 @@ e.each do |ee|
 end
 return nil
 end
-bot.command :squads do |event|
 
+bot.command :squads do |event|
   s= Squad.all
   s.each do |ss|
     p = Player.find(ss.squad_leader)
     pp = Player.where(:squad_id => ss.id)
     event <<  'Номер п/п : ' + ss.id.to_s + ' | ' +'Название отряда : ' + ss.squad_name + ' | ' + 'Состав отряда : ' + pp.count.to_s + ' чел.'+ ' | ' + (ss.squad_recruting ? 'Набор в отряд открыт' : 'Набор в отряд закрыт') + ' | ' +' Лидер отряда : ' +  'http://localhost:3000/profile/'+p.player_nickname_translit
-
   end
   return nil
 end
@@ -108,24 +107,18 @@ bot.command :squad do |event,squad_id|
             m.message_text ='Заявка на вступление в отряд от <a href="http://localhost:3000/profile/' + p.player_nickname_translit+'">' + p.player_nickname + '</a>'
             m.save
             event.user.pm ('Заявка подана. Ты получишь личное сообщение на сайте и письмо на почту, как только заявка будет рассмотрена. **Внимание, письма с сайта могут не доходить на почтовые сервисы mail.ru и yandex.ru !!!**')
-
-
           end
         else
           event.user.pm ('Отряд не ведет набор новых бойцов в данный момент')
         end
-
-
       end
     else
       event.user.pm ('Ты уже состоишь в отряде')
     end
-
   end
-
-
   return nil
 end
+
 bot.command :event do |event,event_id|
   e = Event.find_by_id(event_id)
   p = Player.find_by_player_discord_link(event.user.name + '#' +event.user.tag)
@@ -148,15 +141,17 @@ bot.command :event do |event,event_id|
         else
           e.update_column(:event_players, e.event_players.split(',').append(p.id.to_s).join(','))
           event.user.pm ('Ты записан')
-
         end
     end
-
   end
   return nil
 end
+bot.bucket :vend, limit: 1, time_span: 60*60*24, delay: 1
 
-
+bot.command(:v,bucket: :vend, rate_limit_message: 'Команда может выполняться 1 раз в сутки') do |event|
+  event.channel.send_file(File.open('c:/test.jpg', 'r'))
+  return nil
+end
 
 
 

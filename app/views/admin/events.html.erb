@@ -34,7 +34,9 @@
     Название:
     <select class="form-control" name="event_name">
       <%@event_type.each do |n|%>
+
           <option value="<%=n%>"><%=n%></option>
+
       <%end%>
     </select>
   </div>
@@ -44,7 +46,7 @@
               Время:
               <select class="form-control" name="event_time">
                 <%@event_time.each do |t|%>
-                    <option <%=t >= Time.now ? 'selected' : '' %> value="<%=t%>"><%=t%></option>
+                    <option value="<%=t%>"><%=t%></option>
                 <%end%>
               </select>
 
@@ -54,8 +56,10 @@
               Дата:
               <select class="form-control" name="event_date">
                 <%@current_week.each do |w|%>
-                    <option <%=w == Date.today ? 'selected' : '' %> value="<%=w.strftime('%d/%m/%Y')%>"><%=w.strftime('%d/%m/%Y')%></option>
-                <%end%>
+                    <%unless w < Date.today%>
+                    <option  value="<%=w.strftime('%d/%m/%Y')%>"><%=w.strftime('%d/%m/%Y')%></option>
+                    <%end%>
+                    <%end%>
               </select>
             </div>
 
