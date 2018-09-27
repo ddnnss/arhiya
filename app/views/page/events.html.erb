@@ -47,7 +47,7 @@
            <tr>
              <td align="center">
                <%@events1.each do |e|%>
-                   <%if e.event_active%>
+                   <%if e.event_active && e.event_time.to_time >= Time.now  %>
                        <a href="/event/<%=e.id%>" class="nk-btn nk-btn-xs <%=e.event_group ? 'nk-btn-bg-danger' : 'nk-btn-bg-warning'%> "> <%=e.event_name%> | <%=e.event_time%></a><br>
                    <%else%>
                        <a style="text-decoration: line-through" href="#" class="nk-btn nk-btn-xs nk-btn-bg-dark-1 "> <%=e.event_name%></a><br>
@@ -56,7 +56,7 @@
              </td>
              <td align="center">
                <%@events2.each do |e|%>
-                   <%if e.event_active%>
+                   <%if e.event_active && e.event_time.to_time >= Time.now  %>
                        <a href="/event/<%=e.id%>" class="nk-btn nk-btn-xs <%=e.event_group ? 'nk-btn-bg-danger' : 'nk-btn-bg-warning'%> "> <%=e.event_name%> | <%=e.event_time%></a><br>
                    <%else%>
                        <a style="text-decoration: line-through" href="#" class="nk-btn nk-btn-xs nk-btn-bg-dark-1 "> <%=e.event_name%></a><br>
@@ -65,7 +65,7 @@
              </td>
              <td align="center">
                <%@events3.each do |e|%>
-                   <%if e.event_active%>
+                   <%if e.event_active && e.event_time.to_time >= Time.now  %>
                        <a href="/event/<%=e.id%>" class="nk-btn nk-btn-xs <%=e.event_group ? 'nk-btn-bg-danger' : 'nk-btn-bg-warning'%> "> <%=e.event_name%> | <%=e.event_time%></a><br>
                    <%else%>
                        <a style="text-decoration: line-through" href="#" class="nk-btn nk-btn-xs nk-btn-bg-dark-1 "> <%=e.event_name%></a><br>
@@ -74,7 +74,7 @@
              </td>
              <td align="center">
                <%@events4.each do |e|%>
-                   <%if e.event_active%>
+                   <%if e.event_active && e.event_time.to_time >= Time.now  %>
                        <a href="/event/<%=e.id%>" class="nk-btn nk-btn-xs <%=e.event_group ? 'nk-btn-bg-danger' : 'nk-btn-bg-warning'%> "> <%=e.event_name%> | <%=e.event_time%></a><br>
                    <%else%>
                        <a style="text-decoration: line-through" href="#" class="nk-btn nk-btn-xs nk-btn-bg-dark-1 "> <%=e.event_name%></a><br>
@@ -83,7 +83,7 @@
              </td>
              <td align="center">
                <%@events5.each do |e|%>
-                   <%if e.event_active%>
+                   <%if e.event_active && e.event_time.to_time >= Time.now  %>
                        <a href="/event/<%=e.id%>" class="nk-btn nk-btn-xs <%=e.event_group ? 'nk-btn-bg-danger' : 'nk-btn-bg-warning'%> "> <%=e.event_name%> | <%=e.event_time%></a><br>
                    <%else%>
                        <a style="text-decoration: line-through" href="#" class="nk-btn nk-btn-xs nk-btn-bg-dark-1 "> <%=e.event_name%></a><br>
@@ -92,7 +92,7 @@
              </td>
              <td align="center">
                <%@events6.each do |e|%>
-                   <%if e.event_active%>
+                   <%if e.event_active && e.event_time.to_time >= Time.now  %>
                        <a href="/event/<%=e.id%>" class="nk-btn nk-btn-xs <%=e.event_group ? 'nk-btn-bg-danger' : 'nk-btn-bg-warning'%> "> <%=e.event_name%> | <%=e.event_time%></a><br>
                    <%else%>
                        <a style="text-decoration: line-through" href="#" class="nk-btn nk-btn-xs nk-btn-bg-dark-1 "> <%=e.event_name%></a><br>
@@ -101,7 +101,7 @@
              </td>
              <td align="center">
                <%@events7.each do |e|%>
-                   <%if e.event_active%>
+                   <%if e.event_active && e.event_time.to_time >= Time.now  %>
                        <a href="/event/<%=e.id%>" class="nk-btn nk-btn-xs <%=e.event_group ? 'nk-btn-bg-danger' : 'nk-btn-bg-warning'%> "> <%=e.event_name%> | <%=e.event_time%></a><br>
                    <%else%>
                        <a style="text-decoration: line-through" href="#" class="nk-btn nk-btn-xs nk-btn-bg-dark-1 "> <%=e.event_name%></a><br>
