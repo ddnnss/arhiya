@@ -1,0 +1,130 @@
+<!-- START: Page Background -->
+<div class="nk-page-background op-5" data-bg-mp4="<%= asset_path('bg-2.mp4') %>" data-bg-webm="<%= asset_path('bg-2.webm') %>" data-bg-ogv="<%= asset_path('bg-2.ogv') %>" data-bg-poster="<%= asset_path('bg-2.jpg') %>"></div>
+<!-- END: Page Background -->
+
+<div class="nk-main">
+
+  <div class="nk-header-title nk-header-title-sm nk-header-title-parallax-opacity">
+
+    <div class="nk-header-text-bottom">
+      <div class="nk-breadcrumbs text-xs-center">
+        <ul>
+          <li><a href="/">ГЛАВНАЯ</a></li>
+          <li>
+            <span>РАСПИСАНИЕ МЕРОПРИЯТИЙ НА СЕРВЕРЕ</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+  <div class="container">
+    <div class="nk-gap-4"></div>
+
+    <div class="nk-box bg-dark-1 text-white">
+      <div class="nk-gap-1"></div>
+      <div class="container">
+        <a href="#" class="nk-btn btn-sm nk-btn-bg-danger ">ГРУППОВЫЕ ИВЕНТЫ</a> <a href="#" class="nk-btn btn-sm nk-btn-bg-warning ">ОБЩИЕ ИВЕНТЫ</a>
+        <div class="nk-gap-1"></div>
+
+        <div class="">
+          <div class="">
+            <table class="table table-bordered">
+              <tr align="center">
+                <%@days.each do |d|%>
+                    <td><%=d%></td>
+                <%end%>
+              </tr>
+              <tr align="center">
+                <%@current_week.each do |w|%>
+                <td><%=w.strftime('%d/%m/%Y')%></td>
+                <%end%>
+              </tr>
+           <tr>
+             <td align="center">
+               <%@events1.each do |e|%>
+                   <%if e.event_active%>
+                       <a href="/event/<%=e.id%>" class="nk-btn nk-btn-xs <%=e.event_group ? 'nk-btn-bg-danger' : 'nk-btn-bg-warning'%> "> <%=e.event_name%> | <%=e.event_time%></a><br>
+                   <%else%>
+                       <a style="text-decoration: line-through" href="#" class="nk-btn nk-btn-xs nk-btn-bg-dark-1 "> <%=e.event_name%></a><br>
+                   <%end%>
+             <%end%>
+             </td>
+             <td align="center">
+               <%@events2.each do |e|%>
+                   <%if e.event_active%>
+                       <a href="/event/<%=e.id%>" class="nk-btn nk-btn-xs <%=e.event_group ? 'nk-btn-bg-danger' : 'nk-btn-bg-warning'%> "> <%=e.event_name%> | <%=e.event_time%></a><br>
+                   <%else%>
+                       <a style="text-decoration: line-through" href="#" class="nk-btn nk-btn-xs nk-btn-bg-dark-1 "> <%=e.event_name%></a><br>
+                   <%end%>
+             <%end%>
+             </td>
+             <td align="center">
+               <%@events3.each do |e|%>
+                   <%if e.event_active%>
+                       <a href="/event/<%=e.id%>" class="nk-btn nk-btn-xs <%=e.event_group ? 'nk-btn-bg-danger' : 'nk-btn-bg-warning'%> "> <%=e.event_name%> | <%=e.event_time%></a><br>
+                   <%else%>
+                       <a style="text-decoration: line-through" href="#" class="nk-btn nk-btn-xs nk-btn-bg-dark-1 "> <%=e.event_name%></a><br>
+                   <%end%>
+             <%end%>
+             </td>
+             <td align="center">
+               <%@events4.each do |e|%>
+                   <%if e.event_active%>
+                       <a href="/event/<%=e.id%>" class="nk-btn nk-btn-xs <%=e.event_group ? 'nk-btn-bg-danger' : 'nk-btn-bg-warning'%> "> <%=e.event_name%> | <%=e.event_time%></a><br>
+                   <%else%>
+                       <a style="text-decoration: line-through" href="#" class="nk-btn nk-btn-xs nk-btn-bg-dark-1 "> <%=e.event_name%></a><br>
+                   <%end%>
+             <%end%>
+             </td>
+             <td align="center">
+               <%@events5.each do |e|%>
+                   <%if e.event_active%>
+                       <a href="/event/<%=e.id%>" class="nk-btn nk-btn-xs <%=e.event_group ? 'nk-btn-bg-danger' : 'nk-btn-bg-warning'%> "> <%=e.event_name%> | <%=e.event_time%></a><br>
+                   <%else%>
+                       <a style="text-decoration: line-through" href="#" class="nk-btn nk-btn-xs nk-btn-bg-dark-1 "> <%=e.event_name%></a><br>
+                   <%end%>
+             <%end%>
+             </td>
+             <td align="center">
+               <%@events6.each do |e|%>
+                   <%if e.event_active%>
+                       <a href="/event/<%=e.id%>" class="nk-btn nk-btn-xs <%=e.event_group ? 'nk-btn-bg-danger' : 'nk-btn-bg-warning'%> "> <%=e.event_name%> | <%=e.event_time%></a><br>
+                   <%else%>
+                       <a style="text-decoration: line-through" href="#" class="nk-btn nk-btn-xs nk-btn-bg-dark-1 "> <%=e.event_name%></a><br>
+                   <%end%>
+               <%end%>
+             </td>
+             <td align="center">
+               <%@events7.each do |e|%>
+                   <%if e.event_active%>
+                       <a href="/event/<%=e.id%>" class="nk-btn nk-btn-xs <%=e.event_group ? 'nk-btn-bg-danger' : 'nk-btn-bg-warning'%> "> <%=e.event_name%> | <%=e.event_time%></a><br>
+                   <%else%>
+                       <a style="text-decoration: line-through" href="#" class="nk-btn nk-btn-xs nk-btn-bg-dark-1 "> <%=e.event_name%></a><br>
+                   <%end%>
+             <%end%>
+             </td>
+           </tr>
+
+
+            </table>
+
+
+
+
+          </div>
+        </div>
+
+        <div class="nk-gap-4"></div>
+      </div>
+
+
+
+    </div>
+  </div>
+  <div class="nk-gap-4"></div>
+</div>

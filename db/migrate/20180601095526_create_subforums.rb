@@ -11,6 +11,7 @@ class CreateSubforums < ActiveRecord::Migration[5.1]
       t.string  :subforum_temp3
       t.string  :subforum_temp4
 
+
     #  t.timestamps
     end
   end

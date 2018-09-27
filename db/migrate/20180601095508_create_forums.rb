@@ -8,6 +8,7 @@ class CreateForums < ActiveRecord::Migration[5.1]
       t.string  :forum_temp3
       t.string  :forum_temp4
 
+
      # t.timestamps
     end
   end

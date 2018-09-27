@@ -12,21 +12,22 @@ class PlayerController < ApplicationController
     if logged_in? && @player.id == current_player.id
     #  @pm = Privatemessage.where(message_for_id: session[:player_id]).order('created_at desc')
 
-unless @player.squad_id.nil?
-      if current_player.squad.squad_leader == current_player.id
-        s = Squad.find(current_player.squad.id)
-        if s.squad_in_request == ''
-        @requests = false
-        else
-          @requests = true
-          @req_players = Player.find(s.squad_in_request.split(','))
+      unless @player.squad_id.nil?
+        if current_player.squad.squad_leader == current_player.id
+          s = Squad.find(current_player.squad.id)
+          if s.squad_in_request == ''
+          @requests = false
+          else
+            @requests = true
+            @req_players = Player.find(s.squad_in_request.split(','))
+          end
+
+          @sostav = Player.where(:squad_id => s.id)
+
+
         end
-
-        @sostav = Player.where(:squad_id => s.id)
-
-
       end
-end
+      @players_events = Event.where('event_players LIKE "%?%"', @player.id).order('event_date asc')
     end
 
   end

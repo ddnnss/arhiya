@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   match '/faq' => 'page#faq', via: [:get]
   match '/wiki' => 'page#wiki', via: [:get]
+  match '/events' => 'page#events', via: [:get]
+  match '/event(/:event_id)' => 'page#event', via: [:get]
 
   #----------PLAYER------------------------
   match '/login'  => 'player#login', via: [:post]
@@ -15,7 +17,7 @@ Rails.application.routes.draw do
   match '/addcomment'  => 'player#addcomment', via: [:post]
   match '/editplayer'  => 'player#editplayer', via: [:post]
   match '/sendpm'  => 'player#sendpm', via: [:post]
-  match '/deletepm(:/pm_id)'  => 'player#deletepm', via: [:get]
+  match '/deletepm(/:pm_id)'  => 'player#deletepm', via: [:get]
   match '/activate(/:player_id)' => 'player#activate', via: [:get]
  #----------ADMIN------------------------
   match '/admin/forum'  => 'admin#forum_admin', via: [:get]

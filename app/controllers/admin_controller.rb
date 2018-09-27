@@ -27,6 +27,11 @@ class AdminController < ApplicationController
   end
   def events
     @events = Event.all
+    @events.each do |e|
+      if e.event_date.to_date < Date.today
+        e.update_column(:event_active , false)
+      end
+    end
     @event_type = ['Война роботов','Бегущие стволы','Бегущие стволы 2','Убей их всех','Штурм','Наемники',
                    'Лучший стрелок','Побег','Ринг с зомби','Ринг с медведем','Бои на ринге (8угольник)','Ящики','Кулачный бой стенка-на-стенку']
     @event_time = ['00:00','01:00','02:00','03:00','04:00','05:00','06:00','07:00','08:00','09:00','10:00','11:00','12:00',
@@ -60,7 +65,7 @@ class AdminController < ApplicationController
   def eventinfo
     @event_info = Event.find_by_id(params[:id])
 
-    @event_players = Player.where(:id => @event_info.event_players.split(','))
+    @event_players = Player.where(:id => @event_info.event_players.split(',')).order('squad_id desc')
     @event_squads = Squad.where(id: @event_info.event_squads)
 
   end

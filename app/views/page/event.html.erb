@@ -1,0 +1,61 @@
+<!-- START: Page Background -->
+<div class="nk-page-background op-5" data-bg-mp4="<%= asset_path('bg-2.mp4') %>" data-bg-webm="<%= asset_path('bg-2.webm') %>" data-bg-ogv="<%= asset_path('bg-2.ogv') %>" data-bg-poster="<%= asset_path('bg-2.jpg') %>"></div>
+<!-- END: Page Background -->
+
+<div class="nk-main">
+
+  <div class="nk-header-title nk-header-title-sm nk-header-title-parallax-opacity">
+
+    <div class="nk-header-text-bottom">
+      <div class="nk-breadcrumbs text-xs-center">
+        <ul>
+          <li><a href="/">ГЛАВНАЯ</a></li>
+          <li><a href="/events">МЕРОПРИЯТИЯ</a></li>
+          <li>
+            <span><%=@event.event_name.mb_chars.upcase%></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+  <div class="container">
+    <div class="nk-gap-4"></div>
+
+    <div class="nk-box bg-dark-1 text-white">
+      <div class="nk-gap-4"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 offset-md-1">
+
+            Дата проведения : <%=@event.event_date%> <br>
+            Время проведения : <%=@event.event_time%><br>
+            Участников : <%=@event.event_players.split(',').count%><br>
+            Информация о мероприятии:<br>
+            <%=@event.event_info.html_safe%><br>
+            <% if logged_in?%>
+                <%if @event.event_players.split(',').include? (current_player.id.to_s)%>
+                    <a href="#" class="nk-btn btn-sm nk-btn-bg-danger ">ТЫ УЖЕ ЗАПИСАН</a>
+                <%else%>
+                    <a href="/event_app/<%=@event.id%>/<%=current_player.id%>" class="nk-btn btn-sm nk-btn-bg-success ">ЗАПИСАТЬСЯ</a>
+                <%end%>
+
+                <%else%>
+                <a href="#" class=" nk-sign-toggle no-link-effect nk-btn btn-sm nk-btn-bg-danger ">ДЛЯ УЧАСТИЯ В МЕРОПРИЯТИЯХ НУЖНО ЗАРЕГИСТРИРОВАТЬСЯ НА САЙТЕ</a>
+                <%end%>
+          </div>
+        </div>
+
+        <div class="nk-gap-4"></div>
+      </div>
+
+
+
+    </div>
+  </div>
+  <div class="nk-gap-4"></div>
+</div>

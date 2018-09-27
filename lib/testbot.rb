@@ -70,7 +70,7 @@ bot.command :events do |event|
 
 e= Event.where(:event_active => true)
 e.each do |ee|
-  event <<  'Номер :' + ee.id.to_s + ' | ' +'Название :' + ee.event_name + ' | ' + 'Дата и время : '  +  ee.event_date + ' в ' + ee.event_time + ' | ' + (ee.event_group ? '**МОГУТ УЧАВСТВОВАТЬ ТОЛЬКО ОТРЯДЫ**' : '**МОГУТ УЧАВСТВОВАТЬ ВСЕ ЖЕЛАЮЩИЕ**') + ' | ' + 'Подробная информация : http://192.168.1.45:3000/event/' + ee.id.to_s
+  event <<  'Номер :' + ee.id.to_s + ' | ' +'Название :' + ee.event_name + ' | ' + 'Дата и время : '  +  ee.event_date + ' в ' + ee.event_time + ' | ' + (ee.event_group ? '**МОГУТ УЧАВСТВОВАТЬ ТОЛЬКО ОТРЯДЫ**' : '**МОГУТ УЧАВСТВОВАТЬ ВСЕ ЖЕЛАЮЩИЕ**') + ' | ' + 'Подробная информация : http://www.gamescum.ru/events/' + ee.id.to_s
 end
 return nil
 end
@@ -80,7 +80,7 @@ bot.command :squads do |event|
   s.each do |ss|
     p = Player.find(ss.squad_leader)
     pp = Player.where(:squad_id => ss.id)
-    event <<  'Номер п/п : ' + ss.id.to_s + ' | ' +'Название отряда : ' + ss.squad_name + ' | ' + 'Состав отряда : ' + pp.count.to_s + ' чел.'+ ' | ' + (ss.squad_recruting ? 'Набор в отряд открыт' : 'Набор в отряд закрыт') + ' | ' +' Лидер отряда : ' +  'http://localhost:3000/profile/'+p.player_nickname_translit
+    event <<  'Номер п/п : ' + ss.id.to_s + ' | ' +'Название отряда : ' + ss.squad_name + ' | ' + 'Состав отряда : ' + pp.count.to_s + ' чел.'+ ' | ' + (ss.squad_recruting ? 'Набор в отряд открыт' : 'Набор в отряд закрыт') + ' | ' +' Лидер отряда : ' +  'http://www.gamescum.ru/profile/'+p.player_nickname_translit
   end
   return nil
 end
@@ -104,7 +104,7 @@ bot.command :squad do |event,squad_id|
             m= Privatemessage.new
             m.player_id = p.id.to_s
             m.message_for_id = leader.id.to_s
-            m.message_text ='Заявка на вступление в отряд от <a href="http://localhost:3000/profile/' + p.player_nickname_translit+'">' + p.player_nickname + '</a>'
+            m.message_text ='Заявка на вступление в отряд от <a href="http://www.gamescum.ru/profile/' + p.player_nickname_translit+'">' + p.player_nickname + '</a>'
             m.save
             event.user.pm ('Заявка подана. Ты получишь личное сообщение на сайте и письмо на почту, как только заявка будет рассмотрена. **Внимание, письма с сайта могут не доходить на почтовые сервисы mail.ru и yandex.ru !!!**')
           end
