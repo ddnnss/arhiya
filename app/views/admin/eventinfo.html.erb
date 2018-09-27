@@ -3,22 +3,25 @@
 
     <div class="container">
       <div class="nk-gap-1"></div>
-      <a href="https://scummap.devzupa.be" target="_blank">КАРТА</a>
+      Выбери нужные координаты на <a href="https://scummap.devzupa.be" target="_blank">КАРТЕ</a>
       <input type="text" id="coord" class="form-control" placeholder="Сюда нужно ввести координаты для телепорта">
       <div class="nk-gap-1"></div>
+
       <table class="table table-bordered">
         <tr>
 
           <td>НИК</td>
           <td>STEAM ID</td>
           <td>DISCORD ID</td>
+          <td>ОТРЯД</td>
         </tr>
 
             <%@event_players.each do |p|%>
                 <tr>
                   <td><%=p.player_nickname%> </td>
-                  <td><span id="p_id_<%=p.id%>"><%=p.player_id%></span> <button onclick="copyToClipboard('#p_id_<%=p.id%>')">Скопировать</button></td>
+                  <td><span id="p_id_<%=p.id%>"><%=p.player_id%></span> <button id="btn_<%=p.id%>"  class="nk-btn nk-btn-sm nk-btn-color-danger" onclick="copyToClipboard('#p_id_<%=p.id%>','#btn_<%=p.id%>')">Скопировать</button></td>
                   <td><%=p.player_discord_link%></td>
+                  <td><%=p.squad_id.nil? ? 'СОЛО ИГРОК' : p.squad.squad_name%></td>
 
 
                 </tr>
@@ -34,12 +37,16 @@
 </div>
 
 <script>
-    function copyToClipboard(element) {
+    function copyToClipboard(element,btn) {
         var $temp = $("<input>");
         var coord = $('#coord').val();
         $("body").append($temp);
         $temp.val('#teleport ' + $(element).html() + ' ' + coord).select();
         document.execCommand("copy");
         $temp.remove();
+
+        $(btn).removeClass('nk-btn-color-danger');
+        $(btn).addClass('nk-btn-color-success');
+        $('#btn_1').html('Скопировано');
     }
 </script>

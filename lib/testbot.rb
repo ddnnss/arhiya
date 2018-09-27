@@ -121,13 +121,14 @@ end
 
 bot.command :event do |event,event_id|
   e = Event.find_by_id(event_id)
-  p = Player.find_by_player_discord_link(event.user.name + '#' +event.user.tag)
-  if p.nil?
-    event.user.pm ('Похоже ты не зарегистрирован на сайте или при регистрации указал не правильный DISCORD ID')
-  else
-    if e.event_players.split(',').include? p.id.to_s
-      event.user.pm ('Ты уже записан')
+  if e
+    p = Player.find_by_player_discord_link(event.user.name + '#' +event.user.tag)
+    if p.nil?
+      event.user.pm ('Похоже ты не зарегистрирован на сайте или при регистрации указал не правильный DISCORD ID')
     else
+      if e.event_players.split(',').include? p.id.to_s
+        event.user.pm ('Ты уже записан')
+      else
         if e.event_group
           if p.squad_id
             unless e.event_squads.split(',').include? p.squad_id.to_s
@@ -142,8 +143,12 @@ bot.command :event do |event,event_id|
           e.update_column(:event_players, e.event_players.split(',').append(p.id.to_s).join(','))
           event.user.pm ('Ты записан')
         end
+      end
     end
+  else
+    event.user.pm ('Нет такого мероприятия. Набери !events')
   end
+
   return nil
 end
 bot.bucket :vend, limit: 1, time_span: 60*60*24, delay: 1
