@@ -18,6 +18,7 @@ class CreateTopics < ActiveRecord::Migration[5.1]
       t.string  :topic_temp2
       t.string  :topic_temp3
       t.string  :topic_temp4
+      t.boolean :topic_wiki ,  :default => false
 
      t.timestamps
     end

@@ -10,6 +10,7 @@ class CreateSubforums < ActiveRecord::Migration[5.1]
       t.string  :subforum_temp2
       t.string  :subforum_temp3
       t.string  :subforum_temp4
+      t.boolean :subforum_wiki ,  :default => false
 
 
     #  t.timestamps

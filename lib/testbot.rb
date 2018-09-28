@@ -32,6 +32,8 @@ ActiveRecord::Base.establish_connection(
 
 bot = Discordrb::Commands::CommandBot.new token: 'NDkyNDIyNzA1OTkyMTcxNTIw.DoWQmg.zVJhZ5TSZU6OuSlTPEs1eIfcp4o', client_id: 492422705992171520, prefix: '!'
 
+next_v = nil
+last_v_player = nil
 bot.command :igc do |event|
   event.user.pm ('**Доступные команды IGC-БОТА**
   ------------------------------

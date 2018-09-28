@@ -14,10 +14,13 @@ class CreatePlayers < ActiveRecord::Migration[5.1]
       t.string  :player_discord_link, :default => ''
       t.string  :player_money_history, :default => ''
       t.string  :player_squad_request, :default => ''
+      t.string  :player_last_v, :default => ''
+
       t.text    :player_shop_history
       t.text    :player_cart
       
       t.date    :player_lastlogin
+
 
       t.integer :player_wallet , :default => 0
 

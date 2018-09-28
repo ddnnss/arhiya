@@ -8,6 +8,7 @@ class CreatePosts < ActiveRecord::Migration[5.1]
       t.string  :post_temp2
       t.string  :post_temp3
       t.string  :post_temp4
+      t.boolean :post_wiki ,  :default => false
 
      t.timestamps
     end
