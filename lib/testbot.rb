@@ -151,10 +151,13 @@ bot.command :event do |event,event_id|
 
   return nil
 end
-bot.bucket :vend, limit: 1, time_span: 60*60*24, delay: 1
+bot.bucket :vend, limit: 1, time_span: 60*60*24, delay: 3600
 
-bot.command(:v,bucket: :vend, rate_limit_message: 'Команда может выполняться 1 раз в сутки') do |event|
-  event.channel.send_file(File.open('c:/test.jpg', 'r'))
+bot.command(:V,bucket: :vend, rate_limit_message: 'Команда может выполняться 1 раз в сутки %time% %delay%') do |event,victim|
+
+  bot.send_message(491290689846378506,'**ВНИМАНИЕ !!!**
+  Игрок ' + event.user.mention + ' объявляет месть игроку с ником ' + victim)
+  bot.send_file(491290689846378506,File.open('c:/test.jpg', 'r'))
   return nil
 end
 
