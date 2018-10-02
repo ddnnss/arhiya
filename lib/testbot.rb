@@ -32,16 +32,19 @@ ActiveRecord::Base.establish_connection(
 
 bot = Discordrb::Commands::CommandBot.new token: 'NDkyNDIyNzA1OTkyMTcxNTIw.DoWQmg.zVJhZ5TSZU6OuSlTPEs1eIfcp4o', client_id: 492422705992171520, prefix: '!'
 
-next_v = nil
-last_v_player = nil
+@next_v = Time.now - 1.month
+@last_v_player = ''
 bot.command :igc do |event|
   event.user.pm ('**Доступные команды IGC-БОТА**
   ------------------------------
+  !p - Информация о количестве игроков на сервере в данный момент
   !server - Информация о игровом сервере и сообществе (количество игроков, ранг, название и IP-адрес, группа ВК и сайт)
   !squads - Информация о отрядах
   !squad - Заявка на вступление в отряд в формате : !squad[пробел]НОМЕР ОТРЯДА (например : !squad 1). **Регистрация на сайте http://www.gamescum.ru обязательна!!!**
   !events - Информация о мероприятиях на сервере (также можно посмотреть тут : http://www.gamescum.ru/events)
   !event - Запись на мероприятии в формате : !event[пробел]НОМЕР МЕРОПРИЯТИЯ (например : !event 1)
+  -----------------
+  Бот обновлен : 02.10.2018 
   -----------------
   **GRESHNIK WAS HERE**')
 end
@@ -64,6 +67,16 @@ bot.command :server do |event|
   event << '----------------------------------'
   event << '**Группа ВК** : https://vk.com/igcommunity'
   event << '**Сайт** : http://www.gamescum.ru/'
+end
+
+bot.command :p do |event|
+  url = 'https://www.battlemetrics.com/servers/scum/2648150'
+  html = open(url)
+  doc = Nokogiri::HTML(html)
+  players = doc.xpath('//*[@id="serverPage"]/div[1]/div/dl/dd[2]').text
+
+  event << '**Игроков ** : ' + players.to_s
+
 end
 
 
@@ -160,6 +173,34 @@ bot.command(:V,bucket: :vend, rate_limit_message: 'Команда может в�
   bot.send_message(491290689846378506,'**ВНИМАНИЕ !!!**
   Игрок ' + event.user.mention + ' объявляет месть игроку с ником ' + victim)
   bot.send_file(491290689846378506,File.open('c:/test.jpg', 'r'))
+  return nil
+end
+
+bot.command :v do |event,victim|
+
+  p = Player.find_by_player_discord_link(event.user.name + '#' +event.user.tag)
+  if p.nil?
+    event.user.pm ('Похоже ты не зарегистрирован на сайте или при регистрации указал не правильный DISCORD ID')
+  else
+    if p.player_last_v < Time.now + 1.day
+      if @next_v < Time.now + 1.hour
+        @last_v_player = event.user.name + '#' +event.user.tag
+        @next_v = Time.now + 1.hour
+        p.update_column(:player_last_v, Time.now + 1.day)
+        bot.send_message(491290689846378506,'**ВНИМАНИЕ !!!**
+        Игрок ' + event.user.mention + ' объявляет месть игроку с ником ' + victim)
+        bot.send_file(491290689846378506,File.open('c:/test.jpg', 'r'))
+        else
+          event.user.pm ('Вендетта уже запущена игроком' + @last_v_player + '! Снова воспользоваться этой командой можно будет :' + @next_v.to_s)
+      end
+    else
+      event.user.pm ('Лимит выполнения команды 1 раз в сутки!')
+    end
+
+  end
+
+
+
   return nil
 end
 

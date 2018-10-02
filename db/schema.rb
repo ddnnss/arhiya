@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20180924195148) do
     t.string "forum_temp2"
     t.string "forum_temp3"
     t.string "forum_temp4"
+    t.boolean "forum_wiki", default: false
   end
 
   create_table "players", force: :cascade do |t|
@@ -67,6 +68,7 @@ ActiveRecord::Schema.define(version: 20180924195148) do
     t.string "player_discord_link", default: ""
     t.string "player_money_history", default: ""
     t.string "player_squad_request", default: ""
+    t.string "player_last_v", default: ""
     t.text "player_shop_history"
     t.text "player_cart"
     t.date "player_lastlogin"
@@ -99,6 +101,7 @@ ActiveRecord::Schema.define(version: 20180924195148) do
     t.string "post_temp2"
     t.string "post_temp3"
     t.string "post_temp4"
+    t.boolean "post_wiki", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["player_id"], name: "index_posts_on_player_id"
@@ -153,6 +156,7 @@ ActiveRecord::Schema.define(version: 20180924195148) do
     t.string "subforum_temp2"
     t.string "subforum_temp3"
     t.string "subforum_temp4"
+    t.boolean "subforum_wiki", default: false
     t.index ["forum_id"], name: "index_subforums_on_forum_id"
     t.index ["subforum_name_translit"], name: "index_subforums_on_subforum_name_translit"
   end
@@ -175,6 +179,7 @@ ActiveRecord::Schema.define(version: 20180924195148) do
     t.string "topic_temp2"
     t.string "topic_temp3"
     t.string "topic_temp4"
+    t.boolean "topic_wiki", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["player_id"], name: "index_topics_on_player_id"

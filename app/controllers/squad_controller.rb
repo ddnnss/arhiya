@@ -1,5 +1,6 @@
 class SquadController < ApplicationController
   def newsquad
+    unless current_player.squad_id
     s = Squad.new
     uploadedFile = params[:squad][:squad_avatar]
 
@@ -23,7 +24,9 @@ class SquadController < ApplicationController
     current_player.update_column(:squad_id , s.id)
 
     redirect_to '/profile/'+current_player.player_nickname_translit
-
+    else
+      redirect_to '/'
+      end
 
   end
 
