@@ -178,6 +178,7 @@ end
 
 bot.command :v do |event,victim|
 
+  
   p = Player.find_by_player_discord_link(event.user.name + '#' +event.user.tag)
   if p.nil?
     event.user.pm ('Похоже ты не зарегистрирован на сайте или при регистрации указал не правильный DISCORD ID')
