@@ -15,7 +15,8 @@ class PageController < ApplicationController
 
   end
   def launcher
-    
+    @p = Player.all
+
   end
 
   def faq

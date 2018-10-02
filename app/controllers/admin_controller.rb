@@ -1,11 +1,5 @@
 class AdminController < ApplicationController
-  before_action :ch_admin
-
-  def ch_admin
-    unless session[:admin]
-      redirect_to '/'
-    end
-  end
+ 
   def forum_admin
     @forum = Forum.all
     @icons = ['ion-help','ion-alert','ion-android-bulb','ion-ios-star','ion-beer','ion-android-chat','ion-alert-circled','ion-android-settings','ion-bonfire','ion-cash','ion-chatboxes','ion-coffee','ion-social-freebsd-devil','ion-speakerphone','ion-happy','ion-heart','ion-heart-broken','ion-help']
