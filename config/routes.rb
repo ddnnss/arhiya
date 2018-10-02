@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   match '/wiki' => 'page#wiki', via: [:get]
   match '/events' => 'page#events', via: [:get]
   match '/event(/:event_id)' => 'page#event', via: [:get]
+  match '/launcher' => 'page#launcher', via: [:get]
 
   #----------PLAYER------------------------
   match '/login'  => 'player#login', via: [:post]

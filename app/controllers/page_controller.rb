@@ -14,6 +14,9 @@ class PageController < ApplicationController
 
 
   end
+  def launcher
+    
+  end
 
   def faq
     @activefaq = 'active'
