@@ -1,9 +1,9 @@
 
 
 
-<a class="nk-btn nk-btn-color-main-1" href="#" onclick="myFunction1()">СЕРВЕР</a>
-<a class="nk-btn nk-btn-color-main-1" href="#" onclick="myFunction2()">СООБЩЕСТВО</a>
-<a class="nk-btn nk-btn-color-main-1" href="#" >КАК ПОДКЛЮЧИТЬСЯ</a>
+<a class="nk-btn nk-btn-color-success" href="#" onclick="myFunction1()">СЕРВЕР</a>
+<a class="nk-btn nk-btn-color-info" href="#" onclick="myFunction2()">СООБЩЕСТВО</a>
+<a class="nk-btn nk-btn-color-danger" href="#" onclick="myFunction3()">КАК ПОДКЛЮЧИТЬСЯ</a>
 <div id="server_div">
   <script type="application/javascript">window.addEventListener('message',function(e){if(e.data.uid&&e.data.type==='sizeUpdate'){var i = document.querySelector('iframe[name="'+e.data.uid+'"]');i.style.width = e.data.payload.width;i.style.height = e.data.payload.height;}});</script><iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/2648150.html?foreground=%23EEEEEE&background=%230e0e0e&lines=%23333333&linkColor=%23e08821&chartColor=%23e08821" frameborder=0 style="border:0" name="dhfdl"></iframe></p>
 
@@ -13,14 +13,29 @@
   Наш дискорд : <a class="nk-btn nk-btn-color-main-1" href="https://discord.gg/MG3Nqde" target="_blank">https://discord.gg/MG3Nqde</a> <br>
   Наш сайт : <a class="nk-btn nk-btn-color-main-1" href="http://www.gamescum.ru" target="_blank">http://www.gamescum.ru</a><br>
 </div>
+<div id="connect_div" style="display: none">
+  1)Жмете кнопку старт-запуская проверку обновлений<br>
+  2)После жмете запустить игру<br>
+  3)Конектитесь на наш сервер
+  <input style="margin-left: 5px;
+      background-color: #0e0e0e;
+      color: #f5f5f5;
+      border-width: 0px;
+      width: 146px;" type="text" readonly value="54.37.128.93:28302" id="myInput">
+
+  <!-- The button used to copy the text -->
+  <button class="nk-btn nk-btn-color-info" onclick="myFunction()">Скопировать IP</button>
+</div>
 
 <script language="JavaScript">
     function myFunction1() {
         var x = document.getElementById("server_div");
         var x1 = document.getElementById("comm_div");
+        var x2 = document.getElementById("connect_div");
         if (x.style.display === "none") {
             x.style.display = "block";
             x1.style.display = "none";
+            x2.style.display = "none";
         } else {
             x.style.display = "none";
         }
@@ -28,12 +43,35 @@
     function myFunction2() {
         var x = document.getElementById("comm_div");
         var x1 = document.getElementById("server_div");
+        var x2 = document.getElementById("connect_div");
         if (x.style.display === "none") {
             x.style.display = "block";
             x1.style.display = "none";
+            x2.style.display = "none";
         } else {
             x.style.display = "none";
         }
+    }
+    function myFunction3() {
+        var x = document.getElementById("connect_div");
+        var x1 = document.getElementById("server_div");
+        var x2 = document.getElementById("comm_div");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+            x1.style.display = "none";
+            x2.style.display = "none";
+        } else {
+            x.style.display = "none";
+        }
+    }
+    function myFunction() {
+
+        var copyText = document.getElementById("myInput");
+
+        copyText.select();
+
+        document.execCommand("copy");
+
     }
 </script>
 

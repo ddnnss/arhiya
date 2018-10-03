@@ -172,7 +172,7 @@ bot.command(:V,bucket: :vend, rate_limit_message: 'Команда может в�
 
   bot.send_message(491290689846378506,'**ВНИМАНИЕ !!!**
   Игрок ' + event.user.mention + ' объявляет месть игроку с ником ' + victim)
-  bot.send_file(491290689846378506,File.open('c:/test.jpg', 'r'))
+  bot.send_file(491290689846378506,File.open('c:/vendetta.png', 'r'))
   return nil
 end
 
@@ -190,7 +190,7 @@ bot.command :v do |event,victim|
         p.update_column(:player_last_v, Time.now + 1.day)
        bot.send_message(491290689846378506,'**ВНИМАНИЕ !!!**
        Игрок ' + event.user.mention + ' объявляет месть игроку с ником ' + victim)
-       bot.send_file(491290689846378506,File.open('c:/test.jpg', 'r'))
+       bot.send_file(491290689846378506,File.open('c:/vendetta.png', 'r'))
 
         else
           event.user.pm ('Вендетта уже запущена игроком : ' + @last_v_player + ' ! Снова воспользоваться этой командой можно будет :' + @next_v.strftime("%d.%m.%Y | %H:%M:%S"))
