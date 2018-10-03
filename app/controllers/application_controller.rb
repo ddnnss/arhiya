@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  helper_method :current_player, :logged_in?, :player_pm, :player_wh
+  helper_method :current_player, :logged_in?, :player_pm, :player_admin
 
   def current_player
     return unless session[:player_id]
@@ -12,9 +12,9 @@ class ApplicationController < ActionController::Base
     @player_pm = Privatemessage.where(message_for_id: current_player.id)
   end
 
-  def player_wh
+  def player_admin
     return unless session[:player_id]
-    @player_wh = Whitelist.where(player_id: current_player.player_id)
+    player_admin = current_player.player_admin
   end
 
   def logged_in?

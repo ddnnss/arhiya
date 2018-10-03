@@ -1,4 +1,13 @@
 class AdminController < ApplicationController
+before_action :ch_admin
+
+def ch_admin
+  if player_admin
+  return true
+  else
+    redirect_to '/'
+  end
+end
 
   def forum_admin
     @forum = Forum.all

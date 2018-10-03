@@ -36,17 +36,10 @@
             Время проведения : <%=@event.event_time%><br>
             Участников : <%=@event.event_players.split(',').count%><br>
             Информация о мероприятии:<br>
+            <span>ДЛЯ ЗАПИСИ НА ЭТО МЕРОПРИЯТИЕ НАБЕРИ !event <%=@event.id%> В ДИСКОРДЕ</span><br>
+            <span>ЗАПИСЬ ЧЕРЕЗ САЙТ В РАЗРАБОТКЕ</span><br>
             <%=@event.event_info.html_safe%><br>
-            <% if logged_in?%>
-                <%if @event.event_players.split(',').include? (current_player.id.to_s)%>
-                    <a href="#" class="nk-btn btn-sm nk-btn-bg-danger ">ТЫ УЖЕ ЗАПИСАН</a>
-                <%else%>
-                    <a href="/event_app/<%=@event.id%>/<%=current_player.id%>" class="nk-btn btn-sm nk-btn-bg-success ">ЗАПИСАТЬСЯ</a>
-                <%end%>
 
-                <%else%>
-                <a href="#" class=" nk-sign-toggle no-link-effect nk-btn btn-sm nk-btn-bg-danger ">ДЛЯ УЧАСТИЯ В МЕРОПРИЯТИЯХ НУЖНО ЗАРЕГИСТРИРОВАТЬСЯ НА САЙТЕ</a>
-                <%end%>
           </div>
         </div>
 

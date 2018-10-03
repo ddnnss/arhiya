@@ -1,28 +1,36 @@
 
-<div class="tabset">
-  <!-- Tab 1 -->
-  <input type="radio" name="tabset" id="tab1" aria-controls="marzen" checked>
-  <label for="tab1">СЕРВЕР</label>
-  <!-- Tab 2 -->
-  <input type="radio" name="tabset" id="tab2" aria-controls="rauchbier">
-  <label for="tab2">СООБЩЕСТВО</label>
-  <!-- Tab 3 -->
-  <input type="radio" name="tabset" id="tab3" aria-controls="dunkles">
-  <label for="tab3">КАК ПОДКЛЮЧИТЬСЯ</label>
 
-  <div class="tab-panels">
-    <section id="marzen" class="tab-panel">
-      <script type="application/javascript">window.addEventListener('message',function(e){if(e.data.uid&&e.data.type==='sizeUpdate'){var i = document.querySelector('iframe[name="'+e.data.uid+'"]');i.style.width = e.data.payload.width;i.style.height = e.data.payload.height;}});</script><iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/2648150.html?foreground=%23EEEEEE&background=%230e0e0e&lines=%23333333&linkColor=%23e08821&chartColor=%23e08821" frameborder=0 style="border:0" name="dhfdl"></iframe></p>
-
-    </section>
-    <section style="color: #e08821;" id="rauchbier" class="tab-panel">
-      Наша группа ВК :<a class="nk-btn nk-btn-color-main-1" href=" https://vk.com/igcommunity" target="_blank"> https://vk.com/igcommunity</a>   <br>
-      Наш дискорд : <a class="nk-btn nk-btn-color-main-1" href="https://discord.gg/MG3Nqde" target="_blank">https://discord.gg/MG3Nqde</a> <br>
-      Наш сайт : <a class="nk-btn nk-btn-color-main-1" href="http://www.gamescum.ru" target="_blank">http://www.gamescum.ru</a><br>
-       </section>
-    <section id="dunkles" class="tab-panel">
-
-       </section>
-  </div>
-
+<div class="pc-tab">
+  <input checked="checked" id="tab1" type="radio" name="pct" />
+  <input id="tab2" type="radio" name="pct" />
+  <input id="tab3" type="radio" name="pct" />
+  <nav>
+    <ul>
+      <li class="tab1">
+        <label for="tab1">First Tab</label>
+      </li>
+      <li class="tab2">
+        <label for="tab2">Second Tab</label>
+      </li>
+      <li class="tab3">
+        <label for="tab3">Third Tab</label>
+      </li>
+    </ul>
+  </nav>
+  <section>
+    <div class="tab1">
+      <h2>First</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus itaque quidem minus nostrum, voluptatem accusamus aspernatur quia harum ratione, officia laudantium inventore autem doloribus atque labore numquam non. Hic, animi.</p>
+    </div>
+    <div class="tab2">
+      <h2>Second</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum nesciunt ipsum dolore error repellendus officiis aliquid a, vitae reprehenderit, accusantium vero, ad. Obcaecati numquam sapiente cupiditate. Praesentium eaque, quae error!</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis, maiores.</p>
+    </div>
+    <div class="tab3">
+      <h2>Third</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, nobis culpa rem, vitae earum aliquid.</p>
+    </div>
+  </section>
 </div>
+

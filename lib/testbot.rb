@@ -44,7 +44,7 @@ bot.command :igc do |event|
   !events - Информация о мероприятиях на сервере (также можно посмотреть тут : http://www.gamescum.ru/events)
   !event - Запись на мероприятии в формате : !event[пробел]НОМЕР МЕРОПРИЯТИЯ (например : !event 1)
   -----------------
-  Бот обновлен : 02.10.2018
+  Бот обновлен : 03.10.2018
   -----------------
   **GRESHNIK WAS HERE**')
 end
@@ -85,7 +85,7 @@ bot.command :events do |event|
 
 e= Event.where(:event_active => true)
 e.each do |ee|
-  event <<  'Номер :' + ee.id.to_s + ' | ' +'Название :' + ee.event_name + ' | ' + 'Дата и время : '  +  ee.event_date + ' в ' + ee.event_time + ' | ' + (ee.event_group ? '**МОГУТ УЧАВСТВОВАТЬ ТОЛЬКО ОТРЯДЫ**' : '**МОГУТ УЧАВСТВОВАТЬ ВСЕ ЖЕЛАЮЩИЕ**') + ' | ' + 'Подробная информация : http://www.gamescum.ru/events/' + ee.id.to_s
+  event <<  'Номер :' + ee.id.to_s + ' | ' +'Название :' + ee.event_name + ' | ' + 'Дата и время : '  +  ee.event_date + ' в ' + ee.event_time + ' | ' + (ee.event_group ? '**МОГУТ УЧАВСТВОВАТЬ ТОЛЬКО ОТРЯДЫ**' : '**МОГУТ УЧАВСТВОВАТЬ ВСЕ ЖЕЛАЮЩИЕ**') + ' | ' + 'Подробная информация : http://www.gamescum.ru/event/' + ee.id.to_s
 end
 return nil
 end
@@ -183,16 +183,17 @@ bot.command :v do |event,victim|
   if p.nil?
     event.user.pm ('Похоже ты не зарегистрирован на сайте или при регистрации указал не правильный DISCORD ID')
   else
-    if p.player_last_v < Time.now + 1.day
-      if @next_v < Time.now + 1.hour
+    if p.player_last_v < Time.now
+      if @next_v < Time.now
         @last_v_player = event.user.name + '#' +event.user.tag
         @next_v = Time.now + 1.hour
         p.update_column(:player_last_v, Time.now + 1.day)
-        bot.send_message(491290689846378506,'**ВНИМАНИЕ !!!**
-        Игрок ' + event.user.mention + ' объявляет месть игроку с ником ' + victim)
-        bot.send_file(491290689846378506,File.open('c:/test.jpg', 'r'))
+       bot.send_message(491290689846378506,'**ВНИМАНИЕ !!!**
+       Игрок ' + event.user.mention + ' объявляет месть игроку с ником ' + victim)
+       bot.send_file(491290689846378506,File.open('c:/test.jpg', 'r'))
+
         else
-          event.user.pm ('Вендетта уже запущена игроком' + @last_v_player + '! Снова воспользоваться этой командой можно будет :' + @next_v.to_s)
+          event.user.pm ('Вендетта уже запущена игроком : ' + @last_v_player + ' ! Снова воспользоваться этой командой можно будет :' + @next_v.strftime("%d.%m.%Y | %H:%M:%S"))
       end
     else
       event.user.pm ('Лимит выполнения команды 1 раз в сутки!')
