@@ -35,9 +35,15 @@
             Дата проведения : <%=@event.event_date%> <br>
             Время проведения : <%=@event.event_time%><br>
             Участников : <%=@event.event_players.split(',').count%><br>
+            <div class="nk-info-box bg-main-1">
+              <div class="nk-info-box-icon">
+                <i class="ion-information-circled"></i>
+              </div>
+              <span>ДЛЯ ЗАПИСИ НА ЭТО МЕРОПРИЯТИЕ НАБЕРИ В ДИСКОРДЕ : !event <%=@event.event_creator%></span><br>
+              <span>ЗАПИСЬ ЧЕРЕЗ САЙТ В РАЗРАБОТКЕ</span><br>
+            </div>
             Информация о мероприятии:<br>
-            <span>ДЛЯ ЗАПИСИ НА ЭТО МЕРОПРИЯТИЕ НАБЕРИ !event <%=@event.id%> В ДИСКОРДЕ</span><br>
-            <span>ЗАПИСЬ ЧЕРЕЗ САЙТ В РАЗРАБОТКЕ</span><br>
+
             <%=@event.event_info.html_safe%><br>
 
           </div>

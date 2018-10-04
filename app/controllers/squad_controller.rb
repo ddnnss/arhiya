@@ -22,6 +22,7 @@ class SquadController < ApplicationController
     end
         s.save
     current_player.update_column(:squad_id , s.id)
+    current_player.update_column(:squad_leader , true)
 
     redirect_to '/profile/'+current_player.player_nickname_translit
     else

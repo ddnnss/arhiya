@@ -37,11 +37,17 @@
             <div class="nk-social-profile-info-last-seen">Дата регистрации : <%= @player.created_at.strftime("%d.%m.%Y")%> | Последний вход : <%= @player.player_lastlogin.nil? ? 'НИКОГДА' : @player.player_lastlogin.strftime("%d.%m.%Y")%>  </div>
             <h1 class="nk-social-profile-info-name"><%= @player.player_nickname%></h1>
             <div class="nk-social-profile-info-username home-game-info" >
-              <%if @player.squad.id == @player.squad_leader%>
-                  Лидер отряда: <%= @player.squad.squad_name%>
+              <%unless @player.squad_id.nil? %>
+                  <%if @player.squad_id == @player.squad.squad_leader%>
+                      Лидер отряда: <%= @player.squad.squad_name%>
+                  <%else%>
+                      Ранг: <%= @player.player_rank%>
+                  <%end%>
               <%else%>
                   Ранг: <%= @player.player_rank%>
-                  <%end%>
+              <%end%>
+
+
 
 
             </div>

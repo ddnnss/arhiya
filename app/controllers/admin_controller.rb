@@ -37,12 +37,17 @@ end
   end
   def events
     @events = Event.all
+    i=1
     @events.each do |e|
       if e.event_date.to_date < Date.today
         e.update_column(:event_active , false)
+        e.update_column(:event_creator , '0')
+      else
+        e.update_column(:event_creator , i.to_s)
+        i =i+1
       end
     end
-    @event_type = ['Война роботов','Бегущие стволы','Бегущие стволы 2','Убей их всех','Штурм','Наемники',
+    @event_type = ['Освобождение заложника','Разведка','Исследования','Война роботов','Бегущие стволы','Бегущие стволы 2','Убей их всех','Штурм','Наемники',
                    'Лучший стрелок','Побег','Ринг с зомби','Ринг с медведем','Бои на ринге (8угольник)','Ящики','Кулачный бой стенка-на-стенку']
     @event_time = ['00:00','01:00','02:00','03:00','04:00','05:00','06:00','07:00','08:00','09:00','10:00','11:00','12:00',
                    '13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00']
@@ -58,8 +63,9 @@ end
 
   end
   def addevent
+    ee = Event.where(:event_active => true)
     e = Event.new
-    e.event_creator = current_player.id
+    e.event_creator = ee.count.next
     e.event_name = params[:event_name]
     e.event_time = params[:event_time]
     e.event_date = params[:event_date]

@@ -36,16 +36,18 @@ bot = Discordrb::Commands::CommandBot.new token: 'NDkyNDIyNzA1OTkyMTcxNTIw.DoWQm
 @last_v_player = ''
 bot.command :igc do |event|
   event.user.pm ('**Доступные команды IGC-БОТА**
-  ------------------------------
+  ------------**ОБЩИЕ КОМАНДЫ**------------------
   !p - Информация о количестве игроков на сервере в данный момент
   !server - Информация о игровом сервере и сообществе (количество игроков, ранг, название и IP-адрес, группа ВК и сайт)
   !squads - Информация о отрядах
   !squad - Заявка на вступление в отряд в формате : !squad[пробел]НОМЕР ОТРЯДА (например : !squad 1). **Регистрация на сайте http://www.gamescum.ru обязательна!!!**
   !events - Информация о мероприятиях на сервере (также можно посмотреть тут : http://www.gamescum.ru/events)
   !event - Запись на мероприятии в формате : !event[пробел]НОМЕР МЕРОПРИЯТИЯ (например : !event 1)
-  -----------------
-  Бот обновлен : 03.10.2018
-  -----------------
+  ------------**СПЕЦИАЛЬНЫЕ КОМАНДЫ**------------------
+  !V - запуск игрового события "Вендетта", месть игроку. Формат запуска !V[пробел]ИГРОВОЙ_НИК_КОМУ_МСТИШЬ (например: !V GRESHNIK)
+  -----------------------------------
+  Бот обновлен : **03.10.2018**
+  -----------------------------------
   **GRESHNIK WAS HERE**')
 end
 
@@ -85,7 +87,7 @@ bot.command :events do |event|
 
 e= Event.where(:event_active => true)
 e.each do |ee|
-  event <<  'Номер :' + ee.id.to_s + ' | ' +'Название :' + ee.event_name + ' | ' + 'Дата и время : '  +  ee.event_date + ' в ' + ee.event_time + ' | ' + (ee.event_group ? '**МОГУТ УЧАВСТВОВАТЬ ТОЛЬКО ОТРЯДЫ**' : '**МОГУТ УЧАВСТВОВАТЬ ВСЕ ЖЕЛАЮЩИЕ**') + ' | ' + 'Подробная информация : http://www.gamescum.ru/event/' + ee.id.to_s
+  event <<  'Номер :' + ee.event_creator + ' | ' +'Название :' + ee.event_name + ' | ' + 'Дата и время : '  +  ee.event_date + ' в ' + ee.event_time + ' | ' + (ee.event_group ? '**МОГУТ УЧАВСТВОВАТЬ ТОЛЬКО ОТРЯДЫ**' : '**МОГУТ УЧАВСТВОВАТЬ ВСЕ ЖЕЛАЮЩИЕ**') + ' | ' + 'Подробная информация : http://www.gamescum.ru/event/' + ee.id.to_s
 end
 return nil
 end
@@ -135,7 +137,7 @@ bot.command :squad do |event,squad_id|
 end
 
 bot.command :event do |event,event_id|
-  e = Event.find_by_id(event_id)
+  e = Event.find_by_event_creator(event_id)
   if e
     p = Player.find_by_player_discord_link(event.user.name + '#' +event.user.tag)
     if p.nil?
@@ -148,6 +150,11 @@ bot.command :event do |event,event_id|
           if p.squad_id
             unless e.event_squads.split(',').include? p.squad_id.to_s
               e.update_column(:event_squads, e.event_squads.split(',').append(p.squad_id.to_s).join(','))
+                if p.squad.squad_rating == ''
+                  p.squad.update_column(:squad_rating , '1')
+                else
+                  p.squad.update_column(:squad_rating , (p.squad.squad_rating.to_i + 1).to_s)
+                end
             end
             e.update_column(:event_players, e.event_players.split(',').append(p.id.to_s).join(','))
             event.user.pm ('Ты и твой отряд записан')
@@ -166,17 +173,9 @@ bot.command :event do |event,event_id|
 
   return nil
 end
-bot.bucket :vend, limit: 1, time_span: 60*60*24, delay: 3600
 
-bot.command(:V,bucket: :vend, rate_limit_message: 'Команда может выполняться 1 раз в сутки %time% %delay%') do |event,victim|
 
-  bot.send_message(491290689846378506,'**ВНИМАНИЕ !!!**
-  Игрок ' + event.user.mention + ' объявляет месть игроку с ником ' + victim)
-  bot.send_file(491290689846378506,File.open('c:/vendetta.png', 'r'))
-  return nil
-end
-
-bot.command :v do |event,victim|
+bot.command :V do |event,victim|
 
 
   p = Player.find_by_player_discord_link(event.user.name + '#' +event.user.tag)
@@ -211,3 +210,10 @@ end
 
 bot.run
 
+#bot.bucket :vend, limit: 1, time_span: 60*60*24, delay: 3600
+#bot.command(:V,bucket: :vend, rate_limit_message: 'Команда может выполняться 1 раз в сутки %time% %delay%') do |event,victim|
+#  bot.send_message(491290689846378506,'**ВНИМАНИЕ !!!**
+#  Игрок ' + event.user.mention + ' объявляет месть игроку с ником ' + victim)
+#  bot.send_file(491290689846378506,File.open('c:/vendetta.png', 'r'))
+#  return nil
+#end
