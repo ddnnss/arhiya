@@ -35,7 +35,7 @@ bot = Discordrb::Commands::CommandBot.new token: 'NDkyNDIyNzA1OTkyMTcxNTIw.DoWQm
 @next_v = Time.now - 1.month
 @last_v_player = ''
 bot.command :igc do |event|
-  event.user.pm ('**Доступные команды IGC-БОТА**
+  event.user.pm ('**IGC-БОТ**
   ------------**ОБЩИЕ КОМАНДЫ**------------------
   !p - Информация о количестве игроков на сервере в данный момент
   !server - Информация о игровом сервере и сообществе (количество игроков, ранг, название и IP-адрес, группа ВК и сайт)
@@ -85,10 +85,14 @@ end
 
 bot.command :events do |event|
 
-e= Event.where(:event_active => true)
+e= Event.where(:event_active => true).order('event_date ASC')
+unless e.blank?
 e.each do |ee|
   event <<  'Номер :' + ee.event_creator + ' | ' +'Название :' + ee.event_name + ' | ' + 'Дата и время : '  +  ee.event_date + ' в ' + ee.event_time + ' | ' + (ee.event_group ? '**МОГУТ УЧАВСТВОВАТЬ ТОЛЬКО ОТРЯДЫ**' : '**МОГУТ УЧАВСТВОВАТЬ ВСЕ ЖЕЛАЮЩИЕ**') + ' | ' + 'Подробная информация : http://www.gamescum.ru/event/' + ee.id.to_s
 end
+else
+  event <<  'Запланированных мероприятий пока нет.'
+  end
 return nil
 end
 
