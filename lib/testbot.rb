@@ -5,6 +5,7 @@ require 'rubygems'
 require 'active_record'
 require 'yaml'
 require 'sqlite3'
+require 'translit'
 
 
 
@@ -16,10 +17,10 @@ class Event < ActiveRecord::Base
 end
 
 class Squad < ActiveRecord::Base
-
+  has_many :players
 end
 class Player < ActiveRecord::Base
-
+  belongs_to :squad
 end
 class Privatemessage < ActiveRecord::Base
 
@@ -35,7 +36,7 @@ bot = Discordrb::Commands::CommandBot.new token: 'NDkyNDIyNzA1OTkyMTcxNTIw.DoWQm
 @next_v = Time.now - 1.month
 @last_v_player = ''
 bot.command :igc do |event|
-  event.user.pm ('**IGC-БОТ**
+  event.user.pm ('
   ------------**ОБЩИЕ КОМАНДЫ**------------------
   !p - Информация о количестве игроков на сервере в данный момент
   !server - Информация о игровом сервере и сообществе (количество игроков, ранг, название и IP-адрес, группа ВК и сайт)
@@ -44,9 +45,10 @@ bot.command :igc do |event|
   !events - Информация о мероприятиях на сервере (также можно посмотреть тут : http://www.gamescum.ru/events)
   !event - Запись на мероприятии в формате : !event[пробел]НОМЕР МЕРОПРИЯТИЯ (например : !event 1)
   ------------**СПЕЦИАЛЬНЫЕ КОМАНДЫ**------------------
-  !V - запуск игрового события "Вендетта", месть игроку. Формат запуска !V[пробел]ИГРОВОЙ_НИК_КОМУ_МСТИШЬ (например: !V GRESHNIK)
+  !V - запуск игрового события "Вендетта", месть игроку. Формат запуска !V[пробел]ИГРОВОЙ-НИК-КОМУ-МСТИШЬ (например: !V GRESHNIK)
+  !reg - регистрация на сайте. Формат команды !reg[пробел]ИГРОВОЙ-НИК[пробел]STEAMID64[пробел]E-MAIL (например: !reg GRESHNIK 76561198091XXXXXX admin@gamescum.ru) УЗНАТЬ СВОЙ STEAMID64 МОЖНО ТУТ https://steamid.xyz
   -----------------------------------
-  Бот обновлен : **03.10.2018**
+  Бот обновлен : **06.10.2018**
   -----------------------------------
   **GRESHNIK WAS HERE**')
 end
@@ -154,7 +156,7 @@ bot.command :event do |event,event_id|
           if p.squad_id
             unless e.event_squads.split(',').include? p.squad_id.to_s
               e.update_column(:event_squads, e.event_squads.split(',').append(p.squad_id.to_s).join(','))
-                if p.squad.squad_rating == ''
+                if p.squad.squad_rating.nil?
                   p.squad.update_column(:squad_rating , '1')
                 else
                   p.squad.update_column(:squad_rating , (p.squad.squad_rating.to_i + 1).to_s)
@@ -180,8 +182,6 @@ end
 
 
 bot.command :V do |event,victim|
-
-
   p = Player.find_by_player_discord_link(event.user.name + '#' +event.user.tag)
   if p.nil?
     event.user.pm ('Похоже ты не зарегистрирован на сайте или при регистрации указал не правильный DISCORD ID')
@@ -203,10 +203,36 @@ bot.command :V do |event,victim|
     end
 
   end
-
-
-
   return nil
+end
+
+bot.command :reg do |event,nick,steamid,mail|
+  p = Player.find_by_player_discord_link(event.user.name + '#' +event.user.tag)
+  if p.nil?
+    pn = Player.new
+    if steamid.length != 17
+      event.user.pm ('Похоже ты не правильно ввел STEAMID. Уточни на сайте https://steamid.xyz')
+    else
+      pn.player_nickname  = nick
+      pn.player_email = mail
+      pn.player_id = steamid
+      pn.player_discord_link = event.user.name + '#' +event.user.tag
+      pn.player_nickname_translit = Translit.convert(nick.gsub(' ','-').gsub(/[?!*.,:; ]/, ''), :english)
+      pn.player_password = [*('a'..'z'),*('0'..'9')].shuffle[0,8].join
+      pn.player_activated = true
+      pn.player_last_v = Time.now - 1.day
+      pn.player_lastlogin = Date.today
+      pn.save
+      event.user.pm 'Ты зарегистрирован на сайте http://www.gamescum.ru'
+      event.user.pm ' Твой логин :' + mail
+      event.user.pm 'Твой пароль :' + pn.player_password
+    end
+
+
+  else
+    event.user.pm ('Похоже ты уже зарегистрирован на сайте')
+  end
+
 end
 
 
