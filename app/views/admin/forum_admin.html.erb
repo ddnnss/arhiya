@@ -65,6 +65,11 @@
                   <%=f.text_field  :forum_name, :required => true , class:'form-control'%></p>
               </div>
 
+            <div class="col-sm-12">
+              <p>ВИКИ? :
+                <%=f.check_box  :forum_wiki, class:'form-control'%></p>
+            </div>
+
             <input name="addmain" value="add" type="hidden" />
             <%= submit_tag 'Добавить' , class:'nk-btn nk-btn-lg link-effect-4'%>
 

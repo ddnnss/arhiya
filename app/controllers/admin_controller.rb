@@ -91,6 +91,9 @@ end
     if params[:addmain] == 'add'
       f = Forum.new
       f.forum_name = params[:addforum][:forum_name]
+      if params[:addforum][:forum_wiki] == '1'
+        f.forum_wiki = true
+      end
 
       f.save
     end
@@ -100,6 +103,9 @@ end
       sf.subforum_name = params[:addforum][:subforum_name]
       sf.subforum_name_translit = Translit.convert(params[:addforum][:subforum_name].gsub(' ','-').gsub(/[?!*.,:; ]/, ''), :english)
       sf.subforum_icon = params[:subforum_icon]
+      if sf.forum.forum_wiki
+        sf.subforum_wiki =true
+      end
       sf.save
     end
     if params[:addmain] == 'edit'

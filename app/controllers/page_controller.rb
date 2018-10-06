@@ -64,6 +64,10 @@ class PageController < ApplicationController
 
   end
 
+  def squads
+
+  end
+
 
 
 

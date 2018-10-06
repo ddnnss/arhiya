@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   match '/faq' => 'page#faq', via: [:get]
   match '/wiki' => 'page#wiki', via: [:get]
   match '/events' => 'page#events', via: [:get]
+  match '/squads' => 'page#squads', via: [:get]
   match '/event(/:event_id)' => 'page#event', via: [:get]
   match '/launcher' => 'page#launcher', via: [:get]
 
