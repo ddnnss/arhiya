@@ -26,6 +26,8 @@ Rails.application.routes.draw do
   match '/admin/addtopic'  => 'admin#addtopic', via: [:get]
   match '/addevent'  => 'admin#addevent', via: [:post]
   match '/admin/events'  => 'admin#events', via: [:get]
+  match '/admin/players'  => 'admin#players', via: [:get]
+  match '/admin'  => 'admin#index', via: [:get]
   match '/admin/eventinfo'  => 'admin#eventinfo', via: [:get]
 
   match '/addfaq'  => 'admin#addfaq', via: [:post]

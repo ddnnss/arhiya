@@ -1,0 +1,101 @@
+
+<div class="nk-main">
+
+  <div class="nk-header-title nk-header-title-sm nk-header-title-parallax-opacity">
+
+    <div class="nk-header-text-bottom">
+      <div class="nk-breadcrumbs text-xs-center">
+        <ul>
+          <li><a href="/admin">АДМИНКА</a></li>
+          <li>
+            <span>ИГРОКИ НА СЕРВЕРЕ</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+  <div class="">
+    <div class="nk-gap-4"></div>
+
+    <div class="nk-box bg-dark-1 text-white">
+      <div class="nk-gap-1"></div>
+      <div class="container">
+
+        <div class="nk-gap-1"></div>
+
+        <div class="">
+          <div class="">
+
+            Сортировка :
+            <a href="/admin/players?sort=nick"  class="nk-btn nk-btn-sm nk-btn-color-success">ПО НИКУ</a>
+            <a href="/admin/players?sort=reg"  class="nk-btn nk-btn-sm nk-btn-color-warning">ПО РЕГЕ</a>
+            <a href="/admin/players?sort=bonus"  class="nk-btn nk-btn-sm nk-btn-color-info">ПО БОНУСУ</a>
+            <div class="nk-gap-1"></div>
+            <table class="table table-bordered">
+              <tr>
+
+                <td class="nk-btn-color-success">НИК</td>
+                <td>STEAM ID</td>
+                <td>DISCORD ID</td>
+                <td>ОТРЯД</td>
+                <td class="nk-btn-color-warning">РЕГА</td>
+                <td class="nk-btn-color-info">БОНУС</td>
+
+              </tr>
+
+              <%@players.each do |p|%>
+                  <tr>
+                    <td><%=p.player_nickname%> </td>
+                    <td><span id="p_id_<%=p.id%>"><%=p.player_id%></span> <button id="btn_<%=p.id%>"  class="nk-btn nk-btn-sm nk-btn-color-danger" onclick="copyToClipboard('#p_id_<%=p.id%>','#btn_<%=p.id%>')">Скопировать</button></td>
+                    <td><%=p.player_discord_link%></td>
+                    <td><%=p.squad_id.nil? ? 'НЕТ' : p.squad.squad_name%></td>
+                    <td><%=p.created_at.strftime("%d.%m.%Y | %H:%M:%S")%></td>
+                    <%if p.player_welcome_bonus%>
+                        <td style="background-color: #5cb85c;">Выдан</td>
+
+                  <%else%>
+                        <td style="background-color: #d9534f;"><a class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline nk-btn-color-main-1" href="/admin/players?<%= @sort ? 'sort='+@sort+'&': ''%>bonus=<%=p.id%>">Не выдан</a></td>
+                    <%end%>
+
+
+                  </tr>
+              <%end%>
+
+
+
+            </table>
+
+
+
+
+          </div>
+        </div>
+
+        <div class="nk-gap-4"></div>
+      </div>
+
+
+
+    </div>
+  </div>
+  <div class="nk-gap-4"></div>
+</div>
+
+<script>
+    function copyToClipboard(element,btn) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val('#teleport ' + $(element).html()).select();
+        document.execCommand("copy");
+        $temp.remove();
+
+        $(btn).removeClass('nk-btn-color-danger');
+        $(btn).addClass('nk-btn-color-success');
+        $('#btn_1').html('Скопировано');
+    }
+</script>

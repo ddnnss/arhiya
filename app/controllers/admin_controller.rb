@@ -8,6 +8,12 @@ def ch_admin
     redirect_to '/'
   end
 end
+def index
+  @players = Player.all
+  @squads = Squad.all
+
+
+end
 
   def forum_admin
     @forum = Forum.all
@@ -17,6 +23,32 @@ end
     @icons = ['ion-help','ion-alert','ion-android-bulb','ion-ios-star','ion-beer','ion-android-chat','ion-alert-circled','ion-android-settings','ion-bonfire','ion-cash','ion-chatboxes','ion-coffee','ion-social-freebsd-devil','ion-speakerphone','ion-happy','ion-heart','ion-heart-broken','ion-help']
     @subforum_id = params[:subforum_id]
     @topic_type = ['Первый взгляд','Обновление','Премьера','Патч','Гайд','Новости','Событие','Интересная тема']
+  end
+
+  def players
+    if params[:bonus].present?
+      p =Player.find(params[:bonus])
+      p.update_column(:player_welcome_bonus, true)
+
+    end
+    if params[:sort].present?
+    case params[:sort]
+      when 'nick'
+        @players = Player.all.order('player_nickname ASC')
+        @sort = 'nick'
+      when 'reg'
+        @players = Player.all.order('created_at ASC')
+        @sort = 'reg'
+      when 'bonus'
+        @players = Player.all.order('player_welcome_bonus ASC')
+        @sort = 'bonus'
+    end
+    else
+    @players = Player.all
+    @sort = false
+    end
+
+
   end
 
 
