@@ -163,7 +163,7 @@ bot.command :event do |event,event_id|
                 end
             end
             e.update_column(:event_players, e.event_players.split(',').append(p.id.to_s).join(','))
-            event.user.pm ('Ты и твой отряд записан')
+            event.user.pm ('Ты и твой отряд записан (**не игроки в отряде, а просто отряд!**)')
           else
             event.user.pm ('Данное мероприятие только для отрядов')
           end
