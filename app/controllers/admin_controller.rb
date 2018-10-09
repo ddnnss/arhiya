@@ -15,6 +15,55 @@ def index
 
 end
 
+def squads
+  @squads = Squad.all
+
+end
+
+def userinfo
+  if params[:act].present?  && params[:act] == 'del'
+    player = Player.find(params[:id])
+    player.destroy!
+    redirect_to '/admin/players'
+  else
+    @player = Player.find(params[:id])
+  end
+
+
+end
+def adminuser
+  p = Player.find(params[:p_id])
+  p.update_column(:player_nickname,params[:player_nickname])
+  p.update_column(:player_email,params[:player_email])
+  p.update_column(:player_password,params[:player_password])
+  p.update_column(:player_id,params[:player_id])
+  p.update_column(:player_discord_link,params[:player_discord_link])
+  p.update_column(:player_rank,params[:player_rank])
+  p.update_column(:player_vk_link,params[:player_vk_link])
+  p.update_column(:player_wallet,params[:player_wallet])
+  if params[:player_activated]
+    p.update_column(:player_activated,true)
+  else
+    p.update_column(:player_activated,false)
+  end
+  if params[:player_welcome_bonus]
+    p.update_column(:player_welcome_bonus,true)
+    else
+    p.update_column(:player_welcome_bonus,false)
+  end
+  if params[:player_banned]
+    p.update_column(:player_banned,true)
+  else
+    p.update_column(:player_banned,false)
+  end
+
+  p.save!
+
+  redirect_to '/admin/players'
+
+
+end
+
   def forum_admin
     @forum = Forum.all
     @icons = ['ion-help','ion-alert','ion-android-bulb','ion-ios-star','ion-beer','ion-android-chat','ion-alert-circled','ion-android-settings','ion-bonfire','ion-cash','ion-chatboxes','ion-coffee','ion-social-freebsd-devil','ion-speakerphone','ion-happy','ion-heart','ion-heart-broken','ion-help']
@@ -33,15 +82,24 @@ end
     end
     if params[:sort].present?
     case params[:sort]
-      when 'nick'
+      when 'nick_asc'
         @players = Player.all.order('player_nickname ASC')
-        @sort = 'nick'
-      when 'reg'
+        @sort = 'nick_asc'
+      when 'nick_desc'
+        @players = Player.all.order('player_nickname DESC')
+        @sort = 'nick_desc'
+      when 'reg_asc'
         @players = Player.all.order('created_at ASC')
-        @sort = 'reg'
-      when 'bonus'
+        @sort = 'reg_asc'
+      when 'reg_desc'
+        @players = Player.all.order('created_at DESC')
+        @sort = 'reg_desc'
+      when 'bonus_asc'
+        @players = Player.all.order('player_welcome_bonus DESC')
+        @sort = 'bonus_asc'
+      when 'bonus_desc'
         @players = Player.all.order('player_welcome_bonus ASC')
-        @sort = 'bonus'
+        @sort = 'bonus_desc'
     end
     else
     @players = Player.all
@@ -79,7 +137,7 @@ end
         i =i+1
       end
     end
-    @event_type = ['Освобождение заложника','Разведка','Исследования','Война роботов','Бегущие стволы','Бегущие стволы 2','Убей их всех','Штурм','Наемники',
+    @event_type = ['Карта сокровищ','Освобождение заложника','Разведка','Исследования','Война роботов','Бегущие стволы','Бегущие стволы 2','Убей их всех','Штурм','Наемники',
                    'Лучший стрелок','Побег','Ринг с зомби','Ринг с медведем','Бои на ринге (8угольник)','Ящики','Кулачный бой стенка-на-стенку']
     @event_time = ['00:00','01:00','02:00','03:00','04:00','05:00','06:00','07:00','08:00','09:00','10:00','11:00','12:00',
                    '13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00']

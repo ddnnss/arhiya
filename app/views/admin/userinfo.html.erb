@@ -1,0 +1,88 @@
+
+<div class="nk-main">
+
+  <div class="nk-header-title nk-header-title-sm nk-header-title-parallax-opacity">
+
+    <div class="nk-header-text-bottom">
+      <div class="nk-breadcrumbs text-xs-center">
+        <ul>
+          <li><a href="/admin">АДМИНКА</a></li>
+          <li>
+            <span>РЕДАКТИРОВАНИЕ ПОЛЬЗОВАТЕЛЯ : <%=@player.player_nickname%></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+  <div class="">
+    <div class="nk-gap-4"></div>
+
+    <div class="nk-box bg-dark-1 text-white">
+      <div class="nk-gap-1"></div>
+      <div class="container">
+
+        <div class="nk-gap-1"></div>
+
+        <div class="">
+          <div class="">
+
+            <%= form_for :userinfo , url: adminuser_path do |f|%>
+
+                <%= f.label :player_nickname , 'Ник пользователя'%>
+                <%=text_field_tag :player_nickname , @player.player_nickname, class:'form-control'%>
+
+                <%= f.label :player_email , 'EMAIL'%>
+                <%=text_field_tag :player_email , @player.player_email, class:'form-control'%>
+
+                <%= f.label :player_password , 'Пароль пользователя'%>
+                <%=text_field_tag :player_password , @player.player_password, class:'form-control'%>
+
+                <%= f.label :player_id , 'STEAMID'%>
+                <%=text_field_tag :player_id , @player.player_id, class:'form-control'%>
+
+                <%= f.label :player_discord_link , 'DISCORD ID'%>
+                <%=text_field_tag :player_discord_link , @player.player_discord_link, class:'form-control'%>
+
+                <%= f.label :player_rank , 'Звание'%>
+                <%=text_field_tag :player_rank , @player.player_rank, class:'form-control'%>
+
+                <%= f.label :player_vk_link , 'Страница в ВК'%>
+                <%=text_field_tag :player_vk_link , @player.player_vk_link, class:'form-control'%>
+
+                <%= f.label :player_wallet , 'Вирт. баланс'%>
+                <%=text_field_tag :player_wallet , @player.player_wallet, class:'form-control'%>
+
+                <%= f.label :player_activated , 'Активирован'%>
+                <%=check_box_tag :player_activated , @player.player_activated,@player.player_activated%>
+
+                <%= f.label :player_welcome_bonus , 'Бонус получен'%>
+                <%=check_box_tag :player_welcome_bonus , @player.player_welcome_bonus,@player.player_welcome_bonus%>
+
+                <%= f.label :player_banned , 'Забанен'%>
+                <%=check_box_tag :player_banned , @player.player_banned, @player.player_banned%>
+                <input type="hidden" name="p_id" value="<%=@player.id%>">
+                <div class="nk-gap-1"></div>
+                <%=submit_tag 'Внести изменения', class:'nk-btn  nk-btn-color-main-1'%>
+          <%end%>
+            <div class="nk-gap-2"></div>
+            <a style="position: absolute;
+                right: 0px;" href="/admin/userinfo?id=<%=@player.id%>&act=del"  class="nk-btn nk-btn-sm nk-btn-color-danger " onclick="return confirm('ТОЧНО УДАЛИТЬ?')">УДАЛИТЬ</a>
+
+          </div>
+        </div>
+
+        <div class="nk-gap-4"></div>
+      </div>
+
+
+
+    </div>
+  </div>
+  <div class="nk-gap-4"></div>
+</div>
+

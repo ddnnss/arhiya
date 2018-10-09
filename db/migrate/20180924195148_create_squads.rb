@@ -1,7 +1,7 @@
 class CreateSquads < ActiveRecord::Migration[5.1]
   def change
     create_table :squads do |t|
-
+      t.integer :squad_number #new
       t.string :squad_name
       t.string :squad_name_translit
       t.string :squad_avatar

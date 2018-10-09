@@ -32,9 +32,12 @@
           <div class="">
 
             Сортировка :
-            <a href="/admin/players?sort=nick"  class="nk-btn nk-btn-sm nk-btn-color-success">ПО НИКУ</a>
-            <a href="/admin/players?sort=reg"  class="nk-btn nk-btn-sm nk-btn-color-warning">ПО РЕГЕ</a>
-            <a href="/admin/players?sort=bonus"  class="nk-btn nk-btn-sm nk-btn-color-info">ПО БОНУСУ</a>
+            <a href="/admin/players?sort=nick_asc"  class="nk-btn nk-btn-sm nk-btn-color-success">ПО НИКУ (A-Z)</a>
+            <a href="/admin/players?sort=nick_desc"  class="nk-btn nk-btn-sm nk-btn-color-success">ПО НИКУ (Z-A)</a>
+            <a href="/admin/players?sort=reg_asc"  class="nk-btn nk-btn-sm nk-btn-color-warning">ПО РЕГЕ (новые)</a>
+            <a href="/admin/players?sort=reg_desc"  class="nk-btn nk-btn-sm nk-btn-color-warning">ПО РЕГЕ (старые)</a>
+            <a href="/admin/players?sort=bonus_asc"  class="nk-btn nk-btn-sm nk-btn-color-info">ПО БОНУСУ (выдан)</a>
+            <a href="/admin/players?sort=bonus_desc"  class="nk-btn nk-btn-sm nk-btn-color-info">ПО БОНУСУ (не выдан)</a>
             <div class="nk-gap-1"></div>
             <table class="table table-bordered">
               <tr>
@@ -50,8 +53,15 @@
 
               <%@players.each do |p|%>
                   <tr>
-                    <td><%=p.player_nickname%> </td>
-                    <td><span id="p_id_<%=p.id%>"><%=p.player_id%></span> <button id="btn_<%=p.id%>"  class="nk-btn nk-btn-sm nk-btn-color-danger" onclick="copyToClipboard('#p_id_<%=p.id%>','#btn_<%=p.id%>')">Скопировать</button></td>
+
+                    <td><a href="/admin/userinfo?id=<%=p.id%>"><%=p.player_nickname%></a>  </td>
+                    <td><span id="p_id_<%=p.id%>"><%=p.player_id%></span>
+                      <br>
+                      <button id="btn_<%=p.id%>"  class="nk-btn nk-btn-sm nk-btn-color-danger" onclick="copyToClipboard('#p_id_<%=p.id%>','#btn_<%=p.id%>')">Телепорт</button>
+                      <input style="width: 40px;" type="text" id="fp_input_<%=p.id%>"  >
+
+                      <button id="btn_<%=p.id%>_1"  class="nk-btn nk-btn-sm nk-btn-color-info" onclick="copyToClipboard1('#fp_input_<%=p.id%>','#btn_<%=p.id%>_1','#p_id_<%=p.id%>')">Начисление</button>
+                    </td>
                     <td><%=p.player_discord_link%></td>
                     <td><%=p.squad_id.nil? ? 'НЕТ' : p.squad.squad_name%></td>
                     <td><%=p.created_at.strftime("%d.%m.%Y | %H:%M:%S")%></td>
@@ -95,6 +105,17 @@
         $temp.remove();
 
         $(btn).removeClass('nk-btn-color-danger');
+        $(btn).addClass('nk-btn-color-success');
+        $('#btn_1').html('Скопировано');
+    }
+    function copyToClipboard1(element,btn,user) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val('#setfamepoints ' + $(element).val() + ' ' + $(user).html()).select();
+        document.execCommand("copy");
+        $temp.remove();
+
+        $(btn).removeClass('nk-btn-color-info');
         $(btn).addClass('nk-btn-color-success');
         $('#btn_1').html('Скопировано');
     }

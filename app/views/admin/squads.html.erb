@@ -1,0 +1,75 @@
+
+<div class="nk-main">
+
+  <div class="nk-header-title nk-header-title-sm nk-header-title-parallax-opacity">
+
+    <div class="nk-header-text-bottom">
+      <div class="nk-breadcrumbs text-xs-center">
+        <ul>
+          <li><a href="/admin">АДМИНКА</a></li>
+          <li>
+            <span>ОТРЯДЫ</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+  <div class="">
+
+
+    <div class="nk-box bg-dark-1 text-white">
+      <div class="nk-gap-1"></div>
+      <div class="container">
+
+        <div class="nk-gap-1"></div>
+
+        <div class="">
+          <div class="">
+            <table class="table table-bordered">
+              <tr>
+
+                <td class="nk-btn-color-success">НАЗВАНИЕ</td>
+                <td>ЛИДЕР</td>
+                <td>УЧАСТНИКИ</td>
+
+
+              </tr>
+
+              <%@squads.each do |s|%>
+                  <tr>
+
+                    <td><%=s.squad_name%> </td>
+                    <td><a href="/profile/<%=Player.find(s.squad_leader).player_nickname_translit%>"><%=Player.find(s.squad_leader).player_nickname%></a>  </td>
+                    <td>
+                      <%Player.where(:squad_id => s.id).each do |p|%>
+                          <a href="/profile/<%=p.player_nickname_translit%>"><%=p.player_nickname%></a><br>
+
+                    <%end%>
+                    </td>
+
+                  </tr>
+              <%end%>
+
+
+
+            </table>
+
+
+          </div>
+        </div>
+
+        <div class="nk-gap-4"></div>
+      </div>
+
+
+
+    </div>
+  </div>
+  <div class="nk-gap-4"></div>
+</div>
+
