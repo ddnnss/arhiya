@@ -151,6 +151,7 @@ class PlayerController < ApplicationController
         @user.player_password = [*('a'..'z'),*('0'..'9')].shuffle[0,8].join
         @user.player_nickname_translit =Translit.convert(params[:registration][:player_nickname].gsub(' ','-').gsub(/[?!*.,:; ]/, ''), :english)
         @user.player_last_v = Time.now - 1.day
+        @user.player_last_zp = Time.now - 1.day
         @user.player_lastlogin = Date.today
         @user.save
 

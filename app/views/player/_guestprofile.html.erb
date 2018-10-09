@@ -38,7 +38,10 @@
             <h1 class="nk-social-profile-info-name"><%= @player.player_nickname%></h1>
             <div class="nk-social-profile-info-username home-game-info" >
               <%unless @player.squad_id.nil? %>
-                  <%if @player.squad_id == @player.squad.squad_leader%>
+                  <%logger.info (@player.squad.squad_leader)%>
+                  <%logger.info (@player.squad_id)%>
+                  <%if @player.squad.squad_leader == @player.id %>
+
                       Лидер отряда: <%= @player.squad.squad_name%>
                   <%else%>
                       Ранг: <%= @player.player_rank%>

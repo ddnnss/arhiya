@@ -48,7 +48,7 @@ bot.command :igc do |event|
   !V - запуск игрового события "Вендетта", месть игроку. Формат запуска !V[пробел]ИГРОВОЙ-НИК-КОМУ-МСТИШЬ (например: !V GRESHNIK)
   !reg - регистрация на сайте. Формат команды !reg[пробел]ИГРОВОЙ-НИК[пробел]STEAMID64[пробел]E-MAIL (например: !reg GRESHNIK 76561198091XXXXXX admin@gamescum.ru) УЗНАТЬ СВОЙ STEAMID64 МОЖНО ТУТ https://steamid.xyz
   -----------------------------------
-  Бот обновлен : **06.10.2018**
+  Бот обновлен : **09.10.2018**
   -----------------------------------
   **GRESHNIK WAS HERE**')
 end
@@ -90,7 +90,7 @@ bot.command :events do |event|
 e= Event.where(:event_active => true).order('event_date ASC')
 unless e.blank?
 e.each do |ee|
-  event <<  'Номер :' + ee.event_creator + ' | ' +'Название :' + ee.event_name + ' | ' + 'Дата и время : '  +  ee.event_date + ' в ' + ee.event_time + ' | ' + (ee.event_group ? '**МОГУТ УЧАВСТВОВАТЬ ТОЛЬКО ОТРЯДЫ**' : '**МОГУТ УЧАВСТВОВАТЬ ВСЕ ЖЕЛАЮЩИЕ**') + ' | ' + 'Подробная информация : http://www.gamescum.ru/event/' + ee.id.to_s
+  event <<  'Номер :' + ee.event_creator + ' | ' +'Название :' + ee.event_name + ' | ' + 'Дата и время : '  +  ee.event_date + ' в ' + ee.event_time + ' | ' + (ee.event_group ? '**МОГУТ УЧАСТВОВАТЬ ТОЛЬКО ОТРЯДЫ**' : '**МОГУТ УЧАСТВОВАТЬ ВСЕ ЖЕЛАЮЩИЕ**') + ' | ' + 'Подробная информация : http://www.gamescum.ru/event/' + ee.id.to_s
 end
 else
   event <<  'Запланированных мероприятий пока нет.'
@@ -103,7 +103,7 @@ bot.command :squads do |event|
   s.each do |ss|
     p = Player.find(ss.squad_leader)
     pp = Player.where(:squad_id => ss.id)
-    event <<  'Номер п/п : ' + ss.id.to_s + ' | ' +'Название отряда : ' + ss.squad_name + ' | ' + 'Состав отряда : ' + pp.count.to_s + ' чел.'+ ' | ' + (ss.squad_recruting ? 'Набор в отряд открыт' : 'Набор в отряд закрыт') + ' | ' +' Лидер отряда : ' +  'http://www.gamescum.ru/profile/'+p.player_nickname_translit
+    event <<  'Номер п/п : ' + ss.squad_number.to_s + ' | ' +'Название отряда : ' + ss.squad_name + ' | ' + 'Состав отряда : ' + pp.count.to_s + ' чел.'+ ' | ' + (ss.squad_recruting ? 'Набор в отряд открыт' : 'Набор в отряд закрыт') + ' | ' +' Лидер отряда : ' +  'http://www.gamescum.ru/profile/'+p.player_nickname_translit
   end
   return nil
 end
@@ -114,7 +114,7 @@ bot.command :squad do |event,squad_id|
     event.user.pm ('Похоже ты не зарегистрирован на сайте или при регистрации указал не правильный DISCORD ID')
   else
     unless p.squad_id
-      s= Squad.find_by_id(squad_id)
+      s= Squad.find_by_squad_number(squad_id)
       if s.nil?
         event.user.pm ('Нет отряда с таким номером, набери !squads и уточни еще раз номер отряда')
       else

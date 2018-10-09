@@ -52,8 +52,11 @@ Rails.application.routes.draw do
   #----------SQUAD------------------------
   match '/newsquad'  => 'squad#newsquad', via: [:post]
   match '/squadadd(/:squad_id/:player_id)'  => 'squad#squadadd', via: [:get]
-
+  match '/squaddeny(/:squad_id/:player_id)'  => 'squad#squaddeny', via: [:get]
+  match '/squaddel(/:squad_id)'  => 'squad#squaddel', via: [:get]
+  match '/squadedit(/:squad_id)'  => 'squad#squadedit', via: [:get]
   match '/event_app(/:event_id/:player_id)'  => 'squad#squadadd', via: [:get]
+  match '/squadkick(/:squad_id/:player_id)'  => 'squad#squadkick', via: [:get]
 
 
 

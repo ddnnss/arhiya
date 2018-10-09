@@ -1,0 +1,12 @@
+$("#edit_squad_info").summernote('code',"<%= j @squad_text %>");
+
+
+
+
+$('#edit_squad_name').val('<%=@squad_name %>');
+$('#edit_id').val('<%=@squad_id %>');
+$('#edit_avatar').attr('src','/images/squads/<%=@squad_img%>');
+if (<%=@squad_rec%>){
+    $('#edit_squad_recruting').attr('checked','checked')
+}
+$('.edit-squad-modal').modal('show');

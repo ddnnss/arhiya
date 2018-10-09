@@ -1,0 +1,2 @@
+class Eventtext < ApplicationRecord
+end

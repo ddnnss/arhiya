@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180924195148) do
+ActiveRecord::Schema.define(version: 20181009174404) do
 
   create_table "comments", force: :cascade do |t|
     t.integer "event_id"
@@ -25,6 +25,14 @@ ActiveRecord::Schema.define(version: 20180924195148) do
     t.index ["player_id"], name: "index_comments_on_player_id"
   end
 
+  create_table "contracts", force: :cascade do |t|
+    t.string "contract_name"
+    t.string "contract_image"
+    t.string "contract_duration"
+    t.string "contract_reward"
+    t.text "contract_info", default: ""
+  end
+
   create_table "events", force: :cascade do |t|
     t.string "event_creator"
     t.string "event_name"
@@ -35,6 +43,12 @@ ActiveRecord::Schema.define(version: 20180924195148) do
     t.text "event_info", default: ""
     t.boolean "event_group", default: false
     t.boolean "event_active", default: true
+  end
+
+  create_table "eventtexts", force: :cascade do |t|
+    t.string "event_name"
+    t.string "event_image"
+    t.text "event_info", default: ""
   end
 
   create_table "faqs", force: :cascade do |t|
@@ -69,6 +83,8 @@ ActiveRecord::Schema.define(version: 20180924195148) do
     t.string "player_money_history", default: ""
     t.string "player_squad_request", default: ""
     t.string "player_last_v", default: ""
+    t.string "player_last_zp", default: ""
+    t.string "player_rating", default: ""
     t.text "player_shop_history"
     t.text "player_cart"
     t.date "player_lastlogin"
@@ -121,6 +137,7 @@ ActiveRecord::Schema.define(version: 20180924195148) do
   create_table "scum_items", force: :cascade do |t|
     t.string "scum_item_image"
     t.string "scum_item_price"
+    t.string "scum_item_price_fp"
     t.string "scum_item_name"
     t.string "scum_item_name_translit"
     t.string "scum_item_temp1"
@@ -134,6 +151,7 @@ ActiveRecord::Schema.define(version: 20180924195148) do
   end
 
   create_table "squads", force: :cascade do |t|
+    t.integer "squad_number"
     t.string "squad_name"
     t.string "squad_name_translit"
     t.string "squad_avatar"
