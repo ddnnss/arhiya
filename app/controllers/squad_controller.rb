@@ -92,7 +92,7 @@ class SquadController < ApplicationController
   end
 
   def squaddel
-    if current_player.squad_id == params[:squad_id].to_i
+    if current_player.squad.squad_leader == params[:squad_id].to_i
       s = Squad.find_by_id(params[:squad_id])
         if s
           s.destroy
@@ -121,7 +121,7 @@ class SquadController < ApplicationController
 
   end
   def squadedit
-    if current_player.squad_id == params[:squad_id].to_i
+    if current_player.squad.squad_leader == params[:squad_id].to_i
       s = Squad.find_by_id(params[:squad_id])
       if s
         respond_to do |format|
@@ -141,7 +141,7 @@ class SquadController < ApplicationController
     end
   end
   def squadkick
-    if current_player.squad_id == params[:squad_id].to_i
+    if current_player.squad.squad_leader == params[:squad_id].to_i
       p=Player.find(params[:player_id])
       p.update_column(:squad_id,nil)
       redirect_to '/profile/'+current_player.player_nickname_translit
@@ -151,7 +151,7 @@ class SquadController < ApplicationController
   end
 
   def squaddeny
-    if current_player.squad_id == params[:squad_id].to_i
+    if current_player.squad.squad_leader == params[:squad_id].to_i
      s = Squad.find(params[:squad_id])
      s.update_column(:squad_in_request,(s.squad_in_request.split(',') -[params[:player_id]]).join(','))
 
@@ -159,5 +159,9 @@ class SquadController < ApplicationController
     else
       redirect_to '/'
     end
+  end
+  def squadleave
+    current_player.update_column(:squad_id,nil)
+    redirect_to '/profile/'+current_player.player_nickname_translit
   end
 end
