@@ -44,6 +44,25 @@
       <div class="nk-gap-1"></div>
       Добавить новое событие:
       <div class="nk-gap-1"></div>
+      <div class="row">
+        <div class="col-6">
+          <select class="form-control" id="event_item">
+            <%@event_type.each do |e|%>
+
+                <option <%=@current_event.id == e.id ? 'selected' : '' %> value="<%=e.id%>"><%=e.event_name%></option>
+
+            <%end%>
+          </select>
+        </div>
+        <div class="col-6">
+          <img width="300px" align="center" src="/images/events/<%=@current_event.event_image%>">
+        </div>
+      </div>
+
+    
+
+
+      <div class="nk-gap-1"></div>
       <%= form_for  :event, url: addevent_path do |f|%>
 
 
@@ -52,13 +71,8 @@
 <div class="row">
   <div class="col-4">
     Название:
-    <select class="form-control" name="event_name">
-      <%@event_type.each do |n|%>
+    <input readonly class="form-control" name="event_name" value="<%=@current_event.event_name%>">
 
-          <option value="<%=n%>"><%=n%></option>
-
-      <%end%>
-    </select>
   </div>
 
 
@@ -91,12 +105,12 @@
           <div class="nk-gap-1"></div>
           <span class=" home-game-info">Описание события :</span>
 
-          <textarea class="nk-summernote  home-game-info"    name="event_info" rows="10"></textarea>
+          <textarea class="nk-summernote  home-game-info" id="event_info"   name="event_info" rows="10"></textarea>
 
 
           <div class="nk-gap-2"></div>
 
-
+<input type="hidden" id="event_image" name="event_image" value="">
 
 
           <button  type="submit" class="nk-btn nk-btn-color-main-1 link-effect-4">Добавить </button>
@@ -107,3 +121,13 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+    $(function(){
+        $("#event_item").change(function(){
+            window.location='/admin/events?id=' + this.value
+        });
+    });
+    $("#event_info").summernote('code',"<%= j @current_event.event_info.html_safe %>");
+    $('#event_image').val('<%=@current_event.event_image%>');
+</script>

@@ -107,7 +107,13 @@ class PlayerController < ApplicationController
       if user.player_activated ##check user activated
         if user.player_password == params[:login][:player_password]##check user password
           session[:player_id] = user.id
-          user.update_column(:player_lastlogin, Date.today)
+
+          if user.player_lastlogin != Date.today
+           user.update_column(:player_lastlogin,Date.today)
+           user.update_column(:player_wallet,user.player_wallet + 30)
+
+           end
+
           if user.player_admin
             session[:admin] = true
             if user.player_rank == 'Комрад'
@@ -153,6 +159,7 @@ class PlayerController < ApplicationController
         @user.player_last_v = Time.now - 1.day
         @user.player_last_zp = Time.now - 1.day
         @user.player_lastlogin = Date.today
+        @user.player_rating = '1'
         @user.save
 
        UserMailer.activation(@user).deliver_later

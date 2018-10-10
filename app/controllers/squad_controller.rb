@@ -15,6 +15,7 @@ class SquadController < ApplicationController
 
         s.squad_avatar = uploadedFile.original_filename
         s.squad_name = params[:squad][:squad_name]
+        s.squad_rating = '1'
         s.squad_name_translit = Translit.convert(params[:squad][:squad_name].gsub(' ','-').gsub(/[?!*.,:; ]/, ''), :english) + '-' + [*('a'..'z'),*('0'..'9')].shuffle[0,2].join
         s.squad_leader = current_player.id
         s.squad_info = params[:squad_info]
@@ -75,24 +76,36 @@ class SquadController < ApplicationController
       if p.nil?
         redirect_to '/'
       else
-        tmp = s.squad_in_request.split(',')
-        tmp1 = tmp - [params[:player_id]]
-        s.update_column(:squad_in_request , tmp1.join(','))
-        p.update_column(:squad_id,params[:squad_id].to_i)
-        UserMailer.squadapp(p.player_email).deliver_later
-        m= Privatemessage.new
-        m.player_id = s.squad_leader
-        m.message_for_id = p.id
-        m.message_text = 'Привет, ты добавлен в отряд.'
-        m.save
-        redirect_to '/profile/'+current_player.player_nickname_translit
+
+        if p.squad_id == nil
+          p.update_column(:squad_id,params[:squad_id].to_i)
+
+          ss = Squad.where('squad_in_request LIKE ?', '%'+params[:player_id]+'%')
+          ss.each do |s|
+
+
+          end
+          UserMailer.squadapp(p.player_email).deliver_later
+          m= Privatemessage.new
+          m.player_id = s.squad_leader
+          m.message_for_id = p.id
+          m.message_text = 'Привет, ты добавлен в отряд.'
+          m.save
+          redirect_to '/profile/'+current_player.player_nickname_translit
+        else
+          s.update_column(:squad_in_request , (s.squad_in_request.split(',') - [params[:player_id]]).join(','))
+          redirect_to '/'
+        end
+
+
+
       end
 
     end
   end
 
   def squaddel
-    if current_player.squad.squad_leader == params[:squad_id].to_i
+    if current_player.squad.squad_leader == current_player.id
       s = Squad.find_by_id(params[:squad_id])
         if s
           s.destroy
@@ -121,7 +134,7 @@ class SquadController < ApplicationController
 
   end
   def squadedit
-    if current_player.squad.squad_leader == params[:squad_id].to_i
+    if current_player.squad.squad_leader == current_player.id
       s = Squad.find_by_id(params[:squad_id])
       if s
         respond_to do |format|
@@ -141,7 +154,7 @@ class SquadController < ApplicationController
     end
   end
   def squadkick
-    if current_player.squad.squad_leader == params[:squad_id].to_i
+    if current_player.squad.squad_leader == current_player.id
       p=Player.find(params[:player_id])
       p.update_column(:squad_id,nil)
       redirect_to '/profile/'+current_player.player_nickname_translit
@@ -151,7 +164,7 @@ class SquadController < ApplicationController
   end
 
   def squaddeny
-    if current_player.squad.squad_leader == params[:squad_id].to_i
+    if current_player.squad.squad_leader == current_player.id
      s = Squad.find(params[:squad_id])
      s.update_column(:squad_in_request,(s.squad_in_request.split(',') -[params[:player_id]]).join(','))
 
@@ -163,5 +176,28 @@ class SquadController < ApplicationController
   def squadleave
     current_player.update_column(:squad_id,nil)
     redirect_to '/profile/'+current_player.player_nickname_translit
+  end
+  def squadapply
+    s = Squad.find_by_squad_name_translit(params[:squad_id])
+    if s
+      if s.squad_in_request.split(',').include? (current_player.id.to_s)
+        flash[:s_error] = 'Заявка уже подана ранее.'
+        redirect_to '/squads'
+      else
+        s.update_column(:squad_in_request,s.squad_in_request.split(',').append(current_player.id.to_s).join(','))
+
+        m= Privatemessage.new
+        m.player_id = current_player.id.to_s
+        m.message_for_id = s.squad_leader.to_s
+        m.message_text ='Заявка на вступление в отряд от <a href="http://www.gamescum.ru/profile/' + current_player.player_nickname_translit+'">' + current_player.player_nickname + '</a>'
+        m.save
+        flash[:s_success] = 'Заявка подана.'
+        redirect_to '/squads'
+      end
+
+    else
+      flash[:s_error] = 'Неведомая ошибка.'
+      redirect_to '/squads'
+    end
   end
 end

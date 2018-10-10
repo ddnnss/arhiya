@@ -72,7 +72,7 @@
                       <li>  <a href="/squadedit/<%=current_player.squad_id%>" data-remote="true" class="nk-btn nk-btn-lg nk-btn-bg-info" >РЕДАКТИРОВАТЬ ОТРЯД</a> </li>
                       <li>  <a href="/squaddel/<%=current_player.squad_id%>" class="nk-btn nk-btn-lg nk-btn-bg-danger" onclick="return confirm('ТОЧНО УДАЛИТЬ?')">УДАЛИТЬ ОТРЯД</a> </li>
                   <%else%>
-                      <li>  <a href="/squadleave/<%=current_player.squad_id%>" class="nk-btn nk-btn-lg nk-btn-bg-danger" onclick="return confirm('ТОЧНО ПОКИНУТЬ ОТРЯД?')">ПОКИНУТЬ ОТРЯД</a> </li>
+                      <li>  <a href="/squadleave" class="nk-btn nk-btn-lg nk-btn-bg-danger" onclick="return confirm('ТОЧНО ПОКИНУТЬ ОТРЯД?')">ПОКИНУТЬ ОТРЯД</a> </li>
                   <%end%>
               <%end%>
             </ul>

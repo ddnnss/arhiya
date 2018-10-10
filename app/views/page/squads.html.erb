@@ -28,11 +28,86 @@
     <div class="nk-box bg-dark-1 text-white">
       <div class="nk-gap-4"></div>
       <div class="container">
+        <%if flash[:s_error]%>
+            <div class="nk-info-box bg-danger">
+              <div class="nk-info-box-icon">
+                <i class="ion-alert-circled"></i>
+              </div>
+              <%=flash[:s_error]%>
+            </div>
+        <%end%>
+        <%if flash[:s_success]%>
+            <div class="nk-info-box bg-success">
+              <div class="nk-info-box-icon">
+                <i class="ion-alert-circled"></i>
+              </div>
+              <%=flash[:s_success]%>
+            </div>
+        <%end%>
         <div class="row">
-          <div class="col-md-10 offset-md-1">
 
-            <p align="center" class="menu_item" style="font-size: 50px !important;">РАЗДЕЛ В РАЗРАБОТКЕ</p>
-          </div>
+
+          <table class="table text-center">
+            <tr>
+              <td style="width: 250px;" ></td>
+              <td>НАЗВАНИЕ</td>
+              <td>НАБОР</td>
+              <td>ЛИДЕР</td>
+              <td>РЕЙТИНГ</td>
+              <td>УЧАСТНИКИ</td>
+
+
+            </tr>
+
+            <%@squads.each do |s|%>
+                <tr>
+                  <td><img class="nk-img" src="/images/squads/<%=s.squad_avatar%>"></td>
+
+
+                  <td style="vertical-align: middle;"><%=s.squad_name%> </td>
+                  <td style="vertical-align: middle;">
+                    <%if s.squad_recruting%>
+                        <span class="nk-btn-color-info">ОТКРЫТ</span><br>
+                        <%if s.squad_in_request.split(',').include? (current_player.id.to_s)%>
+                            <span class="nk-btn-color-danger">Заявка отправлена</span>
+                        <%else%>
+                            <%if current_player.squad_id == nil%>
+                                <a class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline nk-btn-color-success" href="/squadapply/<%=s.squad_name_translit%>">ВСТУПИТЬ</a>
+                            <%else%>
+                                <%if current_player.squad_id == s.id%>
+                                    <span class="nk-btn-color-danger">Это твой отряд</span>
+                                <%end%>
+                            <%end%>
+
+                  <%end%>
+
+
+
+
+
+                        <%else%>
+                        <span class="nk-btn-color-danger">ЗАКРЫТ</span>
+                        <%end%>
+
+
+                  </td>
+                  <td style="vertical-align: middle;"><a href="/profile/<%=Player.find(s.squad_leader).player_nickname_translit%>"><%=Player.find(s.squad_leader).player_nickname%></a>  </td>
+                  <td style="vertical-align: middle;"><%=s.squad_rating%></td>
+                  <td>
+                    <%Player.where(:squad_id => s.id).each do |p|%>
+                        <%unless p.id == p.squad.squad_leader%>
+                        <a href="/profile/<%=p.player_nickname_translit%>"><%=p.player_nickname%></a><br>
+                        <%end%>
+                    <%end%>
+                  </td>
+
+                </tr>
+            <%end%>
+
+
+
+          </table>
+
         </div>
 
         <div class="nk-gap-4"></div>

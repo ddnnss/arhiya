@@ -67,6 +67,8 @@ class PageController < ApplicationController
   end
 
   def squads
+    @squads = Squad.all
+
 
   end
 

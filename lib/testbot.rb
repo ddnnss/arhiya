@@ -48,7 +48,7 @@ bot.command :igc do |event|
   !V - запуск игрового события "Вендетта", месть игроку. Формат запуска !V[пробел]ИГРОВОЙ-НИК-КОМУ-МСТИШЬ (например: !V GRESHNIK)
   !reg - регистрация на сайте. Формат команды !reg[пробел]ИГРОВОЙ-НИК[пробел]STEAMID64[пробел]E-MAIL (например: !reg GRESHNIK 76561198091XXXXXX admin@gamescum.ru) УЗНАТЬ СВОЙ STEAMID64 МОЖНО ТУТ https://steamid.xyz
   -----------------------------------
-  Бот обновлен : **09.10.2018**
+  Бот обновлен : **10.10.2018**
   -----------------------------------
   **GRESHNIK WAS HERE**')
 end
@@ -67,7 +67,7 @@ bot.command :server do |event|
   event << '**IP сервера** : ' + ip.to_s
   event << '----------------------------------'
   event << '12 реальных часов - 1 игровой день'
-  event << '**Рестарты сервера в: 00:00 и 12:00 МСК**'
+  event << '**Рестарты сервера в: 02:30 и 14:30 МСК**'
   event << '----------------------------------'
   event << '**Группа ВК** : https://vk.com/igcommunity'
   event << '**Сайт** : http://www.gamescum.ru/'
@@ -156,11 +156,9 @@ bot.command :event do |event,event_id|
           if p.squad_id
             unless e.event_squads.split(',').include? p.squad_id.to_s
               e.update_column(:event_squads, e.event_squads.split(',').append(p.squad_id.to_s).join(','))
-                if p.squad.squad_rating.nil?
-                  p.squad.update_column(:squad_rating , '1')
-                else
-                  p.squad.update_column(:squad_rating , (p.squad.squad_rating.to_i + 1).to_s)
-                end
+
+              p.squad.update_column(:squad_rating , (p.squad.squad_rating.to_i + 0.01).to_s)
+
             end
             e.update_column(:event_players, e.event_players.split(',').append(p.id.to_s).join(','))
             event.user.pm ('Ты и твой отряд записан (**не игроки в отряде, а просто отряд!**)')
@@ -169,6 +167,7 @@ bot.command :event do |event,event_id|
           end
         else
           e.update_column(:event_players, e.event_players.split(',').append(p.id.to_s).join(','))
+          p.update_column(:player_rating , (p.player_rating.to_i + 0.01).to_s)
           event.user.pm ('Ты записан')
         end
       end
@@ -191,9 +190,9 @@ bot.command :V do |event,victim|
         @last_v_player = event.user.name + '#' +event.user.tag
         @next_v = Time.now + 1.hour
         p.update_column(:player_last_v, Time.now + 1.day)
-       bot.send_message(491290689846378506,'**ВНИМАНИЕ !!!**
+       bot.send_message(499625425253957643,'**ВНИМАНИЕ !!!**
        Игрок ' + event.user.mention + ' объявляет месть игроку с ником ' + victim)
-       bot.send_file(491290689846378506,File.open('c:/vendetta.png', 'r'))
+       bot.send_file(499625425253957643,File.open('c:/vendetta.png', 'r'))
 
         else
           event.user.pm ('Вендетта уже запущена игроком : ' + @last_v_player + ' ! Снова воспользоваться этой командой можно будет :' + @next_v.strftime("%d.%m.%Y | %H:%M:%S"))

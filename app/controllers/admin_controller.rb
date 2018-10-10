@@ -125,7 +125,41 @@ end
     redirect_to '/admin/faq'
 
   end
+
+    def event
+
+    end
+
+    def addnewevent
+      e = Eventtext.new
+
+      uploadedFile = params[:event][:event_image]
+
+      if File.file?(Rails.root.join('public','images','events', uploadedFile.original_filename))
+        uploadedFile.original_filename = [*('a'..'z'),*('0'..'9')].shuffle[0,4].join + uploadedFile.original_filename
+      end
+
+      File.open(Rails.root.join('public','images','events',  uploadedFile.original_filename), 'wb' ) do |f|
+        f.write(uploadedFile.read)
+      end
+
+      e.event_image = uploadedFile.original_filename
+
+      e.event_name = params[:event][:event_name]
+      e.event_info = params[:event_info]
+      e.save
+      redirect_to '/admin/event'
+
+
+    end
   def events
+    @event_type = Eventtext.all
+    if params[:id].present?
+      @current_event = Eventtext.find(params[:id])
+    else
+      @current_event = Eventtext.first
+    end
+
     @events = Event.all
     i=1
     @events.each do |e|
@@ -137,8 +171,8 @@ end
         i =i+1
       end
     end
-    @event_type = ['Карта сокровищ','Освобождение заложника','Разведка','Исследования','Война роботов','Бегущие стволы','Бегущие стволы 2','Убей их всех','Штурм','Наемники',
-                   'Лучший стрелок','Побег','Ринг с зомби','Ринг с медведем','Бои на ринге (8угольник)','Ящики','Кулачный бой стенка-на-стенку']
+   # @event_type = ['Карта сокровищ','Освобождение заложника','Разведка','Исследования','Война роботов','Бегущие стволы','Бегущие стволы 2','Убей их всех','Штурм','Наемники',
+   #                'Лучший стрелок','Побег','Ринг с зомби','Ринг с медведем','Бои на ринге (8угольник)','Ящики','Кулачный бой стенка-на-стенку']
     @event_time = ['00:00','01:00','02:00','03:00','04:00','05:00','06:00','07:00','08:00','09:00','10:00','11:00','12:00',
                    '13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00']
     @current_week = []

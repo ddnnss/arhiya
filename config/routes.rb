@@ -25,7 +25,9 @@ Rails.application.routes.draw do
   match '/admin/forum'  => 'admin#forum_admin', via: [:get]
   match '/admin/addtopic'  => 'admin#addtopic', via: [:get]
   match '/addevent'  => 'admin#addevent', via: [:post]
+  match '/addnewevent'  => 'admin#addnewevent', via: [:post]
   match '/admin/events'  => 'admin#events', via: [:get]
+  match '/admin/event'  => 'admin#event', via: [:get]
   match '/admin/players'  => 'admin#players', via: [:get]
   match '/admin/squads'  => 'admin#squads', via: [:get]
   match '/admin'  => 'admin#index', via: [:get]
@@ -58,6 +60,7 @@ Rails.application.routes.draw do
   match '/squadleave'  => 'squad#squadleave', via: [:get]
   match '/event_app(/:event_id/:player_id)'  => 'squad#squadadd', via: [:get]
   match '/squadkick(/:squad_id/:player_id)'  => 'squad#squadkick', via: [:get]
+  match '/squadapply(/:squad_id)'  => 'squad#squadapply', via: [:get]
 
 
 

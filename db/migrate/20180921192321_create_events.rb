@@ -7,6 +7,7 @@ class CreateEvents < ActiveRecord::Migration[5.1]
       t.string :event_players, :default => ''
       t.string :event_time
       t.string :event_date
+      t.string :event_image #new
 
       t.text :event_info, :default => ''
 
