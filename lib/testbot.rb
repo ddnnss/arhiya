@@ -156,10 +156,11 @@ bot.command :event do |event,event_id|
           if p.squad_id
             unless e.event_squads.split(',').include? p.squad_id.to_s
               e.update_column(:event_squads, e.event_squads.split(',').append(p.squad_id.to_s).join(','))
-
-              p.squad.update_column(:squad_rating , (p.squad.squad_rating.to_i + 0.01).to_s)
+              p.update_column(:player_rating , (p.player_rating.to_f + 0.02).to_s)
+              p.squad.update_column(:squad_rating , (p.squad.squad_rating.to_f + 0.05).to_s)
 
             end
+            p.update_column(:player_rating , (p.player_rating.to_f + 0.02).to_s)
             e.update_column(:event_players, e.event_players.split(',').append(p.id.to_s).join(','))
             event.user.pm ('Ты и твой отряд записан (**не игроки в отряде, а просто отряд!**)')
           else
@@ -167,7 +168,7 @@ bot.command :event do |event,event_id|
           end
         else
           e.update_column(:event_players, e.event_players.split(',').append(p.id.to_s).join(','))
-          p.update_column(:player_rating , (p.player_rating.to_i + 0.01).to_s)
+          p.update_column(:player_rating , (p.player_rating.to_f + 0.02).to_s)
           event.user.pm ('Ты записан')
         end
       end

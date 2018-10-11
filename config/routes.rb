@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   match '/events' => 'page#events', via: [:get]
   match '/squads' => 'page#squads', via: [:get]
   match '/event(/:event_id)' => 'page#event', via: [:get]
+  match '/event_app(/:event_id)' => 'page#eventapp', via: [:get]
   match '/launcher' => 'page#launcher', via: [:get]
 
   #----------PLAYER------------------------

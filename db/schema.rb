@@ -26,11 +26,13 @@ ActiveRecord::Schema.define(version: 20181009174404) do
   end
 
   create_table "contracts", force: :cascade do |t|
+    t.integer "squad_id"
     t.string "contract_name"
     t.string "contract_image"
     t.string "contract_duration"
     t.string "contract_reward"
     t.text "contract_info", default: ""
+    t.index ["squad_id"], name: "index_contracts_on_squad_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -40,6 +42,7 @@ ActiveRecord::Schema.define(version: 20181009174404) do
     t.string "event_players", default: ""
     t.string "event_time"
     t.string "event_date"
+    t.string "event_image"
     t.text "event_info", default: ""
     t.boolean "event_group", default: false
     t.boolean "event_active", default: true

@@ -66,7 +66,34 @@ class PageController < ApplicationController
 
   end
 
+  def eventapp
+    e = Event.find(params[:event_id])
+    if e
+
+      if e.event_group
+        unless e.event_squads.split(',').include? current_player.squad_id.to_s
+          e.update_column(:event_squads, e.event_squads.split(',').append(current_player.squad_id.to_s).join(','))
+          current_player.update_column(:player_rating , (current_player.player_rating.to_f + 0.02).to_s)
+          current_player.squad.update_column(:squad_rating , (current_player.squad.squad_rating.to_f + 0.05).to_s)
+
+        end
+        current_player.update_column(:player_rating , (current_player.player_rating.to_f + 0.02).to_s)
+        e.update_column(:event_players, e.event_players.split(',').append(current_player.id.to_s).join(','))
+      else
+        current_player.update_column(:player_rating , (current_player.player_rating.to_f + 0.02).to_s)
+        e.update_column(:event_players, e.event_players.split(',').append(current_player.id.to_s).join(','))
+      end
+      flash[:e_ok] = 'Заявка на участие подана. Просьба быть готовым к мероприятию заранее.'
+      redirect_to '/event/'+params[:event_id]
+    else
+      redirect_to '/'
+    end
+
+
+  end
+
   def squads
+    @activesquads = 'active'
     @squads = Squad.all
 
 

@@ -194,6 +194,7 @@ end
     e.event_time = params[:event_time]
     e.event_date = params[:event_date]
     e.event_info = params[:event_info]
+    e.event_image = params[:event_image]
     if params[:event_group].present?
       e.event_group = true
     end

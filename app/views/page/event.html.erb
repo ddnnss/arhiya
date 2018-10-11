@@ -31,18 +31,67 @@
       <div class="container">
         <div class="row">
           <div class="col-md-10 offset-md-1">
+            <%if flash[:e_ok]%>
+                <div class="nk-info-box bg-success">
+                  <div class="nk-info-box-icon">
+                    <i class="ion-alert-circled"></i>
+                  </div>
+                  <%=flash[:e_ok]%>
+                </div>
+            <%end%>
+            <div class="row">
+              <div class="col-6">
+                <span style="font-weight: bold" class="nk-btn-color-main-1">Дата проведения :</span>  <%=@event.event_date%> <br>
+                <span style="font-weight: bold" class="nk-btn-color-main-1">Время проведения :</span> <%=@event.event_time%><br>
+                <span style="font-weight: bold" class="nk-btn-color-main-1">Участников :</span> <%=@event.event_players.split(',').count%><br>
 
-            Дата проведения : <%=@event.event_date%> <br>
-            Время проведения : <%=@event.event_time%><br>
-            Участников : <%=@event.event_players.split(',').count%><br>
-            <div class="nk-info-box bg-main-1">
-              <div class="nk-info-box-icon">
-                <i class="ion-information-circled"></i>
+                <div class="nk-gap-2"></div>
+
+
+
+                <%if logged_in?%>
+                    <%if @event.event_players.split(',').include? current_player.id.to_s%>
+                        <div class="nk-info-box bg-danger">
+                          <div class="nk-info-box-icon">
+                            <i class="ion-information-circled"></i>
+                          </div>
+                          <span>ТЫ УЖЕ ПОДАЛ ЗАЯВКУ НА УЧАСТИЕ</span><br>
+                        </div>
+                    <%else%>
+                        <%if @event.event_group && current_player.squad_id == nil%>
+                            <div class="nk-info-box bg-danger">
+                              <div class="nk-info-box-icon">
+                                <i class="ion-information-circled"></i>
+                              </div>
+                              <span>ЭТО МЕРОПРИЯТИЕ ТОЛЬКО ДЛЯ ОТРЯДОВ</span><br>
+                            </div>
+                        <%else%>
+                            <a class="nk-btn nk-btn-xs nk-btn-bg-success " href="/event_app/<%=@event.id%>">ЗАПИСАТЬСЯ</a>
+                        <%end%>
+                    <%end%>
+
+              <%else%>
+                    <div class="nk-info-box bg-danger">
+                      <div class="nk-info-box-icon">
+                        <i class="ion-information-circled"></i>
+                      </div>
+                      <span>ДЛЯ УЧАСТИЯ НУЖНО ЗАРЕГАТЬСЯ НА САЙТЕ</span><br>
+                    </div>
+
+                <%end%>
+
               </div>
-              <span>ДЛЯ ЗАПИСИ НА ЭТО МЕРОПРИЯТИЕ НАБЕРИ В ДИСКОРДЕ : !event <%=@event.event_creator%></span><br>
-              <span>ЗАПИСЬ ЧЕРЕЗ САЙТ В РАЗРАБОТКЕ</span><br>
+              <div class="col-6">
+                <img style="width: 100%;" src="/images/events/<%=@event.event_image%>">
+              </div>
             </div>
-            Информация о мероприятии:<br>
+
+
+
+
+            <div class="nk-gap-1"></div>
+            <div class="text-xs-center"> <span style="font-size:25px;font-weight: bold" class="nk-btn-color-main-1">Информация о мероприятии:</span></div>
+
 
             <%=@event.event_info.html_safe%><br>
 
