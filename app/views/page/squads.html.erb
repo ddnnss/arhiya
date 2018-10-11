@@ -66,28 +66,29 @@
 
                   <td style="vertical-align: middle;"><%=s.squad_name%> </td>
                   <td style="vertical-align: middle;">
-                    <%if s.squad_recruting%>
-                        <span class="nk-btn-color-info">ОТКРЫТ</span><br>
-                        <%if s.squad_in_request.split(',').include? (current_player.id.to_s)%>
-                            <span class="nk-btn-color-danger">Заявка отправлена</span>
-                        <%else%>
-                            <%if current_player.squad_id == nil%>
-                                <a class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline nk-btn-color-success" href="/squadapply/<%=s.squad_name_translit%>">ВСТУПИТЬ</a>
+                    <%if logged_in?%>
+                        <%if s.squad_recruting%>
+                            <span class="nk-btn-color-info">ОТКРЫТ</span><br>
+                            <%if s.squad_in_request.split(',').include? (current_player.id.to_s)%>
+                                <span class="nk-btn-color-danger">Заявка отправлена</span>
                             <%else%>
-                                <%if current_player.squad_id == s.id%>
-                                    <span class="nk-btn-color-danger">Это твой отряд</span>
+                                <%if current_player.squad_id == nil%>
+                                    <a class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline nk-btn-color-success" href="/squadapply/<%=s.squad_name_translit%>">ВСТУПИТЬ</a>
+                                <%else%>
+                                    <%if current_player.squad_id == s.id%>
+                                        <span class="nk-btn-color-danger">Это твой отряд</span>
+                                    <%end%>
                                 <%end%>
+
                             <%end%>
-
-                  <%end%>
-
-
-
-
-
                         <%else%>
-                        <span class="nk-btn-color-danger">ЗАКРЫТ</span>
+                            <span class="nk-btn-color-danger">ЗАКРЫТ</span>
                         <%end%>
+                  
+
+                    <%end%>
+
+
 
 
                   </td>
