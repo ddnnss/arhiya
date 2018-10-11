@@ -31,7 +31,7 @@ ActiveRecord::Base.establish_connection(
     database: '..\db\development.sqlite3'
 )
 
-bot = Discordrb::Commands::CommandBot.new token: 'NDkyNDIyNzA1OTkyMTcxNTIw.DoWQmg.zVJhZ5TSZU6OuSlTPEs1eIfcp4o', client_id: 492422705992171520, prefix: '!'
+bot = Discordrb::Commands::CommandBot.new token: 'NDkyNDIyNzA1OTkyMTcxNTIw.DqEkwg.QzeBPEr6BeAruMPy35tikSAmAxc', client_id: 492422705992171520, prefix: '!'
 
 @next_v = Time.now - 1.month
 @last_v_player = ''
@@ -41,20 +41,19 @@ bot.command :igc do |event|
   !p - Информация о количестве игроков на сервере в данный момент
   !server - Информация о игровом сервере и сообществе (количество игроков, ранг, название и IP-адрес, группа ВК и сайт)
   !squads - Информация о отрядах
-  !squad - Заявка на вступление в отряд в формате : !squad[пробел]НОМЕР ОТРЯДА (например : !squad 1). **Регистрация на сайте http://www.gamescum.ru обязательна!!!**
+  !squad - Заявка на вступление в отряд в формате : !squad[пробел]НОМЕР ОТРЯДА (например : !squad 1). **Регистрация на сайте http://www.gamescum.ru обязательна!!!** (также можно посмотреть тут : http://www.gamescum.ru/squads)
   !events - Информация о мероприятиях на сервере (также можно посмотреть тут : http://www.gamescum.ru/events)
   !event - Запись на мероприятии в формате : !event[пробел]НОМЕР МЕРОПРИЯТИЯ (например : !event 1)
   ------------**СПЕЦИАЛЬНЫЕ КОМАНДЫ**------------------
-  !V - запуск игрового события "Вендетта", месть игроку. Формат запуска !V[пробел]ИГРОВОЙ-НИК-КОМУ-МСТИШЬ (например: !V GRESHNIK)
   !reg - регистрация на сайте. Формат команды !reg[пробел]ИГРОВОЙ-НИК[пробел]STEAMID64[пробел]E-MAIL (например: !reg GRESHNIK 76561198091XXXXXX admin@gamescum.ru) УЗНАТЬ СВОЙ STEAMID64 МОЖНО ТУТ https://steamid.xyz
   -----------------------------------
-  Бот обновлен : **10.10.2018**
+  Бот обновлен : **11.10.2018**
   -----------------------------------
   **GRESHNIK WAS HERE**')
 end
 
 bot.command :server do |event|
-  url = 'https://www.battlemetrics.com/servers/scum/2648150'
+  url = 'https://www.battlemetrics.com/servers/scum/2732521'
   html = open(url)
   doc = Nokogiri::HTML(html)
   players = doc.xpath('//*[@id="serverPage"]/div[1]/div/dl/dd[2]').text
@@ -74,7 +73,7 @@ bot.command :server do |event|
 end
 
 bot.command :p do |event|
-  url = 'https://www.battlemetrics.com/servers/scum/2648150'
+  url = 'https://www.battlemetrics.com/servers/scum/2732521'
   html = open(url)
   doc = Nokogiri::HTML(html)
   players = doc.xpath('//*[@id="serverPage"]/div[1]/div/dl/dd[2]').text
@@ -191,9 +190,9 @@ bot.command :V do |event,victim|
         @last_v_player = event.user.name + '#' +event.user.tag
         @next_v = Time.now + 1.hour
         p.update_column(:player_last_v, Time.now + 1.day)
-       bot.send_message(499625425253957643,'**ВНИМАНИЕ !!!**
+       bot.send_message(499991650635087872,'**ВНИМАНИЕ !!!**
        Игрок ' + event.user.mention + ' объявляет месть игроку с ником ' + victim)
-       bot.send_file(499625425253957643,File.open('c:/vendetta.png', 'r'))
+       bot.send_file(499991650635087872,File.open('c:/vendetta.png', 'r'))
 
         else
           event.user.pm ('Вендетта уже запущена игроком : ' + @last_v_player + ' ! Снова воспользоваться этой командой можно будет :' + @next_v.strftime("%d.%m.%Y | %H:%M:%S"))
@@ -222,10 +221,12 @@ bot.command :reg do |event,nick,steamid,mail|
       pn.player_activated = true
       pn.player_last_v = Time.now - 1.day
       pn.player_lastlogin = Date.today
+      pn.player_last_zp = Time.now - 1.day
+      pn.player_rating = '1'
       pn.save
       event.user.pm 'Ты зарегистрирован на сайте http://www.gamescum.ru'
-      event.user.pm ' Твой логин :' + mail
-      event.user.pm 'Твой пароль :' + pn.player_password
+      event.user.pm ' Твой логин : ' + mail
+      event.user.pm 'Твой пароль : ' + pn.player_password
     end
 
 

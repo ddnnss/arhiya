@@ -39,7 +39,8 @@
             <div class="nk-social-profile-info-username home-game-info" > </div>
 
             <div class="nk-social-profile-info-actions">
-              Баланс : <%= @player.player_wallet%> монет
+              Баланс : <%= @player.player_wallet%> монет<br>
+              Рейтинг : <%= @player.player_rating%>
 
             </div>
 
@@ -130,12 +131,18 @@
             <!-- START: Tab Description -->
             <div role="tabpanel" class="tab-pane fade in active show" id="tab-description">
               <div class="nk-gap-3"></div>
-              <%@players_events.each do |e|%>
-                  <%if e.event_active%>
-                  <%=e.event_date%> :  <%=e.event_name%> в <%=e.event_time%> <br>
-                  <%end%>
-              <%end%>
+              <div class="nk-box-3  bg-dark-1 ">
+                <%unless @players_events.blank?%>
+                    <%@players_events.each do |e|%>
+                        <%if e.event_active%>
+                            <%=e.event_date%> : <a href="/event/<%=e.id%>"><%=e.event_name%></a>  в <%=e.event_time%> <br>
+                        <%end%>
+                    <%end%>
+                    <%else%>
+                Заявок на участие пока не подано.
+                    <%end%>
 
+              </div>
 
             </div>
             <!-- END: Tab Description -->

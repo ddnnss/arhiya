@@ -69,7 +69,10 @@ class PageController < ApplicationController
   def eventapp
     e = Event.find(params[:event_id])
     if e
-
+    if  e.event_players.split(',').include? current_player.id.to_s
+      flash[:e_err] = 'Заявка на участие уже подана.'
+      redirect_to '/event/'+params[:event_id]
+    else
       if e.event_group
         unless e.event_squads.split(',').include? current_player.squad_id.to_s
           e.update_column(:event_squads, e.event_squads.split(',').append(current_player.squad_id.to_s).join(','))
@@ -85,6 +88,8 @@ class PageController < ApplicationController
       end
       flash[:e_ok] = 'Заявка на участие подана. Просьба быть готовым к мероприятию заранее.'
       redirect_to '/event/'+params[:event_id]
+    end
+
     else
       redirect_to '/'
     end
