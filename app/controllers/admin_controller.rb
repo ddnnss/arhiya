@@ -186,6 +186,13 @@ end
 
 
   end
+  def deleteevent
+    e = Event.find(params[:id])
+    e.destroy
+
+    redirect_to '/admin/events'
+
+  end
   def addevent
     ee = Event.where(:event_active => true)
     e = Event.new

@@ -45,6 +45,18 @@ class PageController < ApplicationController
       @current_week.append(week_start+i)
       i = i+1
     end
+    e=Event.where(:event_active => true)
+
+    e.each do |ee|
+      if ee.event_date.to_date < Date.today
+        ee.update_column(:event_active , false)
+        ee.update_column(:event_creator , '0')
+      end
+      if ee.event_date.to_date == Date.today && ee.event_time.to_time < Time.now
+        ee.update_column(:event_active , false)
+        ee.update_column(:event_creator , '0')
+      end
+    end
     @events1 = Event.where(:event_date => @current_week[0].strftime('%d/%m/%Y')).order('event_time asc')
     @events2 = Event.where(:event_date => @current_week[1].strftime('%d/%m/%Y')).order('event_time asc')
     @events3 = Event.where(:event_date => @current_week[2].strftime('%d/%m/%Y')).order('event_time asc')

@@ -24,6 +24,7 @@
           <td>Время</td>
           <td>Команд</td>
           <td>Игроков</td>
+          <td></td>
         </tr>
         <%@events.each do |e|%>
             <%if e.event_active%>
@@ -33,6 +34,7 @@
               <td><%=e.event_time%></td>
               <td><%=e.event_squads.split(',').count%></td>
               <td><%=e.event_players.split(',').count%></td>
+              <td><a href="/admin/deleteevent?id=<%=e.id%>">удалить</a> </td>
 
 
             </tr>
