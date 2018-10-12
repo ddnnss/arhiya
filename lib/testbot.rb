@@ -35,7 +35,7 @@ bot = Discordrb::Commands::CommandBot.new token: 'NDkyNDIyNzA1OTkyMTcxNTIw.DqEkw
 
 @next_v = Time.now - 1.month
 @last_v_player = ''
-bot.command :igc do |event|
+bot.command :lh do |event|
   event.user.pm ('
   ------------**ОБЩИЕ КОМАНДЫ**------------------
   !p - Информация о количестве игроков на сервере в данный момент
@@ -68,7 +68,7 @@ bot.command :server do |event|
   event << '12 реальных часов - 1 игровой день'
   event << '**Рестарты сервера в: 02:30 и 14:30 МСК**'
   event << '----------------------------------'
-  event << '**Группа ВК** : https://vk.com/igcommunity'
+  event << '**Группа ВК** : https://vk.com/scum_lasthero'
   event << '**Сайт** : http://www.gamescum.ru/'
 end
 
