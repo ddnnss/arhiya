@@ -152,6 +152,44 @@ end
 
 
     end
+
+def contracts
+  @contracts = Contract.all
+
+
+end
+
+def addnewcontract
+  c = Contract.new
+  d={}
+  o={}
+  uploadedFile = params[:contract][:contract_image]
+
+  if File.file?(Rails.root.join('public','images','contracts', uploadedFile.original_filename))
+    uploadedFile.original_filename = [*('a'..'z'),*('0'..'9')].shuffle[0,4].join + uploadedFile.original_filename
+  end
+
+  File.open(Rails.root.join('public','images','contracts',  uploadedFile.original_filename), 'wb' ) do |f|
+    f.write(uploadedFile.read)
+  end
+
+  c.contract_image = uploadedFile.original_filename
+  c.contract_name = params[:contract][:contract_name]
+  c.contract_info = params[:contract_info]
+  c.contract_duration = params[:contract_duration]
+  temp = params[:contract][:contract_reward].split(',')
+    temp.each do |t|
+      d[t.split('-')[0]]=t.split('-')[1]
+    end
+  temp = params[:contract][:contract_mission].split(',')
+  temp.each do |t|
+    o[t.split('-')[0]]=t.split('-')[1]
+  end
+  c.contract_reward = d
+  c.contract_mission =o
+  c.save
+  redirect_to '/admin/contracts'
+end
   def events
     @event_type = Eventtext.all
     if params[:id].present?

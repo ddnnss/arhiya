@@ -25,9 +25,11 @@
           <td>Команд</td>
           <td>Игроков</td>
           <td></td>
+          <td>Запись окончена</td>
+
         </tr>
         <%@events.each do |e|%>
-            <%if e.event_active%>
+
             <tr>
               <td><a href="/admin/eventinfo?id=<%=e.id%>"><%=e.event_name%></a> </td>
               <td><%=e.event_date%></td>
@@ -35,10 +37,11 @@
               <td><%=e.event_squads.split(',').count%></td>
               <td><%=e.event_players.split(',').count%></td>
               <td><a href="/admin/deleteevent?id=<%=e.id%>">удалить</a> </td>
+              <td><%=e.event_active ? 'нет' : 'да'%></td>
 
 
             </tr>
-            <%end%>
+
         <%end%>
 
       </table>

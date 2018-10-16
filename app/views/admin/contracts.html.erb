@@ -1,0 +1,111 @@
+<div class="nk-main">
+  <div class="nk-header-title nk-header-title-sm nk-header-title-parallax-opacity">
+
+    <div class="nk-header-text-bottom">
+      <div class="nk-breadcrumbs text-xs-center">
+        <ul>
+          <li><a href="/admin">АДМИНКА</a></li>
+          <li>
+            <span>КОНТРАКТЫ</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+  <div class="nk-box bg-dark-1 text-white">
+
+    <div class="container">
+      <table class="table table-bordered">
+        <tr>
+
+          <td>Название</td>
+          <td>Длительность</td>
+
+
+        </tr>
+        <%@contracts.each do |c|%>
+
+            <tr>
+              <td><%=c.contract_name%></a> </td>
+              <td><%=c.contract_duration%></td>
+
+            </tr>
+
+        <%end%>
+
+      </table>
+
+      <div class="nk-gap-1"></div>
+      Добавить новый контракт (цели и награда будут умножаться на каждого члена отряда, которому назначен контракт):
+      <div class="nk-gap-1"></div>
+
+      <%= form_for  :contract, url: addnewcontract_path do |f|%>
+          <div class="form-group row">
+            <label for="squad_avatar" class="col-3 col-form-label">Картинка<br>
+
+            </label>
+            <div class="col-sm-9">
+              <%= f.file_field :contract_image ,:required => true, class:'form-control', id:'contract_image'%>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="event_name" class="col-3 col-form-label">Название контракта<br>
+
+            </label>
+            <div class="col-sm-9">
+              <%=f.text_field :contract_name ,:required => true, class:'form-control', id:'contract_name'%>
+            </div>
+          </div>
+         <div class="form-group row">
+            <label for="contract_duration" class="col-3 col-form-label">Время действия контракта:<br>
+
+            </label>
+            <div class="col-sm-9">
+              <select class="form-control" required="required" name="contract_duration" id="contract_duration">
+                <option value="12">12 часов</option>
+                <option value="24">24 часа</option>
+                <option value="36">36 часов</option>
+                <option value="48">48 часов</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="contract_reward" class="col-3 col-form-label">Награда за выполнение через запятую (например : 1-автомат,10-яблок,20-кепок)<br>
+
+            </label>
+            <div class="col-sm-9">
+              <%=f.text_field :contract_reward ,:required => true, class:'form-control', id:'contract_reward'%>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="contract_mission" class="col-3 col-form-label">Цель контракта через запятую (например : 3-шлема,10-обойм,20-мяса)<br>
+
+            </label>
+            <div class="col-sm-9">
+              <%=f.text_field :contract_mission ,:required => true, class:'form-control', id:'contract_mission'%>
+            </div>
+          </div>
+
+
+
+
+          <span class=" home-game-info">Описание контракта:</span>
+
+          <textarea class="nk-summernote  home-game-info"    name="contract_info" rows="10"></textarea>
+
+
+          <div class="nk-gap-2"></div>
+
+
+
+
+          <button  type="submit" class="nk-btn nk-btn-color-main-1 link-effect-4">Добавить </button>
+
+      <% end %>
+
+
+    </div>
+  </div>
+</div>
+

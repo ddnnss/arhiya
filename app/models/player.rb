@@ -18,6 +18,7 @@ class Player < ApplicationRecord
             :uniqueness => {:message => 'Данный ник уже занят '},
             :presence => {:message => 'Не указан ник '}
   validates :player_discord_link,
+            format: { with:/\w+#\d{4}/i,message: 'Неправильный формат DiscordID (проверь формат : текст#цифры)'},
             :uniqueness => {:message => 'Данный DiscordID уже занят '},
             :presence => {:message => 'Не указан DiscordID '}
 

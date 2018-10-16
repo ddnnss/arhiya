@@ -30,7 +30,8 @@ ActiveRecord::Schema.define(version: 20181009174404) do
     t.string "contract_name"
     t.string "contract_image"
     t.string "contract_duration"
-    t.string "contract_reward"
+    t.text "contract_reward"
+    t.text "contract_mission"
     t.text "contract_info", default: ""
     t.index ["squad_id"], name: "index_contracts_on_squad_id"
   end

@@ -5,7 +5,8 @@ class CreateContracts < ActiveRecord::Migration[5.1]
       t.string :contract_name
       t.string :contract_image
       t.string :contract_duration
-      t.string :contract_reward
+      t.text   :contract_reward
+      t.text   :contract_mission
       t.text   :contract_info, :default => ''
 
     end
