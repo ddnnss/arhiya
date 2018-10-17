@@ -5,9 +5,11 @@ class CreateContracts < ActiveRecord::Migration[5.1]
       t.string :contract_name
       t.string :contract_image
       t.string :contract_duration
-      t.text   :contract_reward
-      t.text   :contract_mission
+      t.string :contract_hh_player, :default => ''
+      t.text   :contract_reward, :default => ''
+      t.text   :contract_mission, :default => ''
       t.text   :contract_info, :default => ''
+      t.boolean :contract_hh , :default => false
 
     end
   end

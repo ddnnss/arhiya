@@ -1,0 +1,110 @@
+
+<div class="nk-main">
+
+  <div class="nk-header-title nk-header-title-sm nk-header-title-parallax-opacity">
+
+    <div class="nk-header-text-bottom">
+      <div class="nk-breadcrumbs text-xs-center">
+        <ul>
+          <li><a href="/admin">АДМИНКА</a></li>
+          <li>
+            <span>ОТРЯД : <%=@squad.squad_name%></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+  <div class="">
+
+
+    <div class="nk-box bg-dark-1 text-white">
+      <div class="nk-gap-1"></div>
+      <div class="container">
+
+        <div class="nk-gap-1"></div>
+
+        <div class="">
+          <div class="">
+
+            <%= form_for :squad, url: updatesquad_path  do |f| %>
+                <div class="nk-gap-2"></div>
+                <div class="form-group row">
+
+                  <label for="squad_avatar" class="col-3 col-form-label">Аватар отряда (желательно 215x215)<br>
+                    Текущий аватар
+                    <img src="/images/squads/<%=@squad.squad_avatar%>" id="squad_avatar" width="30%">
+                  </label>
+                  <div class="col-sm-9">
+                    <%= f.file_field :squad_avatar , class:'form-control', id:'squad_avatar'%>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="squad_rating" class="col-3 col-form-label">Текущий рейтинг:</label>
+                  <div class="col-sm-9">
+
+                    <%= text_field_tag :squad_rating, @squad.squad_rating.to_s, :required => true, id:'squad_rating', class:'form-control home-game-info'  %>
+                  </div>
+                </div>
+
+
+                <div class="form-group row">
+                  <label for="squad_name" class="col-3 col-form-label">Название отряда:</label>
+                  <div class="col-sm-9">
+
+                    <%= text_field_tag :squad_name, @squad.squad_name, :required => true, id:'squad_name', class:'form-control home-game-info'  %>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="squad_recruting" class="col-3 col-form-label">Набор открыт ?:</label>
+                  <div class="col-sm-1">
+
+                    <%= check_box_tag :squad_recruting,@squad.squad_recruting,@squad.squad_recruting, id:'squad_recruting', class:'form-control home-game-info'  %>
+
+                  </div>
+                </div>
+
+
+                <div class="form-group row">
+                  <label for="squad_info" class="col-3 col-form-label">Дополнительная нформация :</label>
+                  <div class="col-sm-9">
+                    <textarea class="nk-summernote"  id="squad_info" name="squad_info"  rows="18"></textarea>
+                  </div>
+                </div>
+
+
+
+
+
+                <div class="nk-gap-2"></div>
+
+                <input type="hidden" id="edit_id" name="squad_id" value="<%=@squad.id%>" >
+
+
+                <button  type="submit" class="nk-btn nk-btn-color-main-1 link-effect-4">Внести изменения</button>
+
+            <% end %>
+
+
+          </div>
+        </div>
+
+        <div class="nk-gap-4"></div>
+      </div>
+
+
+
+    </div>
+  </div>
+  <div class="nk-gap-4"></div>
+</div>
+
+<script language="JavaScript">
+    $("#squad_info").summernote('code',"<%= j @squad.squad_info.html_safe%>");
+</script>

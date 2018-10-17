@@ -20,6 +20,13 @@ def squads
 
 end
 
+def squad
+  @squad = Squad.find(params[:id])
+end
+def updatesquad
+
+end
+
 def userinfo
   if params[:act].present?  && params[:act] == 'del'
     player = Player.find(params[:id])
@@ -181,12 +188,18 @@ def addnewcontract
     temp.each do |t|
       d[t.split('-')[0]]=t.split('-')[1]
     end
-  temp = params[:contract][:contract_mission].split(',')
-  temp.each do |t|
-    o[t.split('-')[0]]=t.split('-')[1]
-  end
   c.contract_reward = d
-  c.contract_mission =o
+  if params[:contract_hh].present?
+    c.contract_hh = true
+    c.contract_hh_player = params[:contract][:contract_hh_player]
+  else
+    temp = params[:contract][:contract_mission].split(',')
+    temp.each do |t|
+      o[t.split('-')[0]]=t.split('-')[1]
+    end
+    c.contract_mission =o
+  end
+
   c.save
   redirect_to '/admin/contracts'
 end

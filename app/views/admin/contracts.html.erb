@@ -21,6 +21,8 @@
 
           <td>Название</td>
           <td>Длительность</td>
+          <td>HeadHunter?</td>
+          <td>Назначен</td>
 
 
         </tr>
@@ -29,6 +31,8 @@
             <tr>
               <td><%=c.contract_name%></a> </td>
               <td><%=c.contract_duration%></td>
+              <td><%=c.contract_hh ? 'да' : 'нет'%></td>
+              <td><%=c.squad_id.nil? ? 'нет' : '<a href="/admin/squad?id=' + c.squad_id.to_s + '>ДА</a>'.html_safe%></td>
 
             </tr>
 
@@ -67,6 +71,8 @@
                 <option value="24">24 часа</option>
                 <option value="36">36 часов</option>
                 <option value="48">48 часов</option>
+                <option value="60">60 часов</option>
+                <option value="72">72 часа</option>
               </select>
             </div>
           </div>
@@ -76,6 +82,22 @@
             </label>
             <div class="col-sm-9">
               <%=f.text_field :contract_reward ,:required => true, class:'form-control', id:'contract_reward'%>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="contract_hh" class="col-3 col-form-label">HeadHunter ?<br>
+
+            </label>
+            <div class="col-sm-9">
+             <input type="checkbox" name="contract_hh" id="contract_hh" value="hh">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="contract_hh_player" class="col-3 col-form-label">HeadHunter - цель:<br>
+
+            </label>
+            <div class="col-sm-9">
+              <%=f.text_field :contract_hh_player ,:required => true, class:'form-control',disabled:'disabled', id:'contract_hh_player'%>
             </div>
           </div>
           <div class="form-group row">
@@ -109,3 +131,17 @@
   </div>
 </div>
 
+<script language="JavaScript">
+    const checkbox = $("#contract_hh");
+
+    checkbox.change(function(event) {
+        var checkbox = event.target;
+        if (checkbox.checked) {
+            $('#contract_hh_player').removeAttr('disabled');
+            $("#contract_mission").attr("disabled","disabled");
+        } else {
+            $("#contract_hh_player").attr("disabled","disabled");
+            $('#contract_mission').removeAttr('disabled');
+        }
+    });
+</script>

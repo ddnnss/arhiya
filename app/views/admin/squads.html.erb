@@ -43,7 +43,7 @@
               <%@squads.each do |s|%>
                   <tr>
 
-                    <td><%=s.squad_name%> </td>
+                    <td><a href="/admin/squad?id=<%=s.id.to_s%>"><%=s.squad_name%></a>  </td>
                     <td><a href="/profile/<%=Player.find(s.squad_leader).player_nickname_translit%>"><%=Player.find(s.squad_leader).player_nickname%></a>  </td>
                     <td>
                       <%Player.where(:squad_id => s.id).each do |p|%>
