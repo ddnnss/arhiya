@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
 
   def player_admin
     return unless session[:player_id]
-    player_admin = current_player.player_admin
+    @player_admin = current_player.player_admin
   end
 
   def logged_in?

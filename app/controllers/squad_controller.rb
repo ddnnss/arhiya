@@ -105,7 +105,7 @@ class SquadController < ApplicationController
   end
 
   def squaddel
-    if current_player.squad.squad_leader == current_player.id
+    if current_player.squad.squad_leader == current_player.id || player_admin
       s = Squad.find_by_id(params[:squad_id])
         if s
           p_ids=[]
@@ -129,7 +129,12 @@ class SquadController < ApplicationController
             end
           end
           current_player.update_column(:squad_leader,false)
-          redirect_to '/profile/'+current_player.player_nickname_translit
+          if player_admin
+            redirect_to '/admin/squads'
+          else
+            redirect_to '/profile/'+current_player.player_nickname_translit
+          end
+
         else
           redirect_to '/'
         end

@@ -35,6 +35,8 @@ bot = Discordrb::Commands::CommandBot.new token: 'NDkyNDIyNzA1OTkyMTcxNTIw.DqEkw
 
 @next_v = Time.now - 1.month
 @last_v_player = ''
+
+
 bot.command :lh do |event|
   event.user.pm ('
   ------------**ОБЩИЕ КОМАНДЫ**------------------
@@ -99,11 +101,11 @@ end
 
 bot.command :squads do |event|
   s= Squad.all
+  event << 'LAST HERO: Зарегистрированные отряды:'
   s.each do |ss|
     p = Player.find(ss.squad_leader)
     pp = Player.where(:squad_id => ss.id)
-    event << 'LAST HERO: Зарегистрированные отряды:'
-    event << 'Номер п/п : ' + ss.squad_number.to_s + ' | ' +'Название отряда : ' + ss.squad_name + ' | ' + 'Состав отряда : ' + pp.count.to_s + ' чел.'+ ' | ' + (ss.squad_recruting ? 'Набор в отряд открыт' : 'Набор в отряд закрыт') + ' | ' +' Лидер отряда : ' +  'http://www.gamescum.ru/profile/'+p.player_nickname_translit
+       event << 'Номер п/п : ' + ss.squad_number.to_s + ' | ' +'Название отряда : ' + ss.squad_name + ' | ' + 'Состав отряда : ' + pp.count.to_s + ' чел.'+ ' | ' + (ss.squad_recruting ? 'Набор в отряд открыт' : 'Набор в отряд закрыт') + ' | ' +' Лидер отряда : ' +  'http://www.gamescum.ru/profile/'+p.player_nickname_translit
   end
   return nil
 end
@@ -234,6 +236,12 @@ bot.command :reg do |event,nick,steamid,mail|
   else
     event.user.pm ('Похоже ты уже зарегистрирован на сайте')
   end
+
+end
+bot.command :test do |event|
+
+
+event <<  API::User.resolve(token, id)
 
 end
 
