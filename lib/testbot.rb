@@ -37,7 +37,7 @@ bot = Discordrb::Commands::CommandBot.new token: 'NDkyNDIyNzA1OTkyMTcxNTIw.DqEkw
 @last_v_player = ''
 
 
-bot.command :lh do |event|
+bot.command :red do |event|
   event.user.pm ('
   ------------**ОБЩИЕ КОМАНДЫ**------------------
   !p - Информация о количестве игроков на сервере в данный момент
@@ -81,7 +81,7 @@ bot.command :p do |event|
   players = doc.xpath('//*[@id="serverPage"]/div[1]/div/dl/dd[2]').text
 
   event << '**Игроков ** : ' + players.to_s
-
+  event << '**Рестарты сервера в: 02:30 и 14:30 МСК**'
 end
 
 
@@ -228,7 +228,7 @@ bot.command :reg do |event,nick,steamid,mail|
       pn.player_rating = '1'
       pn.save
       event.user.pm 'Ты зарегистрирован на сайте http://www.gamescum.ru'
-      event.user.pm ' Твой логин : ' + mail
+      event.user.pm 'Твой логин : ' + mail
       event.user.pm 'Твой пароль : ' + pn.player_password
     end
 
