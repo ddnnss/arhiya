@@ -67,7 +67,7 @@ bot.command :server do |event|
   event << '**Игроков** : ' + players.to_s
   event << '**IP сервера** : ' + ip.to_s
   event << '----------------------------------'
-  event << '12 реальных часов - 1 игровой день'
+  event << '3 реальных часа - 1 игровой день'
   event << '**Рестарты сервера в: 02:30 и 14:30 МСК**'
   event << '----------------------------------'
   event << '**Группа ВК** : https://vk.com/scum_lasthero'
@@ -101,7 +101,7 @@ end
 
 bot.command :squads do |event|
   s= Squad.all
-  event << 'LAST HERO: Зарегистрированные отряды:'
+  event << 'Зарегистрированные отряды:'
   s.each do |ss|
     p = Player.find(ss.squad_leader)
     pp = Player.where(:squad_id => ss.id)
