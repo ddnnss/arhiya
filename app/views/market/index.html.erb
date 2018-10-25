@@ -1,0 +1,80 @@
+<!-- START: Page Background -->
+<div class="nk-page-background op-5" data-bg-mp4="<%= asset_path('bg-2.mp4') %>" data-bg-webm="<%= asset_path('bg-2.webm') %>" data-bg-ogv="<%= asset_path('bg-2.ogv') %>" data-bg-poster="<%= asset_path('bg-2.jpg') %>"></div>
+<!-- END: Page Background -->
+
+<div class="nk-main">
+
+  <div class="nk-header-title nk-header-title-sm nk-header-title-parallax-opacity">
+
+    <div class="nk-header-text-bottom">
+      <div class="nk-breadcrumbs text-xs-center">
+        <ul>
+          <li><a href="/">ГЛАВНАЯ</a></li>
+          <li>
+            <span>BLACK<span style="color: #e08821;">M</span>ARKET</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+  <div class="container">
+    <div class="nk-gap-4"></div>
+
+    <div class="nk-store">
+
+      <!-- START: Products List -->
+      <div class="row equal-height multi-columns-row no-gap">
+<%@scummaincat.each do |maincat|%>
+        <div class="col-sm-6 col-lg-4">
+
+          <!-- START: Product -->
+          <div class="nk-product" data-mouse-parallax-z="2">
+            <div>
+              <div class="nk-carousel-3" data-size="1" data-mouse-parallax-z="3">
+                <div class="nk-carousel-inner nk-popup-gallery">
+
+                  <div>
+                    <div>
+                      <img class="nk-img-stretch" src="/images/maincat/<%=maincat.cat_image%>" alt="SCUM - <%=maincat.cat_image%>">
+                    </div>
+                  </div>
+
+
+                </div>
+              </div>
+              <h2 class="nk-product-title h5" data-mouse-parallax-z="1"><a href="store-product.html"><%=maincat.cat_name%></a></h2>
+
+
+              <div class="nk-product-bottom">
+                <div>
+                  <div class="nk-product-price">Товаров : <%=maincat.scumitems.count%></div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- END: Product -->
+
+        </div>
+<%end%>
+
+
+      </div>
+      <!-- END: Products List -->
+
+      <div class="nk-gap-5"></div>
+
+      <!-- START: Pagination -->
+
+      <!-- END: Pagination -->
+    </div>
+
+    <div class="nk-gap-4"></div>
+    <div class="nk-gap-3"></div>
+  </div>
+</div>

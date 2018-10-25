@@ -1,0 +1,16 @@
+
+
+
+alert('<%=@mc_id %>');
+
+$('#cat_name').val('<%=@mc_name %>');
+$('#main_id').val('<%=@mc_id %>');
+$('#edit_cat_image').attr('src','/images/maincat/<%=@mc_img%>');
+$('#edit_cat_image').css('display','block');
+if (<%=@mc_show%>){
+    $('#cat_show').attr('checked','checked')}
+    else{
+    $('#cat_show').removeAttribute('checked')
+}
+$('#addmain').val('edit');
+$('.add_new_cat').modal('show');

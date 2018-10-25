@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   match '/event(/:event_id)' => 'page#event', via: [:get]
   match '/event_app(/:event_id)' => 'page#eventapp', via: [:get]
   match '/launcher' => 'page#launcher', via: [:get]
+  match '/blackmarket' => 'market#index', via: [:get]
 
   #----------PLAYER------------------------
   match '/login'  => 'player#login', via: [:post]
@@ -40,8 +41,10 @@ Rails.application.routes.draw do
   match '/admin/eventinfo'  => 'admin#eventinfo', via: [:get]
   match '/admin/userinfo'  => 'admin#userinfo', via: [:get]
   match '/adminuser'  => 'admin#adminuser', via: [:post]
-  match '/addfaq'  => 'admin#addfaq', via: [:post]
-  match '/admin/faq'  => 'admin#faq', via: [:get]
+  match '/addmaincat'  => 'admin#addmaincat', via: [:post]
+  match '/addscumitem'  => 'admin#addscumitem', via: [:post]
+  match '/editmaincat'  => 'admin#editmaincat', via: [:get]
+  match '/admin/shop'  => 'admin#shop', via: [:get]
   match '/addforum'  => 'admin#addforum', via: [:post, :get]
 
   #----------FORUM------------------------

@@ -58,6 +58,18 @@
         <div class="nk-navbar">
           <ul class="nk-nav">
             <% if logged_in? %>
+                <li class="">
+                  <% if current_player.player_admin %>
+                    <li class="single-icon">
+                      <a href="/admin" >
+                  <span class=" bg-danger"> АДМИНКА
+                      </span>
+
+                      </a>
+                    </li>
+                <% end %>
+                </li>
+                <li> | </li>
                <li class="">
                  <a href="#" data-nav-toggle="#nk-side" >
                  <span class="fa fa-id-badge">
@@ -130,10 +142,11 @@
 
           </li>
 
-          <li class="<%= @activeforum%> " ><a style="padding: 5px 10px !important;" class="no-link-effect menu_item" href="/forums">SCUM-ИНФО</a></li>
+          <li class="<%= @activeforum%> " ><a style="padding: 5px 10px !important;" class="no-link-effect menu_item" href="/forums">SCUM<span style="color: #e08821;">И</span>НФО</a></li>
+
           <li class="<%= @activeevents%>"><a style="padding: 5px 10px !important;" class="no-link-effect menu_item" href="/events">МЕРОПРИЯТИЯ</a></li>
           <li class="<%= @activesquads%>"><a style="padding: 5px 10px !important;" class="no-link-effect menu_item" href="/squads">ОТРЯДЫ</a></li>
-
+          <li class="<%= @activemarket%> " ><a style="padding: 5px 10px !important;" class="no-link-effect menu_item" href="/blackmarket">SCUM<span style="color: #e08821;">B</span>LACK<span style="color: #e08821;">M</span>ARKET</a></li>
 
 
          

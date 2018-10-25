@@ -1,6 +1,66 @@
 class AdminController < ApplicationController
 before_action :ch_admin
 
+def shop
+  @maincat = Scummaincat.all
+end
+
+def addmaincat
+  c = Scummaincat.new
+  c.cat_name = params[:addmaincat][:cat_name]
+  c.cat_name_translit = Translit.convert(params[:addmaincat][:cat_name].gsub(' ','-').gsub(/[?!*.,:; ]/, ''), :english)
+  uploadedFile = params[:addmaincat][:cat_image]
+  if File.file?(Rails.root.join('public','images','maincat', uploadedFile.original_filename))
+    uploadedFile.original_filename = [*('a'..'z'),*('0'..'9')].shuffle[0,4].join + uploadedFile.original_filename
+  end
+  File.open(Rails.root.join('public','images','maincat',  uploadedFile.original_filename), 'wb' ) do |f|
+    f.write(uploadedFile.read)
+  end
+  c.cat_image = uploadedFile.original_filename
+  unless params[:addmaincat][:cat_show].present?
+    c.cat_show = false
+  end
+  c.save
+  redirect_to '/admin/shop'
+end
+
+def addscumitem
+  i = Scumitem.new
+  i.scummaincat_id = params[:cat_id].to_i
+  i.item_name = params[:addscumitem][:item_name]
+  i.item_spawn_name = params[:addscumitem][:item_spawn_name]
+  i.item_name_translit = Translit.convert(params[:addscumitem][:item_name].gsub(' ','-').gsub(/[?!*.,:; ]/, ''), :english)
+  uploadedFile = params[:addscumitem][:item_image]
+  if File.file?(Rails.root.join('public','images','items', uploadedFile.original_filename))
+    uploadedFile.original_filename = [*('a'..'z'),*('0'..'9')].shuffle[0,4].join + uploadedFile.original_filename
+  end
+  File.open(Rails.root.join('public','images','items',  uploadedFile.original_filename), 'wb' ) do |f|
+    f.write(uploadedFile.read)
+  end
+  i.item_image = uploadedFile.original_filename
+  i.item_price = params[:addscumitem][:item_price].to_i
+  i.item_squad_discount = params[:addscumitem][:item_squad_discount].to_i
+  unless params[:addscumitem][:item_show].present?
+    i.item_show = false
+  end
+  i.save
+  redirect_to '/admin/shop'
+end
+
+def editmaincat
+  m = Scummaincat.find(params[:maincat_id])
+
+  respond_to do |format|
+    @mc_id = m.id
+    @mc_name = m.cat_name
+    @mc_img = m.cat_image
+    @mc_show = m.cat_show
+
+    format.js
+  end
+
+end
+
 def ch_admin
   if player_admin
   return true
@@ -8,23 +68,43 @@ def ch_admin
     redirect_to '/'
   end
 end
+
 def index
   @players = Player.all
   @squads = Squad.all
-
-
 end
 
 def squads
   @squads = Squad.all
-
 end
 
 def squad
   @squad = Squad.find(params[:id])
 end
-def updatesquad
 
+def updatesquad
+  s = Squad.find(params[:squad_id])
+  if params[:squadd][:squad_avatar] == ''
+    else
+    uploadedFile = params[:squadd][:squad_avatar]
+    if File.file?(Rails.root.join('public','images','squads', uploadedFile.original_filename))
+      uploadedFile.original_filename = [*('a'..'z'),*('0'..'9')].shuffle[0,4].join + uploadedFile.original_filename
+    end
+    File.open(Rails.root.join('public','images','squads',  uploadedFile.original_filename), 'wb' ) do |f|
+      f.write(uploadedFile.read)
+     end
+    s.update_column(:squad_avatar ,uploadedFile.original_filename)
+  end
+  s.update_column(:squad_name ,params[:squad_name])
+  s.update_column(:squad_rating ,params[:squad_rating])
+  s.update_column(:squad_name_translit ,Translit.convert(params[:squad_name].gsub(' ','-').gsub(/[?!*.,:; ]/, ''), :english) + '-' + [*('a'..'z'),*('0'..'9')].shuffle[0,2].join)
+  s.update_column(:squad_info, params[:squad_info])
+  if params[:squad_recruting].present? && params[:squad_recruting] == '1'
+    s.update_column(:squad_recruting, true)
+  else
+    s.update_column(:squad_recruting, false)
+  end
+  redirect_to '/admin/squads'
 end
 
 def userinfo
@@ -35,9 +115,8 @@ def userinfo
   else
     @player = Player.find(params[:id])
   end
-
-
 end
+
 def adminuser
   p = Player.find(params[:p_id])
   p.update_column(:player_nickname,params[:player_nickname])
@@ -63,12 +142,8 @@ def adminuser
   else
     p.update_column(:player_banned,false)
   end
-
   p.save!
-
   redirect_to '/admin/players'
-
-
 end
 
   def forum_admin
@@ -85,7 +160,6 @@ end
     if params[:bonus].present?
       p =Player.find(params[:bonus])
       p.update_column(:player_welcome_bonus, true)
-
     end
     if params[:sort].present?
     case params[:sort]
@@ -112,58 +186,29 @@ end
     @players = Player.all
     @sort = false
     end
-
-
-  end
-
-
-  def faq
-    @faq = Faq.all
-  end
-  def addfaq
-    f = Faq.new
-    f.answer = params[:answer]
-    f.question =params[:question]
-    f.question_caps = params[:question].mb_chars.upcase
-    if params[:link].present?
-      f.link = params[:link]
-    end
-    f.save
-    redirect_to '/admin/faq'
-
   end
 
     def event
-
     end
 
     def addnewevent
       e = Eventtext.new
-
       uploadedFile = params[:event][:event_image]
-
       if File.file?(Rails.root.join('public','images','events', uploadedFile.original_filename))
         uploadedFile.original_filename = [*('a'..'z'),*('0'..'9')].shuffle[0,4].join + uploadedFile.original_filename
       end
-
       File.open(Rails.root.join('public','images','events',  uploadedFile.original_filename), 'wb' ) do |f|
         f.write(uploadedFile.read)
       end
-
       e.event_image = uploadedFile.original_filename
-
       e.event_name = params[:event][:event_name]
       e.event_info = params[:event_info]
       e.save
       redirect_to '/admin/event'
-
-
     end
 
 def contracts
   @contracts = Contract.all
-
-
 end
 
 def addnewcontract
@@ -171,15 +216,12 @@ def addnewcontract
   d={}
   o={}
   uploadedFile = params[:contract][:contract_image]
-
   if File.file?(Rails.root.join('public','images','contracts', uploadedFile.original_filename))
     uploadedFile.original_filename = [*('a'..'z'),*('0'..'9')].shuffle[0,4].join + uploadedFile.original_filename
   end
-
   File.open(Rails.root.join('public','images','contracts',  uploadedFile.original_filename), 'wb' ) do |f|
     f.write(uploadedFile.read)
   end
-
   c.contract_image = uploadedFile.original_filename
   c.contract_name = params[:contract][:contract_name]
   c.contract_info = params[:contract_info]
@@ -199,10 +241,10 @@ def addnewcontract
     end
     c.contract_mission =o
   end
-
   c.save
   redirect_to '/admin/contracts'
 end
+
   def events
     @event_type = Eventtext.all
     if params[:id].present?
@@ -210,7 +252,6 @@ end
     else
       @current_event = Eventtext.first
     end
-
     @events = Event.all
     i=1
     @events.each do |e|
@@ -231,19 +272,16 @@ end
     i=0
     7.times do
       @current_week.append(week_start+i)
-
       i = i+1
     end
-
-
   end
+
   def deleteevent
     e = Event.find(params[:id])
     e.destroy
-
     redirect_to '/admin/events'
-
   end
+
   def addevent
     ee = Event.where(:event_active => true)
     e = Event.new
@@ -258,15 +296,12 @@ end
     end
     e.save
     redirect_to '/admin/events'
-
   end
 
   def eventinfo
     @event_info = Event.find_by_id(params[:id])
-
     @event_players = Player.where(:id => @event_info.event_players.split(',')).order('squad_id desc')
     @event_squads = Squad.where(id: @event_info.event_squads)
-
   end
 
 
@@ -277,7 +312,6 @@ end
       if params[:addforum][:forum_wiki] == '1'
         f.forum_wiki = true
       end
-
       f.save
     end
     if params[:addsub] == 'add'

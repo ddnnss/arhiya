@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181009174404) do
+ActiveRecord::Schema.define(version: 20181025094452) do
 
   create_table "comments", force: :cascade do |t|
     t.integer "event_id"
@@ -154,6 +154,42 @@ ActiveRecord::Schema.define(version: 20181009174404) do
     t.datetime "updated_at", null: false
     t.index ["scum_item_name"], name: "index_scum_items_on_scum_item_name"
     t.index ["scum_item_name_translit"], name: "index_scum_items_on_scum_item_name_translit"
+  end
+
+  create_table "scumitems", force: :cascade do |t|
+    t.integer "scummaincat_id"
+    t.string "item_name"
+    t.string "item_image"
+    t.string "item_spawn_name"
+    t.string "item_name_translit"
+    t.integer "item_buys", default: 0
+    t.integer "item_price", default: 0
+    t.integer "item_squad_discount", default: 0
+    t.boolean "item_show", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["scummaincat_id"], name: "index_scumitems_on_scummaincat_id"
+  end
+
+  create_table "scummaincats", force: :cascade do |t|
+    t.string "cat_name"
+    t.string "cat_image"
+    t.string "cat_name_translit"
+    t.integer "cat_views", default: 0
+    t.boolean "cat_show", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "scumorders", force: :cascade do |t|
+    t.integer "player_id"
+    t.text "order_items"
+    t.integer "order_total_price"
+    t.integer "order_discount", default: 0
+    t.boolean "order_complete", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["player_id"], name: "index_scumorders_on_player_id"
   end
 
   create_table "squads", force: :cascade do |t|

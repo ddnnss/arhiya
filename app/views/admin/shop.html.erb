@@ -1,0 +1,180 @@
+<div class="nk-main">
+  <div class="nk-header-title nk-header-title-sm nk-header-title-parallax-opacity">
+
+    <div class="nk-header-text-bottom">
+      <div class="nk-breadcrumbs text-xs-center">
+        <ul>
+          <li><a href="/admin">АДМИНКА</a></li>
+          <li>
+            <span>МАГАЗИН</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="nk-box bg-dark-1 text-white">
+
+    <div class="container">
+
+      <button class="nk-btn nk-btn-lg link-effect-4" data-toggle="modal" data-target=".add_new_cat">Добавить категорию</button>
+      <table class="table table-bordered">
+        <tbody>
+
+        <% @maincat.each do |maincat| %>
+            <tr class="">
+              <td></td>
+              <td width="50%"><%= maincat.cat_name%></td>
+
+              <td><a href="#" id="<%= maincat.id%>" class="maincat"   data-toggle="modal" data-target=".add_new_item">+ товар</a></td>
+
+              <td><a href="#<%= maincat.id%>">удалить</a></td>
+              <td><a href="/editmaincat?maincat_id=<%= maincat.id%>" data-remote="true">редакт.</a></td>
+
+            </tr>
+            <% maincat.scumitems.each  do |item|%>
+                <tr>
+                  <td ><img width="100px" src="/images/items/<%= item.item_image%>"></td>
+                  <td style="background-color: #666666;"><%= item.item_name%></td>
+
+
+                  <td>Цена : <%= item.item_price%></td>
+                  <td>Скидка : <%= item.item_squad_discount%></td>
+                  <td><a href="/#?id=<%= item.id%>&maincat=<%= maincat.id%>"><i class="fas fa-trash-alt" ></i>уд.</a></td>
+                  <td><a href="/#?id=<%= item.id%>&maincat=<%= maincat.id%>"><i class="fas fa-trash-alt" ></i>ред.</a></td>
+                </tr>
+            <% end %>
+
+        <% end %>
+
+        </tbody>
+      </table>
+
+
+    </div>
+  </div>
+</div>
+</div>
+
+
+<div class="nk-gap-4"></div>
+<div class="nk-gap-4"></div>
+<div class="nk-gap-4"></div>
+<div class="nk-gap-4"></div>
+<div class="nk-gap-4"></div>
+
+<div class="modal nk-modal fade add_new_cat" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none; top : 1%;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span class="ion-android-close"></span>
+        </button>
+        <h4 class="modal-title nk-title" id="myLargeModalLabel">Новая категория</h4>
+      </div>
+      <div class="modal-body">
+        <%= form_for  :addmaincat, url: addmaincat_path   do |f|%>
+
+            <div class="form-group row">
+              <label for="cat_name" class="col-3 col-form-label">Название категории</label>
+              <div class="col-sm-9">
+                <%=f.text_field  :cat_name, :required => true , class:'form-control', id: 'cat_name'%>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="cat_image" class="col-3 col-form-label">Картинка категории (желательно 215x215)
+              <img width="50px" style="display: none;"  id="edit_cat_image">
+              </label>
+              <div class="col-sm-9">
+                <%= f.file_field :cat_image , :required => true , class:'form-control', id: 'cat_image'%>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="cat_show" class="col-1 col-form-label">Показывать?</label>
+              <div class="col-sm-11">
+                <%=f.check_box  :cat_show, class:'form-control', checked: 'checked', id: 'cat_show'%>
+              </div>
+            </div>
+            <input id='main_id' name="main_id" value="0" type="hidden" />
+            <input id="addmain" name="addmain" value="add" type="hidden" />
+            <%= submit_tag 'Добавить' , class:'nk-btn nk-btn-lg link-effect-4'%>
+
+
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal nk-modal fade add_new_item" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none; top : 1%;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span class="ion-android-close"></span>
+        </button>
+        <h4 class="modal-title nk-title" id="myLargeModalLabel">Новый товар</h4>
+      </div>
+      <div class="modal-body">
+        <%= form_for  :addscumitem, url: addscumitem_path   do |f|%>
+
+
+            <div class="form-group row">
+              <label for="item_name" class="col-3 col-form-label">Название категории</label>
+              <div class="col-sm-9">
+                <%=f.text_field  :item_name, :required => true , class:'form-control', id: 'item_name'%>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="item_image" class="col-3 col-form-label">Картинка товара (желательно 215x215)</label>
+              <div class="col-sm-9">
+                <%= f.file_field :item_image , :required => true , class:'form-control', id: 'item_image'%>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="item_spawn_name" class="col-3 col-form-label">ИД спавна в игре</label>
+              <div class="col-sm-9">
+                <%=f.text_field  :item_spawn_name, :required => true , class:'form-control', id: 'item_spawn_name'%>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="item_price" class="col-3 col-form-label">Цена</label>
+              <div class="col-sm-9">
+                <%=f.text_field  :item_price, :required => true , class:'form-control', id: 'item_price'%>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="item_squad_discount" class="col-3 col-form-label">Скидка для отряда</label>
+              <div class="col-sm-9">
+                <%=f.text_field  :item_squad_discount, :required => true , class:'form-control', id: 'item_squad_discount'%>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="item_show" class="col-1 col-form-label">Показывать?</label>
+              <div class="col-sm-11">
+                <%=f.check_box  :item_show, class:'form-control', checked: 'checked', id: 'item_show'%>
+              </div>
+            </div>
+            <input name="additem" value="add" type="hidden" />
+            <input id="cat_id" name="cat_id" value="0" type="hidden" />
+            <%= submit_tag 'Добавить' , class:'nk-btn nk-btn-lg link-effect-4'%>
+
+
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script language="JavaScript">
+    $('a.maincat').click(function() {
+        var cat_id = $(this).attr('id');
+        $('#cat_id').val(cat_id);
+
+    });
+</script>

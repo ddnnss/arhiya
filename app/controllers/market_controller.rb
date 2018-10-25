@@ -1,13 +1,9 @@
 class MarketController < ApplicationController
-  before_action :checkpm
+  def index
+ @scummaincat = Scummaincat.all
 
-  def checkpm
-    if session[:active]
-      pm = Privatemessage.where(player_id: session[:player_id])
-      pm.blank? ? session[:pm_count] = 0 : session[:pm_count] = pm.count
-
-    end
   end
+
   def newtarkovitem
     p = Player.find(session[:player_id])
     if params[:item_info] ==''
