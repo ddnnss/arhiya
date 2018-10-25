@@ -75,7 +75,7 @@
       </div>
       <div class="modal-body">
         <%= form_for  :addmaincat, url: addmaincat_path   do |f|%>
-
+            <%= f.file_field :cat_image ,  class:'form-control' , type: 'hidden'%>
             <div class="form-group row">
               <label for="cat_name" class="col-3 col-form-label">Название категории</label>
               <div class="col-sm-9">
@@ -91,6 +91,14 @@
                 <%= f.file_field :cat_image , :required => true , class:'form-control', id: 'cat_image'%>
               </div>
             </div>
+
+            <div class="form-group row">
+              <label for="cat_info" class="col-3 col-form-label">Описание категории</label>
+              <div class="col-sm-9">
+                <%=f.text_field  :cat_info, :required => true , class:'form-control', id: 'cat_info'%>
+              </div>
+            </div>
+
 
             <div class="form-group row">
               <label for="cat_show" class="col-1 col-form-label">Показывать?</label>

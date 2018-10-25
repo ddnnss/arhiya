@@ -6,8 +6,10 @@ def shop
 end
 
 def addmaincat
+  if params[:addmain] == 'add'
   c = Scummaincat.new
   c.cat_name = params[:addmaincat][:cat_name]
+  c.cat_info = params[:addmaincat][:cat_info]
   c.cat_name_translit = Translit.convert(params[:addmaincat][:cat_name].gsub(' ','-').gsub(/[?!*.,:; ]/, ''), :english)
   uploadedFile = params[:addmaincat][:cat_image]
   if File.file?(Rails.root.join('public','images','maincat', uploadedFile.original_filename))
@@ -17,14 +19,42 @@ def addmaincat
     f.write(uploadedFile.read)
   end
   c.cat_image = uploadedFile.original_filename
-  unless params[:addmaincat][:cat_show].present?
+  if params[:addmaincat][:cat_show] == '0'
     c.cat_show = false
   end
+  if params[:addmaincat][:cat_show] == '1'
+    c.cat_show = true
+  end
   c.save
+  end
+  if params[:addmain] == 'edit'
+    c = Scummaincat.find(params[:main_id])
+    unless params[:addmaincat][:cat_image] == ''
+      uploadedFile = params[:addmaincat][:cat_image]
+      if File.file?(Rails.root.join('public','images','maincat', uploadedFile.original_filename))
+        uploadedFile.original_filename = [*('a'..'z'),*('0'..'9')].shuffle[0,4].join + uploadedFile.original_filename
+      end
+      File.open(Rails.root.join('public','images','maincat',  uploadedFile.original_filename), 'wb' ) do |f|
+        f.write(uploadedFile.read)
+      end
+      c.update_column(:cat_image , uploadedFile.original_filename)
+    end
+    c.update_column(:cat_name , params[:addmaincat][:cat_name])
+    c.update_column(:cat_info , params[:addmaincat][:cat_info])
+    c.update_column(:cat_name_translit , Translit.convert(params[:addmaincat][:cat_name].gsub(' ','-').gsub(/[?!*.,:; ]/, ''), :english))
+    if params[:addmaincat][:cat_show] == '0'
+      c.update_column(:cat_show , false)
+    end
+    if params[:addmaincat][:cat_show] == '1'
+      c.update_column(:cat_show , true)
+    end
+  end
+
   redirect_to '/admin/shop'
 end
 
 def addscumitem
+
   i = Scumitem.new
   i.scummaincat_id = params[:cat_id].to_i
   i.item_name = params[:addscumitem][:item_name]
@@ -44,6 +74,8 @@ def addscumitem
     i.item_show = false
   end
   i.save
+
+
   redirect_to '/admin/shop'
 end
 
@@ -52,6 +84,7 @@ def editmaincat
 
   respond_to do |format|
     @mc_id = m.id
+    @mc_info = m.cat_info
     @mc_name = m.cat_name
     @mc_img = m.cat_image
     @mc_show = m.cat_show
