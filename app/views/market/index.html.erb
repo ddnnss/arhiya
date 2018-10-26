@@ -11,7 +11,7 @@
         <ul>
           <li><a href="/">ГЛАВНАЯ</a></li>
           <li>
-            <span>BLACK<span style="color: #e08821;">M</span>ARKET</span>
+            <span>SCUM<span style="color: #e08821;">B</span>LACK<span style="color: #e08821;">M</span>ARKET</span>
           </li>
         </ul>
       </div>
@@ -52,12 +52,16 @@
 
                 </div>
               </div>
-              <h2 class="nk-product-title h5" data-mouse-parallax-z="1"><a href="store-product.html"><%=maincat.cat_name%></a></h2>
+              <h2 class="nk-product-title h5" data-mouse-parallax-z="1"><a href="/cat/<%=maincat.cat_name_translit%>"><%=maincat.cat_name%></a></h2>
 
 
               <div class="nk-product-bottom">
                 <div>
-                  <div class="nk-product-price"><%=maincat.cat_info%><br>Предложений : <%=maincat.scumitems.count%></div>
+                  <div class="nk-product-price">
+                    <div class="nk-gap-1"></div>
+                    <%=maincat.cat_info%>
+                    <div class="nk-gap-1"></div>
+                    Предложений : <%=maincat.scumitems.count%></div>
 
                 </div>
               </div>

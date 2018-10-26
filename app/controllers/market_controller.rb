@@ -1,6 +1,91 @@
 class MarketController < ApplicationController
   def index
- @scummaincat = Scummaincat.all
+ @scummaincat = Scummaincat.where(:cat_show => true)
+
+  end
+
+  def showcat
+    cat = Scummaincat.find_by_cat_name_translit(params[:cat_name_translit])
+    @items = cat.scumitems.all
+  end
+
+  def addtocart
+    item = Scumitem.find(params[:item_id])
+
+
+
+
+      if session[:cart].nil?  #корзина существует?
+        logger.info('[INFO] : Инициализация корзины. Обработка ......')
+        session[:cart]=Hash.new
+        session[:cart][item.id] = 1
+        @duplicate = false
+        current_player.update_column(:player_cart , session[:cart])
+
+      else
+        if session[:cart].key? item.id.to_s #проверка дублирования товара в корзине
+          logger.info('[INFO] : Существующий товар. Обработка ......')
+
+          session[:cart][item.id.to_s] = session[:cart][item.id.to_s].to_i + 1
+          current_player.update_column(:player_cart , session[:cart])
+          @duplicate = true
+        else
+          logger.info('[INFO] : Новый товар. Обработка ......')
+
+          session[:cart][item.id] = 1
+          current_player.update_column(:player_cart , session[:cart])
+          @duplicate = false
+        end
+
+      end
+
+
+
+
+
+    if @duplicate               #дупликата товара
+
+      respond_to do |format| # дупликат товара
+        @dup = @duplicate
+        @item_id = item.id
+        @item_name = item.item_name
+        @item_count = session[:cart][item.id.to_s]
+
+          if item.item_squad_discount > 0
+            @item_price = item.item_price - (item.item_price * item.item_squad_discount / 100)
+            @item_total_price = @item_price * @item_count
+
+          else
+            @item_price = item.item_price
+            @item_total_price = @item_price * @item_count
+
+          end
+
+
+        logger.info('[INFO] : Существующий товар обновлен.')
+        format.js
+      end
+
+    else
+      respond_to do |format| #нет дупликата товара
+        @dup = @duplicate
+        @item_id = item.id
+        @item_name = item.item_name
+        @item_name_translit = item.item_name_translit
+        @item_image = item.item_image
+        if item.item_squad_discount > 0
+          @item_price = item.item_price - (item.item_price * item.item_squad_discount / 100)
+        else
+          @item_price = item.item_price
+        end
+        logger.info('[INFO] : Новый товар добавлен в корзину.')
+        format.js
+      end
+
+    end
+
+
+
 
   end
 

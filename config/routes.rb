@@ -44,6 +44,8 @@ Rails.application.routes.draw do
   match '/addmaincat'  => 'admin#addmaincat', via: [:post]
   match '/addscumitem'  => 'admin#addscumitem', via: [:post]
   match '/editmaincat'  => 'admin#editmaincat', via: [:get]
+  match '/itemdel'  => 'admin#itemdel', via: [:get]
+  match '/itemedit'  => 'admin#itemedit', via: [:get]
   match '/admin/shop'  => 'admin#shop', via: [:get]
   match '/addforum'  => 'admin#addforum', via: [:post, :get]
 
@@ -71,9 +73,9 @@ Rails.application.routes.draw do
   match '/squadkick(/:squad_id/:player_id)'  => 'squad#squadkick', via: [:get]
   match '/squadapply(/:squad_id)'  => 'squad#squadapply', via: [:get]
 
+  #----------shop------------------------
 
-
-
-
+  match '/cat(/:cat_name_translit)'  => 'market#showcat', via: [:get]
+  match '/tocart(/:item_id)'  => 'market#addtocart', via: [:get]
 
 end

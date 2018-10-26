@@ -108,6 +108,7 @@ class PlayerController < ApplicationController
         if user.player_password == params[:login][:player_password]##check user password
           session[:player_id] = user.id
 
+
           if user.player_lastlogin != Date.today
            user.update_column(:player_lastlogin,Date.today)
            user.update_column(:player_wallet,user.player_wallet + 30)

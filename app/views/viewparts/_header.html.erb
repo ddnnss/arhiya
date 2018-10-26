@@ -60,27 +60,24 @@
             <% if logged_in? %>
                 <li class="">
                   <% if current_player.player_admin %>
-                    <li class="single-icon">
-                      <a href="/admin" >
-                  <span class=" bg-danger"> АДМИНКА
-                      </span>
-
-                      </a>
-                    </li>
+                    <li class="single-icon"><a href="/admin" ><span class=" bg-danger"> АДМИНКА</span></a></li>
                 <% end %>
                 </li>
                 <li> | </li>
-               <li class="">
-                 <a href="#" data-nav-toggle="#nk-side" >
+               <li class=""><a href="/profile/<%= current_player.player_nickname_translit%>" >
                  <span class="fa fa-id-badge">
                    <% if player_pm.count.to_i > 0 %>
                    <span style="right: 0px !important;" class="nk-badge"><%=player_pm.count%></span>
                 <% end %>
-                 </span> <%= current_player.player_nickname%>
-                      </a>
-                    </li>
+                 </span>
+                  <%= current_player.player_nickname%>
+                  </a>
+               </li>
                 <li> | </li>
-
+                <li class="single-icon"><a href="#" class="nk-cart-toggle no-link-effect"><span class="nk-icon-toggle"><span class="nk-icon-toggle-front"><span class="ion-android-cart"></span>
+                  <span id="cart_count" class="nk-badge">8</span>
+                </span> <span class="nk-icon-toggle-back"><span class="nk-icon-close"></span></span></span></a></li>
+                <li> | </li>
                 <li class="single-icon">
                   <a href="/logout" class="menu_item" >
                 <span class="fa fa-sign-out">
@@ -271,3 +268,39 @@ Additional Classes:
 <% unless logged_in? %>
 <%= render 'viewparts/signform' %>
 <% end %>
+
+<div class="nk-cart">
+  <div class="nk-gap-2"></div>
+  <div class="container">
+    <div class="nk-store nk-store-cart">
+      <div class="table-responsive">
+        <table id="cart_items" class="table nk-store-cart-products">
+          <tbody >
+
+
+
+
+
+          </tbody>
+        </table>
+      </div>
+
+      <div class="nk-gap-2"></div>
+      <div class="nk-cart-total">
+        Total
+        <span>$317</span>
+      </div>
+
+      <div class="nk-gap-3"></div>
+      <div class="nk-cart-btns">
+        <a href="#" class="nk-btn nk-btn-lg nk-btn-color-main-1 link-effect-4">
+          Go to Checkout
+        </a> &nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="#" class="nk-btn nk-btn-lg link-effect-4 nk-cart-toggle">
+          Continue Shopping
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="nk-gap-5"></div>
+</div>

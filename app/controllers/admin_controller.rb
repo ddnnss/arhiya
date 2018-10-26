@@ -4,7 +4,24 @@ before_action :ch_admin
 def shop
   @maincat = Scummaincat.all
 end
-
+def itemedit
+  i = Scumitem.find(params[:item_id])
+  respond_to do |format|
+    @i_id =i.id
+    @i_spawn = i.item_spawn_name
+    @i_price = i.item_price
+    @i_discount = i.item_squad_discount
+    @i_name = i.item_name
+    @i_img = i.item_image
+    @i_show = i.item_show
+    format.js
+  end
+end
+def itemdel
+  i = Scumitem.find(params[:item_id])
+  i.destroy
+  redirect_to '/admin/shop'
+end
 def addmaincat
   if params[:addmain] == 'add'
   c = Scummaincat.new
@@ -54,7 +71,7 @@ def addmaincat
 end
 
 def addscumitem
-
+if params[:additem] == 'add'
   i = Scumitem.new
   i.scummaincat_id = params[:cat_id].to_i
   i.item_name = params[:addscumitem][:item_name]
@@ -70,28 +87,50 @@ def addscumitem
   i.item_image = uploadedFile.original_filename
   i.item_price = params[:addscumitem][:item_price].to_i
   i.item_squad_discount = params[:addscumitem][:item_squad_discount].to_i
-  unless params[:addscumitem][:item_show].present?
+  if params[:addscumitem][:item_show] == '0'
     i.item_show = false
   end
   i.save
+end
+if params[:additem] == 'edit'
+  i = Scumitem.find(params[:item_id])
+  unless params[:addscumitem][:item_image] == ''
+    uploadedFile = params[:addscumitem][:item_image]
+    if File.file?(Rails.root.join('public','images','items', uploadedFile.original_filename))
+      uploadedFile.original_filename = [*('a'..'z'),*('0'..'9')].shuffle[0,4].join + uploadedFile.original_filename
+    end
+    File.open(Rails.root.join('public','images','items',  uploadedFile.original_filename), 'wb' ) do |f|
+      f.write(uploadedFile.read)
+    end
+    i.update_column(:item_image , uploadedFile.original_filename)
+  end
+  i.update_column(:item_price , params[:addscumitem][:item_price].to_i)
+  i.update_column(:item_squad_discount , params[:addscumitem][:item_squad_discount].to_i)
+  i.update_column(:item_name , params[:addscumitem][:item_name])
+  i.update_column(:item_spawn_name , params[:addscumitem][:item_spawn_name])
+  i.update_column(:item_name_translit , Translit.convert(params[:addscumitem][:item_name].gsub(' ','-').gsub(/[?!*.,:; ]/, ''), :english))
+  if params[:addscumitem][:item_show]== '0'
+    i.update_column(:item_show , false)
+  end
+  if params[:addscumitem][:item_show]== '1'
+    i.update_column(:item_show , true)
+  end
 
+end
 
   redirect_to '/admin/shop'
 end
 
 def editmaincat
   m = Scummaincat.find(params[:maincat_id])
-
   respond_to do |format|
     @mc_id = m.id
     @mc_info = m.cat_info
     @mc_name = m.cat_name
     @mc_img = m.cat_image
     @mc_show = m.cat_show
-
     format.js
   end
-
 end
 
 def ch_admin

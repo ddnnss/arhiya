@@ -1,0 +1,15 @@
+$('#item_name').val('<%=@i_name %>');
+$('#item_spawn_name').val('<%=@i_spawn %>');
+$('#item_price').val('<%=@i_price %>');
+$('#item_squad_discount').val('<%=@i_discount %>');
+$('#item_id').val('<%=@i_id %>');
+$('#edit_item_image').attr('src','/images/items/<%=@i_img%>');
+$('#item_image').removeAttr('required');
+$('#edit_item_image').css('display','block');
+if (<%=@i_show%>){
+    $('#item_show').attr('checked','checked')}
+else{
+    $('#item_show').removeAttr('checked')
+}
+$('#additem').val('edit');
+$('.add_new_item').modal('show');

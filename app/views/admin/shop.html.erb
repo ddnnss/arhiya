@@ -29,9 +29,9 @@
 
               <td><a href="#" id="<%= maincat.id%>" class="maincat"   data-toggle="modal" data-target=".add_new_item">+ товар</a></td>
 
-              <td><a href="#<%= maincat.id%>">удалить</a></td>
-              <td><a href="/editmaincat?maincat_id=<%= maincat.id%>" data-remote="true">редакт.</a></td>
 
+              <td><a href="/editmaincat?maincat_id=<%= maincat.id%>" data-remote="true">редакт.</a></td>
+              <td><a href="#<%= maincat.id%>">удалить</a></td>
             </tr>
             <% maincat.scumitems.each  do |item|%>
                 <tr>
@@ -41,8 +41,9 @@
 
                   <td>Цена : <%= item.item_price%></td>
                   <td>Скидка : <%= item.item_squad_discount%></td>
-                  <td><a href="/#?id=<%= item.id%>&maincat=<%= maincat.id%>"><i class="fas fa-trash-alt" ></i>уд.</a></td>
-                  <td><a href="/#?id=<%= item.id%>&maincat=<%= maincat.id%>"><i class="fas fa-trash-alt" ></i>ред.</a></td>
+                  <td><a href="/itemedit?item_id=<%= item.id%>" data-remote="true"><i class="fas fa-trash-alt" ></i>ред.</a></td>
+                  <td><a href="/itemdel?item_id=<%= item.id%>" onclick="return confirm('ТОЧНО УДАЛИТЬ?')"><i class="fas fa-trash-alt" ></i>уд.</a></td>
+
                 </tr>
             <% end %>
 
@@ -128,16 +129,18 @@
       <div class="modal-body">
         <%= form_for  :addscumitem, url: addscumitem_path   do |f|%>
 
-
+            <%= f.file_field :item_image ,  class:'form-control' , type: 'hidden'%>
             <div class="form-group row">
-              <label for="item_name" class="col-3 col-form-label">Название категории</label>
+              <label for="item_name" class="col-3 col-form-label">Название товара</label>
               <div class="col-sm-9">
                 <%=f.text_field  :item_name, :required => true , class:'form-control', id: 'item_name'%>
               </div>
             </div>
 
             <div class="form-group row">
-              <label for="item_image" class="col-3 col-form-label">Картинка товара (желательно 215x215)</label>
+              <label for="item_image" class="col-3 col-form-label">Картинка товара (желательно 215x215)
+                <img width="50px" style="display: none;"  id="edit_item_image">
+              </label>
               <div class="col-sm-9">
                 <%= f.file_field :item_image , :required => true , class:'form-control', id: 'item_image'%>
               </div>
@@ -168,8 +171,9 @@
                 <%=f.check_box  :item_show, class:'form-control', checked: 'checked', id: 'item_show'%>
               </div>
             </div>
-            <input name="additem" value="add" type="hidden" />
+            <input id="additem" name="additem" value="add" type="hidden" />
             <input id="cat_id" name="cat_id" value="0" type="hidden" />
+            <input id="item_id" name="item_id" value="0" type="hidden" />
             <%= submit_tag 'Добавить' , class:'nk-btn nk-btn-lg link-effect-4'%>
 
 
