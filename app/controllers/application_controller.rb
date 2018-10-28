@@ -17,10 +17,7 @@ class ApplicationController < ActionController::Base
     @player_admin = current_player.player_admin
   end
 
-  def get_cart
-    return unless session[:player_id]
-    session[:cart] = current_player.player_cart
-  end
+
 
   def logged_in?
     !!session[:player_id]

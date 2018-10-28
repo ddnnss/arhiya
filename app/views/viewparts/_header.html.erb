@@ -75,7 +75,17 @@
                </li>
                 <li> | </li>
                 <li class="single-icon"><a href="#" class="nk-cart-toggle no-link-effect"><span class="nk-icon-toggle"><span class="nk-icon-toggle-front"><span class="ion-android-cart"></span>
-                  <span id="cart_count" class="nk-badge">8</span>
+                  <%if cart.nil? || cart.count == 0%>
+                      <%else%>
+                       <span id="cart_count" class="nk-badge">
+                  <% c=0%>
+                      <%session[:cart].values.each {|v| c=c+v}%>
+                      <%=c%>
+                      </span>
+                      <%end%>
+
+
+
                 </span> <span class="nk-icon-toggle-back"><span class="nk-icon-close"></span></span></span></a></li>
                 <li> | </li>
                 <li class="single-icon">
@@ -276,6 +286,43 @@ Additional Classes:
       <div class="table-responsive">
         <table id="cart_items" class="table nk-store-cart-products">
           <tbody >
+          <% if logged_in?%>
+              <%if cart.nil? || cart.count == 0%>
+                  <tr>
+                    <td>  Корзина пуста</td>
+                  </tr>
+
+
+              <%else%>
+              <%cart.each do |cc|%>
+                      <tr>
+                        <td class="nk-product-cart-thumb">
+                          <a href="#" class="nk-post-image">
+                            <img src="/images/items/<%=cc.item_image%>" alt="Men Tshirt" class="nk-img">
+                          </a>
+                        </td>
+                        <td class="nk-product-cart-title">
+                          <h2 class="nk-post-title h5">
+                            <a href="#"><%=cc.item_name%></a>
+                          </h2>
+                        </td>
+                        <td class="nk-product-cart-price"><%=cc.item_price%> RC</td>
+                        <td class="nk-product-cart-quantity">
+                          <span id="item<%= cc.id%>count"><%=session[:cart][cc.id.to_s]%></span>
+                        </td>
+                        <td class="nk-product-cart-total-<%= cc.id%>">
+                          <%session[:total] = session[:total] + cc.item_price * session[:cart][cc.id.to_s]%>
+                          <%=cc.item_price * session[:cart][cc.id.to_s]%> RC
+                        </td>
+                        <td class="nk-product-cart-remove"><a href="/remcart/<%=cc.id%>"><span class="ion-trash-b"></span></a></td>
+                      </tr>
+                  <%end%>
+
+
+
+
+            <%end%>
+          <%end%>
 
 
 
@@ -287,19 +334,20 @@ Additional Classes:
 
       <div class="nk-gap-2"></div>
       <div class="nk-cart-total">
-        Total
-        <span>$317</span>
+        Всего
+        <span id="total" ><%= session[:total]%></span> RC
+
       </div>
 
       <div class="nk-gap-3"></div>
+
       <div class="nk-cart-btns">
         <a href="#" class="nk-btn nk-btn-lg nk-btn-color-main-1 link-effect-4">
-          Go to Checkout
+        ОПЛАТИТЬ
         </a> &nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="#" class="nk-btn nk-btn-lg link-effect-4 nk-cart-toggle">
-          Continue Shopping
-        </a>
+
       </div>
+
     </div>
   </div>
   <div class="nk-gap-5"></div>

@@ -77,5 +77,6 @@ Rails.application.routes.draw do
 
   match '/cat(/:cat_name_translit)'  => 'market#showcat', via: [:get]
   match '/tocart(/:item_id)'  => 'market#addtocart', via: [:get]
+  match '/remcart(/:item_id)'  => 'market#removecart', via: [:get]
 
 end

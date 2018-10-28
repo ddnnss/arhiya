@@ -107,7 +107,7 @@ class PlayerController < ApplicationController
       if user.player_activated ##check user activated
         if user.player_password == params[:login][:player_password]##check user password
           session[:player_id] = user.id
-
+          session[:cart] = user.player_cart
 
           if user.player_lastlogin != Date.today
            user.update_column(:player_lastlogin,Date.today)

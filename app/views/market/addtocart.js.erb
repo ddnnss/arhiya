@@ -1,34 +1,35 @@
 var cartItem = " <tr>\n" +
     "            <td class=\"nk-product-cart-thumb\">\n" +
-    "              <a href=\"store-product.html\" class=\"nk-post-image\">\n" +
-    "                <img src=\"assets/images/product-2-sm.png\" alt=\"Men Tshirt\" class=\"nk-img\">\n" +
+    "              <a href=\"#\" class=\"nk-post-image\">\n" +
+    "                <img src=\"/images/items/<%=@item_image%>\" alt=\"Men Tshirt\" class=\"nk-img\">\n" +
     "              </a>\n" +
     "            </td>\n" +
     "            <td class=\"nk-product-cart-title\">\n" +
     "              <h2 class=\"nk-post-title h5\">\n" +
-    "                <a href=\"store-product.html\">Men Tshirt</a>\n" +
+    "                <a href=\"#\"><%=@item_name%></a>\n" +
     "              </h2>\n" +
     "            </td>\n" +
-    "            <td class=\"nk-product-cart-price\">$67.00</td>\n" +
+    "            <td class=\"nk-product-cart-price\"><%=@item_price%> RC</td>\n" +
     "            <td class=\"nk-product-cart-quantity\">\n" +
     "              1\n" +
     "            </td>\n" +
     "            <td class=\"nk-product-cart-total\">\n" +
-    "              $67.00\n" +
+    "              <%=@item_price%> RC\n" +
     "            </td>\n" +
     "            <td class=\"nk-product-cart-remove\">\n" +
-    "              <a href=\"#\">\n" +
+    "              <a href=\"/remcart/<%=@item_id%>\">\n" +
     "                <span class=\"ion-trash-b\"></span>\n" +
     "              </a>\n" +
     "            </td>\n" +
     "          </tr>"
 
 if ('<%=@dup %>' == 'true')
-{alert('dup');
+{
 
         $('#item<%= @item_id%>count').html(<%= @item_count%>);
         var cur_total = parseInt( $('#total').html());
         $('#total').html(cur_total + <%= @item_price%>);
+        $('.nk-product-cart-total-<%= @item_id%>').html('<%=@item_total%>')
         var cart_total = parseInt( $('#cart_count').html());
         $('#cart_count').html(cart_total + 1);
 
@@ -42,7 +43,7 @@ if ('<%=@dup %>' == 'true')
 }
 else
 {
-    alert('new');
+
 
     $("#cart_items tbody").append(cartItem);
 

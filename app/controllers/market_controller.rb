@@ -1,4 +1,34 @@
 class MarketController < ApplicationController
+  before_action :get_cart
+
+
+  def get_cart
+
+    if logged_in?
+      if session[:cart].nil?
+        session[:total] = 0
+        logger.info('[INFO] : Корзина пуста.')
+      else
+        session[:total] = 0
+        @cart= Scumitem.find(session[:cart].keys)
+
+        logger.info('[INFO] : Корзина получена.')
+      end
+
+
+    end
+  end
+
+  def removecart
+    if params[:item_id].present?
+    session[:cart].delete(params[:item_id])
+    current_player.update_column(:player_cart , session[:cart])
+    end
+    redirect_to request.referer
+    logger.info('[INFO] : Товар удален из корзины.')
+
+  end
+
   def index
  @scummaincat = Scummaincat.where(:cat_show => true)
 
@@ -51,15 +81,11 @@ class MarketController < ApplicationController
         @item_name = item.item_name
         @item_count = session[:cart][item.id.to_s]
 
-          if item.item_squad_discount > 0
-            @item_price = item.item_price - (item.item_price * item.item_squad_discount / 100)
-            @item_total_price = @item_price * @item_count
+        @item_total = item.item_price * session[:cart][item.id.to_s]
+        @item_price = item.item_price
+        @item_total_price = @item_price * @item_count
 
-          else
-            @item_price = item.item_price
-            @item_total_price = @item_price * @item_count
 
-          end
 
 
         logger.info('[INFO] : Существующий товар обновлен.')
@@ -73,11 +99,7 @@ class MarketController < ApplicationController
         @item_name = item.item_name
         @item_name_translit = item.item_name_translit
         @item_image = item.item_image
-        if item.item_squad_discount > 0
-          @item_price = item.item_price - (item.item_price * item.item_squad_discount / 100)
-        else
-          @item_price = item.item_price
-        end
+        @item_price = item.item_price
         logger.info('[INFO] : Новый товар добавлен в корзину.')
         format.js
       end

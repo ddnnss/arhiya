@@ -1,7 +1,25 @@
 class PageController < ApplicationController
+  before_action :get_cart
   require 'discordrb'
   require 'nokogiri'
   require 'open-uri'
+
+  def get_cart
+
+    if logged_in?
+      if session[:cart].nil?
+        session[:total] = 0
+        logger.info('[INFO] : Корзина пуста.')
+      else
+        session[:total] = 0
+        @cart= Scumitem.find(session[:cart].keys)
+
+        logger.info('[INFO] : Корзина получена.')
+      end
+
+
+    end
+  end
 
   def index
     @title = 'ГЛАВНАЯ'
