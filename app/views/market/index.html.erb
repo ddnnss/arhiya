@@ -23,9 +23,17 @@
 
 
   <div class="container">
-    <div class="nk-gap-4"></div>
-    <%if flash[:err]%>
+    <div class="nk-gap-2"></div>
+    <div class="container">
+      <div class="text-center">
 
+        <h4 class="nk-sub-title">Вся информация вымышленная и является предметами игры SCUM, любое сходство случайно, реальной ценности не представляет!</h4>
+      </div>
+    </div>
+    <div class="nk-gap-2"></div>
+
+    <%if flash[:err]%>
+        <div class="nk-gap-1"></div>
         <div class="nk-info-box bg-danger">
           <div class="nk-info-box-icon">
             <i class="ion-alert-circled"></i>
@@ -34,7 +42,7 @@
         </div>
     <%end%>
     <%if flash[:ok]%>
-
+        <div class="nk-gap-1"></div>
         <div class="nk-info-box bg-success">
           <div class="nk-info-box-icon">
             <i class="ion-alert-circled"></i>
