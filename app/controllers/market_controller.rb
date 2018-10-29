@@ -78,8 +78,8 @@ class MarketController < ApplicationController
   end
 
   def showcat
-    cat = Scummaincat.find_by_cat_name_translit(params[:cat_name_translit])
-    @items = cat.scumitems.all
+    @cat = Scummaincat.find_by_cat_name_translit(params[:cat_name_translit])
+    @items = @cat.scumitems.all.order('item_squad_discount ASC')
   end
 
   def addtocart

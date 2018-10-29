@@ -131,6 +131,12 @@
 
             <%= f.file_field :item_image ,  class:'form-control' , type: 'hidden'%>
             <div class="form-group row">
+              <label for="item_squad_discount" class="col-3 col-form-label">№ П\П</label>
+              <div class="col-sm-9">
+                <%=f.text_field  :item_squad_discount, :required => true , class:'form-control', id: 'item_squad_discount'%>
+              </div>
+            </div>
+            <div class="form-group row">
               <label for="item_name" class="col-3 col-form-label">Название товара</label>
               <div class="col-sm-9">
                 <%=f.text_field  :item_name, :required => true , class:'form-control', id: 'item_name'%>

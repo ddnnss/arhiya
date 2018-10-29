@@ -183,30 +183,7 @@ bot.command :event do |event,event_id|
 end
 
 
-bot.command :V do |event,victim|
-  p = Player.find_by_player_discord_link(event.user.name + '#' +event.user.tag)
-  if p.nil?
-    event.user.pm ('Похоже ты не зарегистрирован на сайте или при регистрации указал не правильный DISCORD ID')
-  else
-    if p.player_last_v < Time.now
-      if @next_v < Time.now
-        @last_v_player = event.user.name + '#' +event.user.tag
-        @next_v = Time.now + 1.hour
-        p.update_column(:player_last_v, Time.now + 1.day)
-       bot.send_message(499991650635087872,'**ВНИМАНИЕ !!!**
-       Игрок ' + event.user.mention + ' объявляет месть игроку с ником ' + victim)
-       bot.send_file(499991650635087872,File.open('c:/vendetta.png', 'r'))
 
-        else
-          event.user.pm ('Вендетта уже запущена игроком : ' + @last_v_player + ' ! Снова воспользоваться этой командой можно будет :' + @next_v.strftime("%d.%m.%Y | %H:%M:%S"))
-      end
-    else
-      event.user.pm ('Лимит выполнения команды 1 раз в сутки!')
-    end
-
-  end
-  return nil
-end
 
 bot.command :reg do |event,nick,steamid,mail|
   p = Player.find_by_player_discord_link(event.user.name + '#' +event.user.tag)
@@ -238,13 +215,32 @@ bot.command :reg do |event,nick,steamid,mail|
   end
 
 end
-bot.command :test do |event|
+
+bot.command :zp do |event|
+  p = Player.find_by_player_discord_link(event.user.name + '#' +event.user.tag)
+  if p.nil?
+    event.user.pm ('Похоже ты не зарегистрирован на сайте или при регистрации указал не правильный DISCORD ID')
+  else
+    if p.created_at + 3.day < Time.now
+      if p.player_last_zp < Time.now
+
+        p.update_column(:player_last_zp, Time.now + 1.day)
+        p.update_column(:player_wallet, p.player_wallet + 30)
+
+        event.user.pm ('Ежедневная выплата выдана. **Текущий баланс** : ' + p.player_wallet.to_s)
+
+      else
+        event.user.pm ('Лимит выполнения команды 1 раз в сутки! **Текущий баланс** : ' + p.player_wallet.to_s)
+      end
+    else
+      event.user.pm ('Ежедневная выплата выдается после 3х дней после регистрации на сайте')
+    end
 
 
-event <<  API::User.resolve(token, id)
 
+  end
+  return nil
 end
-
 
 
 

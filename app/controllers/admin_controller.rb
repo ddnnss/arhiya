@@ -44,7 +44,7 @@ def itemedit
     @i_id =i.id
     @i_spawn = i.item_spawn_name
     @i_price = i.item_price
-
+    @i_pp = i.item_squad_discount
     @i_name = i.item_name
     @i_img = i.item_image
     @i_show = i.item_show
@@ -120,7 +120,7 @@ if params[:additem] == 'add'
   end
   i.item_image = uploadedFile.original_filename
   i.item_price = params[:addscumitem][:item_price].to_i
-
+  i.item_squad_discount = params[:addscumitem][:item_squad_discount].to_i
   if params[:addscumitem][:item_show] == '0'
     i.item_show = false
   end
@@ -139,7 +139,7 @@ if params[:additem] == 'edit'
     i.update_column(:item_image , uploadedFile.original_filename)
   end
   i.update_column(:item_price , params[:addscumitem][:item_price].to_i)
-
+  i.update_column(:item_squad_discount , params[:addscumitem][:item_squad_discount].to_i)
   i.update_column(:item_name , params[:addscumitem][:item_name])
   i.update_column(:item_spawn_name , params[:addscumitem][:item_spawn_name])
   i.update_column(:item_name_translit , Translit.convert(params[:addscumitem][:item_name].gsub(' ','-').gsub(/[?!*.,:; ]/, ''), :english))
