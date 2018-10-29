@@ -55,13 +55,19 @@
                   <h2 class="nk-product-title h5" data-mouse-parallax-z="1"><%=item.item_name%></h2>
                   <%if logged_in?%>
 <div id="to_cart_button_<%=item.id%>">
-  <%if session[:cart].keys.include? item.id.to_s%>
-      <a style="margin-top: 20px;" href="/tocart/<%=item.id%>" id="cart_button_<%=item.id%>" onclick="return theFunction(<%=item.id%>);" data-remote="true" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline nk-btn-color-success"><span id="cart_state_txt_<%=item.id%>">ДОБАВИТЬ ЕЩЕ</span></a>
 
-<%else%>
+  <%if session[:cart].nil?%>
       <a style="margin-top: 20px;" href="/tocart/<%=item.id%>" id="cart_button_<%=item.id%>" onclick="return theFunction(<%=item.id%>);" data-remote="true" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline nk-btn-color-main-1"><span id="cart_state_txt_<%=item.id%>">В КОРЗИНУ</span></a>
+      <%else%>
+      <%if session[:cart].keys.include? item.id.to_s%>
+          <a style="margin-top: 20px;" href="/tocart/<%=item.id%>" id="cart_button_<%=item.id%>" onclick="return theFunction(<%=item.id%>);" data-remote="true" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline nk-btn-color-success"><span id="cart_state_txt_<%=item.id%>">ДОБАВИТЬ ЕЩЕ</span></a>
 
-<%end%>
+      <%else%>
+          <a style="margin-top: 20px;" href="/tocart/<%=item.id%>" id="cart_button_<%=item.id%>" onclick="return theFunction(<%=item.id%>);" data-remote="true" class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline nk-btn-color-main-1"><span id="cart_state_txt_<%=item.id%>">В КОРЗИНУ</span></a>
+
+      <%end%>
+  <%end%>
+
 
 </div>
 <%end%>

@@ -1,6 +1,10 @@
 class AdminController < ApplicationController
 before_action :ch_admin, :get_cart
 
+
+
+## todo вывод баланса, лимит отряда 7чел
+
 def get_cart
 
   if logged_in?
