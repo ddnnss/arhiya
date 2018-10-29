@@ -1,5 +1,22 @@
 class AdminController < ApplicationController
-before_action :ch_admin
+before_action :ch_admin, :get_cart
+
+def get_cart
+
+  if logged_in?
+    if session[:cart].blank?
+      session[:total] = 0
+      logger.info('[INFO] : Корзина пуста.')
+    else
+      session[:total] = 0
+      @cart= Scumitem.find(session[:cart].keys)
+
+      logger.info('[INFO] : Корзина получена.')
+    end
+
+
+  end
+end
 
 def shop
   @maincat = Scummaincat.all

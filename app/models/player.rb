@@ -6,6 +6,7 @@ class Player < ApplicationRecord
   has_many :posts ,:through => :topics
   has_many :comments
   has_many :scumorders
+  belongs_to :squad
 
 
 

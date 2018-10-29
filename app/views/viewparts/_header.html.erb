@@ -76,6 +76,7 @@
                 <li> | </li>
                 <li class="single-icon"><a href="#" class="nk-cart-toggle no-link-effect"><span class="nk-icon-toggle"><span class="nk-icon-toggle-front"><span class="ion-android-cart"></span>
                   <%if cart.nil? || cart.count == 0%>
+                  <span id="cart_count" class="nk-badge">0</span>
                       <%else%>
                        <span id="cart_count" class="nk-badge">
                   <% c=0%>
@@ -336,15 +337,15 @@ Additional Classes:
       </div>
 
       <div class="nk-gap-2"></div>
-      <div class="nk-cart-total">
+      <div class="nk-cart-total ">
         Всего
-        <span id="total" ><%= session[:total]%></span> RC
+        <span id="total" <%= session[:total] == 0 ? 'hidediv' : '' %>><%= session[:total]%></span> RC
 
       </div>
 
       <div class="nk-gap-3"></div>
 
-      <div class="nk-cart-btns">
+      <div class="nk-cart-btns <%= session[:total] == 0 ? 'hidediv' : '' %>">
         <a href="/placeorder" class="nk-btn nk-btn-lg nk-btn-color-main-1 link-effect-4">
         ОПЛАТИТЬ
         </a> &nbsp;&nbsp;&nbsp;&nbsp;

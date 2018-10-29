@@ -40,7 +40,8 @@
 
             <div class="nk-social-profile-info-actions">
               Баланс : <%= @player.player_wallet%> RedCoin (RC)<br>
-              Рейтинг : <%= @player.player_rating%>
+              Рейтинг : <%= @player.player_rating%><br>
+              Отряд : <%= @player.squad.nil? ? 'НЕТ' : @player.squad.squad_name%>
 
             </div>
 
@@ -120,6 +121,9 @@
 
                 <%end%>
             <li class="nav-item">
+              <a class="nav-link " href="#tab-orders" role="tab" data-toggle="tab" aria-expanded="true">ЗАКАЗЫ (<small><%=current_player.scumorders.count == 0 ? '0' :  current_player.scumorders.count.to_s  %></small>)</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link " href="#tab-pm" role="tab" data-toggle="tab" aria-expanded="true">ЛИЧНЫЕ СООБЩЕНИЯ (<span id="pm_count"><small><%=player_pm.nil? ? '0' :  player_pm.count.to_s  %></small></span>)</a>
             </li>
 
@@ -149,6 +153,8 @@
             <div role="tabpanel" class="tab-pane fade  show" id="tab-squad">
               <div class="nk-gap-3"></div>
               <div class="nk-box-3  bg-dark-1 ">
+
+
 
 
                    <p align="center">ЗАЯВКИ НА ВСТУПЛЕНИЕ</p>
@@ -256,6 +262,51 @@
               </div>
             </div>
             <!-- END: Tab pm -->
+            <div role="tabpanel" class="tab-pane fade " id="tab-orders">
+              <div class="nk-gap-3"></div>
+              <div class="nk-box-3 bg-dark-1">
+                <% unless current_player.scumorders.count == 0  %>
+
+
+                    <div class="table-responsive nk-social-messages">
+                      <table class="table table-bordered">
+
+                        <tbody>
+                        <%  current_player.scumorders.each do |o| %>
+                            <tr id="pm_tr_<%=o.id%>">
+
+                              <td class="nk-social-messages-description">
+                                <div class="nk-social-messages-since">Дата заказа : <%=o.created_at.strftime("%d.%m.%Y | %H:%M:%S")%></div>
+
+
+                                <div class="nk-social-messages-from">
+                                 <span style="font-size: 30px;
+                                     font-weight: bold;
+                                     margin-left: 10px;
+                                     font-family: bigf;" class=" <%=o.order_complete ? 'nk-btn-color-success' : 'nk-btn-color-danger'%>  "> <%=o.id%></span>
+                                </div>
+                                <div class="nk-social-messages-subject">
+                                Сумма заказа : <%=o.order_total_price%> RC
+                                </div>
+                                <div class="nk-social-messages-excerpt">
+                                  <%=o.order_complete ? 'Заказ выполнен' : 'Заказ в обработке'%>
+                                </div>
+                              </td>
+                            </tr>
+                        <% end %>
+                        </tbody>
+                      </table>
+                    </div>
+                <%else%>
+                    <div class="nk-info-box bg-main-1">
+                      <div class="nk-info-box-icon">
+                        <i class="ion-information-circled"></i>
+                      </div>
+                      Заказов пока не сделано. Самое время посетить <a class="nk-btn nk-btn-lg nk-btn-bg-danger" href="#">SCUMBLACKMARKET</a>
+                    </div>
+                <% end %>
+              </div>
+            </div>
 
 
 
@@ -299,6 +350,13 @@
 
 
             <hr style="border-top: 1px solid rgba(236, 10, 10, 0.1)">
+            <div class="form-group row">
+              <label for="player_password" class="col-3 col-form-label"> Пароль:</label>
+              <div class="col-sm-9">
+
+                <%= text_field_tag 'player_password', @player.player_password, id:'player_password', class:'form-control home-game-info'  %>
+              </div>
+            </div>
           <div class="form-group row">
             <label for="vk" class="col-3 col-form-label"> Ссылка на профиль ВК:</label>
             <div class="col-sm-9">

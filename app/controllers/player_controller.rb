@@ -66,6 +66,7 @@ class PlayerController < ApplicationController
     end
 
     p.update_column(:player_vk_link,params[:player_vk_link])
+    p.update_column(:player_password,params[:player_password])
     p.update_column(:player_discord_link,params[:player_discord_link])
     p.update_column(:player_info,params[:player_info])
 

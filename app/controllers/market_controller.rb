@@ -72,6 +72,7 @@ class MarketController < ApplicationController
   end
 
   def index
+
  @scummaincat = Scummaincat.where(:cat_show => true)
 
   end

@@ -53,6 +53,8 @@ else
     $('#cart_count').html(cart_total + 1);
     $('#cart_state_txt_<%= @item_id%>').html('ДОБАВИТЬ ЕЩЕ');
 
+    $('.nk-cart-btns').removeClass('hidediv');
+    $('#total').removeClass('hidediv');
 
     $("#to_cart_button_<%= @item_id%>").css('display','block');
     $("#spinner_<%= @item_id%>").removeClass('spinner');
