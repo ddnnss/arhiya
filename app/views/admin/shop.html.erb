@@ -24,8 +24,9 @@
 
         <% @maincat.each do |maincat| %>
             <tr class="">
-              <td></td>
-              <td width="50%"><%= maincat.cat_name%></td>
+              <td><img width="100px" src="/images/maincat/<%= maincat.cat_image%>"></td>
+              <td><%= maincat.cat_name%></td>
+              <td style="width: 40%;"></td>
 
               <td><a href="#" id="<%= maincat.id%>" class="maincat"   data-toggle="modal" data-target=".add_new_item">+ товар</a></td>
 
@@ -33,16 +34,20 @@
               <td><a href="/editmaincat?maincat_id=<%= maincat.id%>" data-remote="true">редакт.</a></td>
               <td><a href="#<%= maincat.id%>">удалить</a></td>
             </tr>
-            <% maincat.scumitems.each  do |item|%>
+            <% maincat.scumitems.order('item_squad_discount ASC').each  do |item|%>
                 <tr>
-                  <td ><img width="100px" src="/images/items/<%= item.item_image%>"></td>
-                  <td style="background-color: #666666;"><%= item.item_name%></td>
+                  <td style="background-color: #1f1f1f;">
+                    <%= item.item_squad_discount%></td>
+                  <td style="background-color: #1f1f1f;"><img width="100px" src="/images/items/<%= item.item_image%>"></td>
+
+                  <td style="background-color: #1f1f1f;"><%= item.item_name%></td>
 
 
-                  <td>Цена : <%= item.item_price%></td>
-                  <td>Скидка : <%= item.item_squad_discount%></td>
-                  <td><a href="/itemedit?item_id=<%= item.id%>" data-remote="true"><i class="fas fa-trash-alt" ></i>ред.</a></td>
-                  <td><a href="/itemdel?item_id=<%= item.id%>" onclick="return confirm('ТОЧНО УДАЛИТЬ?')"><i class="fas fa-trash-alt" ></i>уд.</a></td>
+
+                  <td style="background-color: #1f1f1f;">Цена : <%= item.item_price%></td>
+
+                  <td style="background-color: #1f1f1f;"><a href="/itemedit?item_id=<%= item.id%>" data-remote="true"><i class="fas fa-trash-alt" ></i>ред.</a></td>
+                  <td style="background-color: #1f1f1f;"><a href="/itemdel?item_id=<%= item.id%>" onclick="return confirm('ТОЧНО УДАЛИТЬ?')"><i class="fas fa-trash-alt" ></i>уд.</a></td>
 
                 </tr>
             <% end %>
