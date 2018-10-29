@@ -31,6 +31,9 @@ Rails.application.routes.draw do
   match '/addnewcontract'  => 'admin#addnewcontract', via: [:post]
   match '/admin/events'  => 'admin#events', via: [:get]
   match '/admin/event'  => 'admin#event', via: [:get]
+  match '/admin/orders'  => 'admin#orders', via: [:get]
+  match '/admin/order'  => 'admin#order', via: [:get]
+  match '/admin/ordercomplete'  => 'admin#ordercomplete', via: [:get]
   match '/admin/deleteevent'  => 'admin#deleteevent', via: [:get]
   match '/admin/players'  => 'admin#players', via: [:get]
   match '/admin/squads'  => 'admin#squads', via: [:get]
@@ -78,5 +81,6 @@ Rails.application.routes.draw do
   match '/cat(/:cat_name_translit)'  => 'market#showcat', via: [:get]
   match '/tocart(/:item_id)'  => 'market#addtocart', via: [:get]
   match '/remcart(/:item_id)'  => 'market#removecart', via: [:get]
+  match '/placeorder'  => 'market#placeorder', via: [:get]
 
 end

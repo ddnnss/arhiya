@@ -1,4 +1,23 @@
 class EventController < ApplicationController
+  before_action :get_cart
+
+
+  def get_cart
+
+    if logged_in?
+      if session[:cart].blank?
+        session[:total] = 0
+        logger.info('[INFO] : Корзина пуста.')
+      else
+        session[:total] = 0
+        @cart= Scumitem.find(session[:cart].keys)
+
+        logger.info('[INFO] : Корзина получена.')
+      end
+
+
+    end
+  end
   def index
   @current_week = []
   @next_week = []

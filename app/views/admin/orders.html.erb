@@ -1,0 +1,80 @@
+
+<div class="nk-main">
+
+  <div class="nk-header-title nk-header-title-sm nk-header-title-parallax-opacity">
+
+    <div class="nk-header-text-bottom">
+      <div class="nk-breadcrumbs text-xs-center">
+        <ul>
+          <li><a href="/admin">АДМИНКА</a></li>
+          <li>
+            <span>ЗАКАЗЫ</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+  <div class="">
+
+
+    <div class="nk-box bg-dark-1 text-white">
+      <div class="nk-gap-1"></div>
+      <div class="container">
+
+        <div class="nk-gap-1"></div>
+
+        <div class="">
+          <div class="">
+
+
+            <div class="nk-gap-1"></div>
+            <table class="table table-bordered">
+              <tr>
+
+                <td class="nk-btn-color-success">№</td>
+                <td>ДАТА</td>
+                <td>ЗАКАЗЧИК</td>
+                <td>СУММА</td>
+                <td class="nk-btn-color-info">ВЫДАН</td>
+
+              </tr>
+
+              <%@orders.each do |o|%>
+                  <tr>
+
+                    <td><a class="nk-btn nk-btn-sm nk-btn-color-warning" href="/admin/order?id=<%=o.id%>"><%=o.id%></a> </td>
+                    <td><%=o.created_at.strftime("%d.%m.%Y | %H:%M:%S")%></td>
+                    <td><%=o.player.player_nickname + ' | ' + o.player.player_discord_link%></td>
+                    <td><%=o.order_total_price%></td>
+                    <td><%=o.order_complete ? 'ДА' : 'НЕТ'%></td>
+
+
+                  </tr>
+              <%end%>
+
+
+
+            </table>
+
+
+
+
+          </div>
+        </div>
+
+        <div class="nk-gap-4"></div>
+      </div>
+
+
+
+    </div>
+  </div>
+  <div class="nk-gap-4"></div>
+</div>
+
+

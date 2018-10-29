@@ -1,0 +1,113 @@
+
+<div class="nk-main">
+
+  <div class="nk-header-title nk-header-title-sm nk-header-title-parallax-opacity">
+
+    <div class="nk-header-text-bottom">
+      <div class="nk-breadcrumbs text-xs-center">
+        <ul>
+          <li><a href="/admin">АДМИНКА</a></li>
+          <li>
+            <span>ЗАКАЗ № <%=@order.id%></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+  <div class="">
+
+
+    <div class="nk-box bg-dark-1 text-white">
+      <div class="nk-gap-1"></div>
+      <div class="container">
+
+        <div class="nk-gap-1"></div>
+
+        <div class="">
+          <div class="">
+            <table>
+              <tr>
+                <td style="width: 100px;"> <strong>Дата заказа</strong></td>
+                <td><%=@order.created_at.strftime("%d.%m.%Y | %H:%M:%S")%></td>
+              </tr>
+              <tr>
+                <td> <strong>Заказчик</strong></td>
+
+                <td><%=@order.player.player_nickname%></td>
+              </tr>
+              <tr>
+                <td> <strong>DISCORD ID</strong></td>
+
+                <td><%=@order.player.player_discord_link%></td>
+              </tr>
+              <tr>
+                <td> <strong>STEAM ID</strong></td>
+
+                <td><span id="player_id"><%=@order.player.player_id %></span>  <button id="btn_teleport"  class="nk-btn nk-btn-sm nk-btn-color-danger" onclick="teleport('#player_id','#btn_teleport')">Телепорт</button></td>
+              </tr>
+            </table>
+            <div class="nk-gap-1"></div>
+            <table class="table table-bordered">
+              <tr>
+                <td class="nk-btn-color-success">ТОВАР</td>
+                <td>КОЛИЧЕСТВО</td>
+                <td>СПАВН</td>
+              </tr>
+
+              <%@items.each do |i|%>
+                  <tr>
+                    <td><%=i.item_name%> </td>
+                    <td><span id="spawn_col<%=i.id%>"><%=@order.order_items[i.id.to_s]%></span> </td>
+                    <td><span id="spawn_<%=i.id%>"><%=i.item_spawn_name%></span>  <button id="btn_<%=i.id%>"  class="nk-btn nk-btn-sm nk-btn-color-danger" onclick="spawnitem('#spawn_<%=i.id%>','#spawn_col<%=i.id%>','#btn_<%=i.id%>')">Команда спавна</button> </td>
+                  </tr>
+              <%end%>
+            </table>
+
+            <div class="nk-gap-1"></div>
+
+            <a href="/admin/ordercomplete?id=<%=@order.id%>"  class="nk-btn nk-btn-sm nk-btn-color-success">ЗАКАЗ ВЫДАН</a>
+
+
+          </div>
+        </div>
+
+        <div class="nk-gap-4"></div>
+      </div>
+
+
+
+    </div>
+  </div>
+  <div class="nk-gap-4"></div>
+</div>
+
+<script>
+    function spawnitem(element,col,btn) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val('#spawnItem ' + $(element).html()+' ' + $(col).html()).select();
+        document.execCommand("copy");
+        $temp.remove();
+
+        $(btn).removeClass('nk-btn-color-danger');
+        $(btn).addClass('nk-btn-color-success');
+        $(btn).html('Скопировано');
+    }
+
+    function teleport(element,btn) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val('#teleport ' + $(element).html()).select();
+        document.execCommand("copy");
+        $temp.remove();
+
+        $(btn).removeClass('nk-btn-color-danger');
+        $(btn).addClass('nk-btn-color-success');
+        $(btn).html('Скопировано');
+    }
+</script>

@@ -11,6 +11,10 @@ class UserMailer < ApplicationMailer
     mail(to: mail,subject: "Добавление в отряд")
   end
 
+  def neworder(mail)
+    mail(to: mail,subject: "Новый заказ на сайте")
+  end
+
   def resetpassword(user)
     @user=user
     mail(to: @user.usermail,subject: "Новый пароль на сайте GAMESCUM")

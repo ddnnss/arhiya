@@ -24,7 +24,24 @@
 
   <div class="container">
     <div class="nk-gap-4"></div>
+    <%if flash[:err]%>
 
+        <div class="nk-info-box bg-danger">
+          <div class="nk-info-box-icon">
+            <i class="ion-alert-circled"></i>
+          </div>
+          <%=flash[:err]%>
+        </div>
+    <%end%>
+    <%if flash[:ok]%>
+
+        <div class="nk-info-box bg-success">
+          <div class="nk-info-box-icon">
+            <i class="ion-alert-circled"></i>
+          </div>
+          <%=flash[:ok]%>
+        </div>
+    <%end%>
     <div class="nk-store">
 
       <!-- START: Products List -->

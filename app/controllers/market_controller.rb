@@ -1,11 +1,11 @@
 class MarketController < ApplicationController
-  before_action :get_cart
+  before_action :get_cart, except: [:placeorder]
 
 
   def get_cart
 
     if logged_in?
-      if session[:cart].nil?
+      if session[:cart].blank?
         session[:total] = 0
         logger.info('[INFO] : Корзина пуста.')
       else
@@ -17,6 +17,48 @@ class MarketController < ApplicationController
 
 
     end
+  end
+
+  def placeorder
+    if session[:total] == 0
+      logger.info('[INFO] : Сумма заказа = 0')
+      logger.info('[INFO] : session[:total] = ' + session[:total].to_s)
+      redirect_to '/blackmarket'
+      flash[:err] = 'Нет товаров для оплаты'
+    else
+      if current_player.player_wallet < session[:total].to_i
+        logger.info('[INFO] : Не хватает денег')
+        flash[:err] = 'Не хватает денег. Сумма заказа : ' +session[:total].to_s + ' RC . Твой баланс : ' + current_player.player_wallet.to_s + ' RC'
+        redirect_to '/blackmarket'
+      else
+        o = Scumorder.new
+        o.player_id = current_player.id
+        o.order_items = session[:cart]
+        o.order_total_price = session[:total].to_i
+        o.save
+        a=session[:cart].keys
+        a.each do |k|
+          session[:cart].delete(k)
+        end
+
+        current_player.update_column(:player_wallet, current_player.player_wallet - session[:total].to_i)
+        current_player.update_column(:player_cart,nil)
+
+        a = Player.where(:player_admin => true)
+        a.each do |p|
+          m= Privatemessage.new
+          m.player_id = current_player.id.to_s
+          m.message_for_id = p.id.to_s
+          m.message_text ='Привет, я сделал заказ в магазине'
+          m.save
+          UserMailer.neworder(p.player_email).deliver_later
+        end
+        redirect_to '/blackmarket'
+        flash[:ok] = 'Заказ размещен. Администрация свяжется с тобой в дискорде по поводу выдачи.'
+
+      end
+    end
+
   end
 
   def removecart
@@ -74,7 +116,7 @@ class MarketController < ApplicationController
 
 
     if @duplicate               #дупликата товара
-
+      session[:total] = session[:total] + item.item_price * session[:cart][item.id.to_s]
       respond_to do |format| # дупликат товара
         @dup = @duplicate
         @item_id = item.id
@@ -93,8 +135,10 @@ class MarketController < ApplicationController
       end
 
     else
+      session[:total] = session[:total] + item.item_price
       respond_to do |format| #нет дупликата товара
         @dup = @duplicate
+
         @item_id = item.id
         @item_name = item.item_name
         @item_name_translit = item.item_name_translit

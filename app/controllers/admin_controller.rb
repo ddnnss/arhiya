@@ -4,13 +4,26 @@ before_action :ch_admin
 def shop
   @maincat = Scummaincat.all
 end
+def orders
+  @orders = Scumorder.all
+
+end
+def order
+  @order = Scumorder.find(params[:id])
+  @items = Scumitem.find(@order.order_items.keys)
+end
+def ordercomplete
+  o = Scumorder.find(params[:id])
+  o.update_column(:order_complete , true)
+  redirect_to '/admin/orders'
+end
 def itemedit
   i = Scumitem.find(params[:item_id])
   respond_to do |format|
     @i_id =i.id
     @i_spawn = i.item_spawn_name
     @i_price = i.item_price
-    @i_discount = i.item_squad_discount
+
     @i_name = i.item_name
     @i_img = i.item_image
     @i_show = i.item_show

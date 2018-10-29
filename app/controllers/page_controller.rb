@@ -7,7 +7,7 @@ class PageController < ApplicationController
   def get_cart
 
     if logged_in?
-      if session[:cart].nil?
+      if session[:cart].blank?
         session[:total] = 0
         logger.info('[INFO] : Корзина пуста.')
       else
