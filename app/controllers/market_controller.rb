@@ -35,6 +35,12 @@ class MarketController < ApplicationController
         o.player_id = current_player.id
         o.order_items = session[:cart]
         o.order_total_price = session[:total].to_i
+
+          i = Scumitem.find(session[:cart].keys)
+       i.each do |ii|
+         ii.update_column(:item_buys, ii.item_buys + 1)
+       end
+
         o.save
         a=session[:cart].keys
         a.each do |k|
@@ -79,7 +85,9 @@ class MarketController < ApplicationController
 
   def showcat
     @cat = Scummaincat.find_by_cat_name_translit(params[:cat_name_translit])
+    @cat.update_column(:cat_views,@cat.cat_views + 1)
     @items = @cat.scumitems.all.order('item_squad_discount ASC')
+
   end
 
   def addtocart

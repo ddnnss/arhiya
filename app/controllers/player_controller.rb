@@ -229,6 +229,7 @@ class PlayerController < ApplicationController
     if u.player_activated == false
       u.update_column(:player_activated,true)
       session[:player_id] = u.id
+      session[:cart] = u.player_cart
       u.update_column(:player_lastlogin, Date.today)
       flash[:activatesuccess] = 'Аккаунт активирован.'
       redirect_to '/'

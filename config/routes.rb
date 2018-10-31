@@ -51,6 +51,7 @@ Rails.application.routes.draw do
   match '/itemedit'  => 'admin#itemedit', via: [:get]
   match '/admin/shop'  => 'admin#shop', via: [:get]
   match '/addforum'  => 'admin#addforum', via: [:post, :get]
+  match '/clearimg' =>'admin#clearimg', via: [ :get]
 
   #----------FORUM------------------------
   match '/forums'  => 'forum#index', via: [ :get]

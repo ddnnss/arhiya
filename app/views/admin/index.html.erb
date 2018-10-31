@@ -26,10 +26,24 @@
             <a href="/admin/contracts"  class="nk-btn nk-btn-sm nk-btn-color-warning">КОНТРАКТЫ</a>
             <a href="/admin/shop"  class="nk-btn nk-btn-sm nk-btn-color-warning">МАГАЗИН</a>
             <a href="/admin/orders"  class="nk-btn nk-btn-sm nk-btn-color-warning">ЗАКАЗЫ</a>
-
+            <hr>
+            <a href="/clearimg?id=players"  class="nk-btn nk-btn-sm nk-btn-color-danger">Очистить не используемые аватары игроков</a>
+            <hr>
             <div class="nk-gap-1"></div>
             Пользователей : <%=@players.count%><br>
-            Отрядов : <%=@squads.count%>
+            Отрядов : <%=@squads.count%><br>
+            Самые покупаемые товары :
+            <%@item.first(5).each do |i|%>
+            <%=i.item_name%> |
+              <%end%>
+            <br>
+            Самые просматриваемые категории :
+            <%@cat.first(3).each do |c|%>
+                <%=c.cat_name%> |
+            <%end%>
+            <br>
+
+
 
 
           </div>

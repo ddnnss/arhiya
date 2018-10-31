@@ -38,6 +38,29 @@ def ordercomplete
   o.update_column(:order_complete , true)
   redirect_to '/admin/orders'
 end
+
+  def clearimg
+    if params[:id] == 'players'
+      avatars = []
+      files = Dir.glob("#{Rails.root}/public/images/avatars/*").map{ |s| File.basename(s) }
+      files = files - ['noavatar.png']
+      logger.info('files : ' + files.inspect)
+      users = Player.all
+      users.each do |u|
+
+        avatars.append(u.player_avatar)
+
+      end
+      logger.info('avatars : ' + avatars.inspect)
+      filestodel = files - avatars
+      logger.info('filestodel : ' + filestodel.inspect)
+      filestodel.each do |f|
+        File.delete("#{Rails.root}/public/images/avatars/"+f)
+      end
+
+    end
+    redirect_to '/admin'
+  end
 def itemedit
   i = Scumitem.find(params[:item_id])
   respond_to do |format|
@@ -178,6 +201,9 @@ end
 def index
   @players = Player.all
   @squads = Squad.all
+
+  @item = Scumitem.all.order('item_buys DESC')
+  @cat = Scummaincat.all.order('cat_views DESC')
 end
 
 def squads
