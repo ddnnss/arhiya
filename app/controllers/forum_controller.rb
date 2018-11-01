@@ -1,7 +1,21 @@
 class ForumController < ApplicationController
-  before_action :get_cart
+  before_action :get_cart, :check_activity, :set_activity
 
+  def check_activity
+    if logged_in?
+      if current_player.updated_at + 1.hour < Time.now
+        session[:active] = false
+        reset_session
+        redirect_to '/'
+      end
+    end
+  end
 
+  def set_activity
+    if logged_in?
+      current_player.update_column(:updated_at, Time.now)
+    end
+  end
   def get_cart
 
     if logged_in?

@@ -1,6 +1,21 @@
 class SquadController < ApplicationController
-  before_action :get_cart
+  before_action :get_cart, :check_activity, :set_activity
 
+  def check_activity
+    if logged_in?
+      if current_player.updated_at + 1.hour < Time.now
+        session[:active] = false
+        reset_session
+        redirect_to '/'
+      end
+    end
+  end
+
+  def set_activity
+    if logged_in?
+      current_player.update_column(:updated_at, Time.now)
+    end
+  end
 
   def get_cart
 
@@ -77,7 +92,13 @@ class SquadController < ApplicationController
       s.update_column(:squad_name_translit ,Translit.convert(params[:squad][:squad_name].gsub(' ','-').gsub(/[?!*.,:; ]/, ''), :english) + '-' + [*('a'..'z'),*('0'..'9')].shuffle[0,2].join)
       s.update_column(:squad_info, params[:squad_info])
       if params[:squad][:squad_recruting].present? && params[:squad][:squad_recruting] == '1'
-        s.update_column(:squad_recruting, true)
+        pp = Player.where(:squad_id =>params[:squad_id])
+        if pp.count == 7
+          s.update_column(:squad_recruting, false)
+        else
+          s.update_column(:squad_recruting, true)
+        end
+
       else
         s.update_column(:squad_recruting, false)
       end
@@ -88,37 +109,56 @@ class SquadController < ApplicationController
 
   def squadadd
     s = Squad.find_by_id(params[:squad_id])
+
     if s.nil?
       redirect_to '/'
     else
-      p = Player.find_by_id(params[:player_id])
-      if p.nil?
-        redirect_to '/'
-      else
+      pp = Player.where(:squad_id =>params[:squad_id])
+      if pp.count == 7
+        s.update_column(:squad_recruting , false)
+        flash[:err] = 'Максимальное число игроков в отряде 7 чел.'
+        redirect_to '/profile/'+current_player.player_nickname_translit
+        else
+          p = Player.find_by_id(params[:player_id])
+          if p.nil?
+            redirect_to '/'
+          else
 
-        if p.squad_id == nil
-          p.update_column(:squad_id,params[:squad_id].to_i)
 
-          ss = Squad.where('squad_in_request LIKE ?', '%'+params[:player_id]+'%')
-          ss.each do |s|
-            s.update_column(:squad_in_request , (s.squad_in_request.split(',') - [params[:player_id]]).join(','))
+            if p.squad_id == nil
+              p.update_column(:squad_id,params[:squad_id].to_i)
+
+              ss = Squad.where('squad_in_request LIKE ?', '%'+params[:player_id]+'%')
+              ss.each do |s|
+                s.update_column(:squad_in_request , (s.squad_in_request.split(',') - [params[:player_id]]).join(','))
+
+              end
+              UserMailer.squadapp(p.player_email).deliver_later
+              m= Privatemessage.new
+              m.player_id = s.squad_leader
+              m.message_for_id = p.id
+              m.message_text = 'Привет, ты добавлен в отряд.'
+              m.save
+              if pp.count == 7
+                s.update_column(:squad_recruting , false)
+              end
+
+              redirect_to '/profile/'+current_player.player_nickname_translit
+            else
+              s.update_column(:squad_in_request , (s.squad_in_request.split(',') - [params[:player_id]]).join(','))
+              redirect_to '/'
+            end
+
+
 
           end
-          UserMailer.squadapp(p.player_email).deliver_later
-          m= Privatemessage.new
-          m.player_id = s.squad_leader
-          m.message_for_id = p.id
-          m.message_text = 'Привет, ты добавлен в отряд.'
-          m.save
-          redirect_to '/profile/'+current_player.player_nickname_translit
-        else
-          s.update_column(:squad_in_request , (s.squad_in_request.split(',') - [params[:player_id]]).join(','))
-          redirect_to '/'
-        end
-
 
 
       end
+
+
+
+
 
     end
   end
@@ -183,10 +223,19 @@ class SquadController < ApplicationController
     end
   end
   def squadkick
-    if current_player.squad.squad_leader == current_player.id
+    if current_player.squad.squad_leader == current_player.id || player_admin
       p=Player.find(params[:player_id])
       p.update_column(:squad_id,nil)
-      redirect_to '/profile/'+current_player.player_nickname_translit
+      pp = Player.where(:squad_id =>params[:squad_id])
+      if pp.count < 7
+        current_player.squad.update_column(:squad_recruting , true)
+        end
+      if player_admin
+        redirect_to request.referer
+      else
+        redirect_to '/profile/'+current_player.player_nickname_translit
+      end
+
     else
       redirect_to '/'
     end

@@ -47,9 +47,11 @@
                     <td><a href="/profile/<%=Player.find(s.squad_leader).player_nickname_translit%>"><%=Player.find(s.squad_leader).player_nickname%></a>  </td>
                     <td>
                       <%Player.where(:squad_id => s.id).each do |p|%>
-                          <a href="/profile/<%=p.player_nickname_translit%>"><%=p.player_nickname%></a><br>
-
-                    <%end%>
+                          <%unless p.id == p.squad.squad_leader%>
+                          <a href="/profile/<%=p.player_nickname_translit%>"><%=p.player_nickname%></a>
+                          <a style="left: 20px;" href="/squadkick/<%=p.squad_id%>/<%=p.id%>" class="nk-btn nk-btn-sm nk-btn-bg-danger align-center" onclick="return confirm('ТОЧНО УДАЛИТЬ?')">УДАЛИТЬ ИЗ ОТРЯДА</a>
+                          <%end%>
+                          <%end%>
                     </td>
 
                   </tr>

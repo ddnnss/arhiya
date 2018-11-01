@@ -1,6 +1,22 @@
 class MarketController < ApplicationController
   before_action :get_cart, except: [:placeorder]
+  before_action :check_activity, :set_activity
 
+  def check_activity
+    if logged_in?
+      if current_player.updated_at + 1.hour < Time.now
+        session[:active] = false
+        reset_session
+        redirect_to '/'
+      end
+    end
+  end
+
+  def set_activity
+    if logged_in?
+      current_player.update_column(:updated_at, Time.now)
+    end
+  end
 
   def get_cart
 
@@ -26,15 +42,16 @@ class MarketController < ApplicationController
       redirect_to '/blackmarket'
       flash[:err] = 'Нет товаров для оплаты'
     else
-      if current_player.player_wallet < session[:total].to_i
+      total = session[:total].to_i - (session[:total].to_i * current_player.player_rating.to_i / 100)
+      if current_player.player_wallet < total
         logger.info('[INFO] : Не хватает денег')
-        flash[:err] = 'Не хватает денег. Сумма заказа : ' +session[:total].to_s + ' RC . Твой баланс : ' + current_player.player_wallet.to_s + ' RC'
+        flash[:err] = 'Не хватает денег. Сумма заказа : ' + total.to_s + ' RC . Твой баланс : ' + current_player.player_wallet.to_s + ' RC'
         redirect_to '/blackmarket'
       else
         o = Scumorder.new
         o.player_id = current_player.id
         o.order_items = session[:cart]
-        o.order_total_price = session[:total].to_i
+        o.order_total_price = total.to_i
 
           i = Scumitem.find(session[:cart].keys)
        i.each do |ii|
@@ -47,7 +64,7 @@ class MarketController < ApplicationController
           session[:cart].delete(k)
         end
 
-        current_player.update_column(:player_wallet, current_player.player_wallet - session[:total].to_i)
+        current_player.update_column(:player_wallet, current_player.player_wallet - total.to_i)
         current_player.update_column(:player_cart,nil)
 
         a = Player.where(:player_admin => true)
@@ -131,6 +148,7 @@ class MarketController < ApplicationController
         @item_id = item.id
         @item_name = item.item_name
         @item_count = session[:cart][item.id.to_s]
+        @rating = current_player.player_rating.to_i
 
         @item_total = item.item_price * session[:cart][item.id.to_s]
         @item_price = item.item_price

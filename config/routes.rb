@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   match '/admin/orders'  => 'admin#orders', via: [:get]
   match '/admin/order'  => 'admin#order', via: [:get]
   match '/admin/ordercomplete'  => 'admin#ordercomplete', via: [:get]
+  match '/admin/orderdelete'  => 'admin#orderdelete', via: [:get]
   match '/admin/deleteevent'  => 'admin#deleteevent', via: [:get]
   match '/admin/players'  => 'admin#players', via: [:get]
   match '/admin/squads'  => 'admin#squads', via: [:get]

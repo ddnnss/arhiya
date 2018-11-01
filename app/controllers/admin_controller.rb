@@ -1,7 +1,21 @@
 class AdminController < ApplicationController
-before_action :ch_admin, :get_cart
+  before_action :get_cart, :check_activity, :set_activity
 
+  def check_activity
+    if logged_in?
+      if current_player.updated_at + 1.hour < Time.now
+        session[:active] = false
+        reset_session
+        redirect_to '/'
+      end
+    end
+  end
 
+  def set_activity
+    if logged_in?
+      current_player.update_column(:updated_at, Time.now)
+    end
+  end
 
 ## todo вывод баланса, лимит отряда 7чел
 
@@ -26,9 +40,14 @@ def shop
   @maincat = Scummaincat.all
 end
 def orders
-  @orders = Scumorder.all
+  @orders = Scumorder.all.order('created_at DESC')
 
 end
+  def orderdelete
+    o= Scumorder.find(params[:id])
+    o.destroy
+    redirect_to '/admin/orders'
+  end
 def order
   @order = Scumorder.find(params[:id])
   @items = Scumitem.find(@order.order_items.keys)

@@ -49,6 +49,7 @@
                 <td class="nk-btn-color-warning">РЕГА</td>
                 <td class="nk-btn-color-info">БОНУС</td>
                 <td>БАЛАНС</td>
+                <td>РЕЙТИНГ</td>
 
               </tr>
 
@@ -73,6 +74,7 @@
                         <td style="background-color: #d9534f;"><a class="nk-btn nk-btn-xs nk-btn-rounded nk-btn-outline nk-btn-color-main-1" href="/admin/players?<%= @sort ? 'sort='+@sort+'&': ''%>bonus=<%=p.id%>">Не выдан</a></td>
                     <%end%>
                     <td><%=p.player_wallet%></td>
+                    <td><%=p.player_rating%></td>
 
                   </tr>
               <%end%>

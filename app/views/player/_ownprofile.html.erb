@@ -24,6 +24,7 @@
   </div>
   <!-- END: Header Title -->
   <div class="container">
+
     <div class="nk-social-profile nk-social-profile-container-offset">
       <div class="row">
         <div class="col-md-5 col-lg-3">
@@ -44,7 +45,14 @@
               Отряд : <%= @player.squad.nil? ? 'НЕТ' : @player.squad.squad_name%>
 
             </div>
-
+            <%if flash[:err]%>
+                <div class="nk-info-box bg-danger">
+                  <div class="nk-info-box-icon">
+                    <i class="ion-alert-circled"></i>
+                  </div>
+                  <%=flash[:err]%>
+                </div>
+            <%end%>
           </div>
         </div>
       </div>

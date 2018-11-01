@@ -50,7 +50,7 @@ bot.command :red do |event|
   !reg - регистрация на сайте. Формат команды !reg[пробел]ИГРОВОЙ-НИК[пробел]STEAMID64[пробел]E-MAIL (например: !reg GRESHNIK 76561198091XXXXXX admin@gamescum.ru) УЗНАТЬ СВОЙ STEAMID64 МОЖНО ТУТ https://steamid.xyz
   !zp - ежедневная выплата виртуальной валюты (Для получения нужно быть зереганым на сайте не менее 3х дней)
   -----------------------------------
-  Бот обновлен : **29.10.2018**
+  Бот обновлен : **01.11.2018**
   -----------------------------------
   **GRESHNIK WAS HERE**')
 end
@@ -226,12 +226,12 @@ bot.command :zp do |event|
       if p.player_last_zp < Time.now
 
         p.update_column(:player_last_zp, Time.now + 1.day)
-        p.update_column(:player_wallet, p.player_wallet + 30)
+        p.update_column(:player_wallet, p.player_wallet + (30 * p.player_rating.to_i))
 
-        event.user.pm ('Ежедневная выплата выдана. **Текущий баланс** : ' + p.player_wallet.to_s)
+        event.user.pm ('Ежедневная выплата выдана. С учетом твоего рейтинга начислено : ' + 30 * p.player_rating.to_i + ' RC . **Текущий баланс** : ' + p.player_wallet.to_s + ' RC')
 
       else
-        event.user.pm ('Лимит выполнения команды 1 раз в сутки! **Текущий баланс** : ' + p.player_wallet.to_s)
+        event.user.pm ('Лимит выполнения команды 1 раз в сутки! **Текущий баланс** : ' + p.player_wallet.to_s + ' RC')
       end
     else
       event.user.pm ('Ежедневная выплата выдается после 3х дней после регистрации на сайте')

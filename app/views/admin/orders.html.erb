@@ -36,11 +36,12 @@
             <table class="table table-bordered">
               <tr>
 
-                <td class="nk-btn-color-success">№</td>
+                <td >№</td>
                 <td>ДАТА</td>
                 <td>ЗАКАЗЧИК</td>
                 <td>СУММА</td>
-                <td class="nk-btn-color-info">ВЫДАН</td>
+                <td >ВЫДАН</td>
+                <td></td>
 
               </tr>
 
@@ -51,8 +52,10 @@
                     <td><%=o.created_at.strftime("%d.%m.%Y | %H:%M:%S")%></td>
                     <td><%=o.player.player_nickname + ' | ' + o.player.player_discord_link%></td>
                     <td><%=o.order_total_price%></td>
-                    <td><%=o.order_complete ? 'ДА' : 'НЕТ'%></td>
+                    <td style="background-color: <%=o.order_complete ? '#00FF00' : '#ff0000'%>"><%=o.order_complete ? 'ДА' : 'НЕТ'%></td>
+                    <td>    <a href="/admin/orderdelete?id=<%=o.id%>" onclick="return confirm('ТОЧНО УДАЛИТЬ?')" class="nk-btn nk-btn-sm nk-btn-color-danger">Удалить</a>
 
+                    </td>
 
                   </tr>
               <%end%>

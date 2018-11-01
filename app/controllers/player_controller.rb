@@ -1,6 +1,21 @@
 class PlayerController < ApplicationController
-  before_action :get_cart
+  before_action :get_cart, :check_activity, :set_activity
 
+  def check_activity
+    if logged_in?
+      if current_player.updated_at + 1.hour < Time.now
+        session[:active] = false
+        reset_session
+        redirect_to '/'
+      end
+    end
+  end
+
+  def set_activity
+    if logged_in?
+      current_player.update_column(:updated_at, Time.now)
+    end
+  end
 
   def get_cart
 
@@ -127,10 +142,10 @@ class PlayerController < ApplicationController
         if user.player_password == params[:login][:player_password]##check user password
           session[:player_id] = user.id
           session[:cart] = user.player_cart
-
+          current_player.update_column(:updated_at, Time.now)
           if user.player_lastlogin != Date.today
            user.update_column(:player_lastlogin,Date.today)
-           user.update_column(:player_wallet,user.player_wallet + 30)
+           user.update_column(:player_wallet,user.player_wallet + (30 * user.player_rating.to_i))
 
            end
 
@@ -230,6 +245,7 @@ class PlayerController < ApplicationController
       u.update_column(:player_activated,true)
       session[:player_id] = u.id
       session[:cart] = u.player_cart
+      current_player.update_column(:updated_at, Time.now)
       u.update_column(:player_lastlogin, Date.today)
       flash[:activatesuccess] = 'Аккаунт активирован.'
       redirect_to '/'
