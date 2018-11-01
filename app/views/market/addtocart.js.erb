@@ -33,6 +33,10 @@ if ('<%=@dup %>' == 'true')
         var cart_total = parseInt( $('#cart_count').html());
         $('#cart_count').html(cart_total + 1);
 
+    var total1 = cur_total + <%= @item_price%>
+
+
+    $('#total_discount').html(total1 - (total1 *  <%= @rating.to_i%>  / 100));
         $("#to_cart_button_<%= @item_id%>").css('display','block');
         $("#spinner_<%= @item_id%>").removeClass('spinner');
         notify();
@@ -51,10 +55,15 @@ else
     $('#total').html(cur_total + <%= @item_price%>);
     var cart_total = parseInt( $('#cart_count').html());
     $('#cart_count').html(cart_total + 1);
+
+var total1 = cur_total + <%= @item_price%>
+
+
     $('#cart_state_txt_<%= @item_id%>').html('ДОБАВИТЬ ЕЩЕ');
+    $('#total_discount').html(total1 - (total1 *  <%= @rating.to_i%>  / 100));
 
     $('.nk-cart-btns').removeClass('hidediv');
-    $('#total').removeClass('hidediv');
+    $('.nk-cart-total').removeClass('hidediv');
 
     $("#to_cart_button_<%= @item_id%>").css('display','block');
     $("#spinner_<%= @item_id%>").removeClass('spinner');

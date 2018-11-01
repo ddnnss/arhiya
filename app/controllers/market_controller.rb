@@ -148,7 +148,7 @@ class MarketController < ApplicationController
         @item_id = item.id
         @item_name = item.item_name
         @item_count = session[:cart][item.id.to_s]
-        @rating = current_player.player_rating.to_i
+        @rating = current_player.player_rating
 
         @item_total = item.item_price * session[:cart][item.id.to_s]
         @item_price = item.item_price
@@ -165,7 +165,7 @@ class MarketController < ApplicationController
       session[:total] = session[:total] + item.item_price
       respond_to do |format| #нет дупликата товара
         @dup = @duplicate
-
+        @rating = current_player.player_rating
         @item_id = item.id
         @item_name = item.item_name
         @item_name_translit = item.item_name_translit
