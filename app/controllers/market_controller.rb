@@ -1,5 +1,5 @@
 class MarketController < ApplicationController
-  before_action :get_cart, except: [:placeorder]
+  before_action :get_cart, except: [:placeorder,:addtocart,:removecart]
   before_action :check_activity, :set_activity
 
   def check_activity
@@ -36,13 +36,21 @@ class MarketController < ApplicationController
   end
 
   def placeorder
-    if session[:total] == 0
+    if session[:cart].blank?
       logger.info('[INFO] : Сумма заказа = 0')
       logger.info('[INFO] : session[:total] = ' + session[:total].to_s)
       redirect_to '/blackmarket'
       flash[:err] = 'Нет товаров для оплаты'
     else
-      total = session[:total].to_i - (session[:total].to_i * current_player.player_rating.to_i / 100)
+      total_price = 0
+      items = Scumitem.find(session[:cart].keys)
+      items.each do |ii|
+
+        total_price =  total_price + ii.item_price * session[:cart][ii.id.to_s]
+      end
+
+      total = total_price - (total_price * current_player.player_rating.to_i / 100)
+      logger.info('total = ' + total.to_s)
       if current_player.player_wallet < total
         logger.info('[INFO] : Не хватает денег')
         flash[:err] = 'Не хватает денег. Сумма заказа : ' + total.to_s + ' RC . Твой баланс : ' + current_player.player_wallet.to_s + ' RC'
@@ -113,7 +121,7 @@ class MarketController < ApplicationController
 
 
 
-      if session[:cart].nil?  #корзина существует?
+      if session[:cart].blank?  #корзина существует?
         logger.info('[INFO] : Инициализация корзины. Обработка ......')
         session[:cart]=Hash.new
         session[:cart][item.id] = 1
@@ -142,7 +150,10 @@ class MarketController < ApplicationController
 
 
     if @duplicate               #дупликата товара
-      session[:total] = session[:total] + item.item_price * session[:cart][item.id.to_s]
+
+      logger.info('session[:total] =' + session[:total].to_s )
+      logger.info('session[:cart][item.id.to_s] =' + session[:cart][item.id.to_s].to_s )
+
       respond_to do |format| # дупликат товара
         @dup = @duplicate
         @item_id = item.id
@@ -151,6 +162,7 @@ class MarketController < ApplicationController
         @rating = current_player.player_rating
 
         @item_total = item.item_price * session[:cart][item.id.to_s]
+
         @item_price = item.item_price
         @item_total_price = @item_price * @item_count
 
@@ -162,7 +174,8 @@ class MarketController < ApplicationController
       end
 
     else
-      session[:total] = session[:total] + item.item_price
+
+      logger.info('session[:total] =' + session[:total].to_s )
       respond_to do |format| #нет дупликата товара
         @dup = @duplicate
         @rating = current_player.player_rating
@@ -171,6 +184,7 @@ class MarketController < ApplicationController
         @item_name_translit = item.item_name_translit
         @item_image = item.item_image
         @item_price = item.item_price
+
         logger.info('[INFO] : Новый товар добавлен в корзину.')
         format.js
       end

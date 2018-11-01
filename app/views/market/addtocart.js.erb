@@ -13,7 +13,7 @@ var cartItem = " <tr>\n" +
     "            <td class=\"nk-product-cart-quantity\">\n" +
     "             <span id=\"item<%= @item_id%>count\"> 1</span>\n" +
     "            </td>\n" +
-    "            <td class=\"nk-product-cart-total\">\n" +
+    "            <td class=\"nk-product-cart-total-<%= @item_id%>\">\n" +
     "              <%=@item_price%> RC\n" +
     "            </td>\n" +
     "            <td class=\"nk-product-cart-remove\">\n" +
@@ -32,11 +32,11 @@ if ('<%=@dup %>' == 'true')
         $('.nk-product-cart-total-<%= @item_id%>').html('<%=@item_total%>')
         var cart_total = parseInt( $('#cart_count').html());
         $('#cart_count').html(cart_total + 1);
+        var tot1 = cur_total + <%= @item_price%>
+    var tot2 = tot1 - tot1 * <%=@rating%> /100 ;
 
-    var total1 = cur_total + <%= @item_price%>
 
-
-    $('#total_discount').html(total1 - (total1 *  <%= @rating.to_i%>  / 100));
+    $('#total_discount').html( tot2);
         $("#to_cart_button_<%= @item_id%>").css('display','block');
         $("#spinner_<%= @item_id%>").removeClass('spinner');
         notify();
@@ -56,12 +56,15 @@ else
     var cart_total = parseInt( $('#cart_count').html());
     $('#cart_count').html(cart_total + 1);
 
-var total1 = cur_total + <%= @item_price%>
+
 
 
     $('#cart_state_txt_<%= @item_id%>').html('ДОБАВИТЬ ЕЩЕ');
-    $('#total_discount').html(total1 - (total1 *  <%= @rating.to_i%>  / 100));
+    var tot1 = cur_total + <%= @item_price%>
+    var tot2 = tot1 - tot1 * <%=@rating%> /100 ;
 
+
+    $('#total_discount').html( tot2);
     $('.nk-cart-btns').removeClass('hidediv');
     $('.nk-cart-total').removeClass('hidediv');
 

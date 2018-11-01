@@ -282,7 +282,7 @@ Additional Classes:
 <% unless logged_in? %>
 <%= render 'viewparts/signform' %>
 <% end %>
-
+<% if logged_in?%>
 <div class="nk-cart">
   <div class="nk-gap-2"></div>
   <div class="container">
@@ -290,7 +290,7 @@ Additional Classes:
       <div class="table-responsive">
         <table id="cart_items" class="table nk-store-cart-products">
           <tbody >
-          <% if logged_in?%>
+
               <%if cart.nil? || cart.count == 0%>
                   <tr>
                     <td>  Корзина пуста</td>
@@ -326,7 +326,7 @@ Additional Classes:
 
 
             <%end%>
-          <%end%>
+
 
 
 
@@ -337,9 +337,15 @@ Additional Classes:
       </div>
 
       <div class="nk-gap-2"></div>
-      <div class="nk-cart-total <%= session[:total] == 0 ? 'hidediv' : '' %>">
-        Всего
-        <span id="total" ><%= session[:total]%> </span> RC - <%= current_player.player_rating %>% = <span id="total_discount"><%= session[:total].to_i - (session[:total].to_i * current_player.player_rating.to_i / 100) %></span>  RC
+      <div style="font-family: bigf;" class=" menu_item nk-cart-total <%= session[:total] == 0 ? 'hidediv' : '' %>">
+        <span style="font-size: 2rem;
+            font-style: normal;
+            font-weight: 700;
+            margin-left: 10px;">Всего</span>
+        <span id="total" ><%= session[:total]%> </span> <span style="font-size: 2rem;font-style: normal;font-weight: 700;margin-left: 10px;">RC - <%= current_player.player_rating %>% = </span><span style="font-size: 2rem;
+          font-style: normal;
+          font-weight: 700;
+          margin-left: 10px;" id="total_discount"><%= session[:total].to_i - (session[:total].to_i * current_player.player_rating.to_i / 100) %> RC</span>
 
       </div>
 
@@ -356,3 +362,4 @@ Additional Classes:
   </div>
   <div class="nk-gap-5"></div>
 </div>
+<%end%>
