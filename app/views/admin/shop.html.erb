@@ -30,9 +30,12 @@
 
               <td><a href="#" id="<%= maincat.id%>" class="maincat"   data-toggle="modal" data-target=".add_new_item">+ товар</a></td>
 
-
+              <%unless session[:moder]%>
               <td><a href="/editmaincat?maincat_id=<%= maincat.id%>" data-remote="true">редакт.</a></td>
-              <td><a href="#<%= maincat.id%>">удалить</a></td>
+
+                  <td><a href="#<%= maincat.id%>">удалить</a></td>
+                  <%end%>
+
             </tr>
             <% maincat.scumitems.order('item_squad_discount ASC').each  do |item|%>
                 <tr>
@@ -45,10 +48,10 @@
 
 
                   <td style="background-color: #1f1f1f;">Цена : <%= item.item_price%></td>
-
+                  <%unless session[:moder]%>
                   <td style="background-color: #1f1f1f;"><a href="/itemedit?item_id=<%= item.id%>" data-remote="true"><i class="fas fa-trash-alt" ></i>ред.</a></td>
                   <td style="background-color: #1f1f1f;"><a href="/itemdel?item_id=<%= item.id%>" onclick="return confirm('ТОЧНО УДАЛИТЬ?')"><i class="fas fa-trash-alt" ></i>уд.</a></td>
-
+                  <% end %>
                 </tr>
             <% end %>
 

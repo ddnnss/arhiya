@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  helper_method :current_player, :logged_in?, :player_pm, :player_admin, :get_cart
+  helper_method :current_player, :logged_in?, :player_pm, :player_admin
 
   def current_player
     return unless session[:player_id]

@@ -56,7 +56,14 @@
               <%@players.each do |p|%>
                   <tr>
 
-                    <td><a href="/admin/userinfo?id=<%=p.id%>"><%=p.player_nickname%></a>  </td>
+                    <td>
+                      <%if session[:moder]%>
+                          <%=p.player_nickname%>
+                          <%else%>
+                          <a href="/admin/userinfo?id=<%=p.id%>"><%=p.player_nickname%></a>
+                    <%end%>
+
+                    </td>
                     <td><span id="p_id_<%=p.id%>"><%=p.player_id%></span>
                       <br>
                       <button id="btn_<%=p.id%>"  class="nk-btn nk-btn-sm nk-btn-color-danger" onclick="copyToClipboard('#p_id_<%=p.id%>','#btn_<%=p.id%>')">Телепорт</button>

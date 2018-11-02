@@ -53,9 +53,11 @@
                     <td><%=o.player.player_nickname + ' | ' + o.player.player_discord_link%></td>
                     <td><%=o.order_total_price%></td>
                     <td style="background-color: <%=o.order_complete ? '#00FF00' : '#ff0000'%>"><%=o.order_complete ? 'ДА' : 'НЕТ'%></td>
+                    <%unless session[:moder]%>
                     <td>    <a href="/admin/orderdelete?id=<%=o.id%>" onclick="return confirm('ТОЧНО УДАЛИТЬ?')" class="nk-btn nk-btn-sm nk-btn-color-danger">Удалить</a>
 
                     </td>
+                    <%end%>
 
                   </tr>
               <%end%>

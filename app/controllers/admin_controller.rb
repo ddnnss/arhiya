@@ -1,5 +1,5 @@
 class AdminController < ApplicationController
-  before_action :get_cart, :check_activity, :set_activity
+  before_action :get_cart, :check_activity, :set_activity,:ch_admin
 
   def check_activity
     if logged_in?
@@ -210,7 +210,7 @@ def editmaincat
 end
 
 def ch_admin
-  if player_admin
+  if player_admin || session[:moder]
   return true
   else
     redirect_to '/'

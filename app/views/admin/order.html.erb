@@ -74,9 +74,10 @@
                 <a href="/admin/orders"  class="nk-btn nk-btn-sm nk-btn-color-success">К ЗАКАЗАМ</a>
                 <%else%>
                 <a href="/admin/ordercomplete?id=<%=@order.id%>"  class="nk-btn nk-btn-sm nk-btn-color-info">ЗАКАЗ ОТРАБОТАН</a>
+                <%unless session[:moder]%>
                 <a href="/admin/orderdelete?id=<%=@order.id%>" onclick="return confirm('ТОЧНО УДАЛИТЬ?')" class="nk-btn nk-btn-sm nk-btn-color-danger">УДАЛИТЬ ЗАКАЗ</a>
                 <%end%>
-
+            <%end%>
 
 
 
