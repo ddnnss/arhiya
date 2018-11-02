@@ -59,7 +59,7 @@
           <ul class="nk-nav">
             <% if logged_in? %>
                 <li class="">
-                  <% if current_player.player_admin || session[:moder] %>
+                  <% if current_player.player_admin %>
                     <li class="single-icon"><a href="/admin" ><span class=" bg-danger"> АДМИНКА</span></a></li>
                 <% end %>
                 </li>
@@ -156,11 +156,11 @@
           <li class="<%= @activesquads%>"><a style="padding: 5px 10px !important;" class="no-link-effect menu_item" href="/squads">ОТРЯДЫ</a></li>
           <% if logged_in? %>
 
-                <% if current_player.player_admin %>
+
           <li class="<%= @activemarket%> " ><a style="padding: 5px 10px !important;" class="no-link-effect menu_item" href="/blackmarket">SCUM<span style="color: #e08821;">B</span>LACK<span style="color: #e08821;">M</span>ARKET</a></li>
-<%end%>
+
           <%end%>
-         
+
 
 
            </ul>
