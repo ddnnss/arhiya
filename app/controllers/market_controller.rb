@@ -1,6 +1,11 @@
 class MarketController < ApplicationController
+  before_action :ch_online
   before_action :get_cart, except: [:placeorder,:addtocart,:removecart]
   before_action :check_activity, :set_activity
+
+  def ch_online
+    
+  end
 
   def check_activity
     if logged_in?
@@ -109,9 +114,15 @@ class MarketController < ApplicationController
   end
 
   def showcat
+    if logged_in?
     @cat = Scummaincat.find_by_cat_name_translit(params[:cat_name_translit])
     @cat.update_column(:cat_views,@cat.cat_views + 1)
     @items = @cat.scumitems.all.order('item_squad_discount ASC')
+    else
+    flash[:err] = 'Для просмотра предложений нужно быть зарегистрированным пользователем'
+      redirect_to '/blackmarket'
+    end
+
 
   end
 
