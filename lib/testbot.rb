@@ -104,9 +104,8 @@ bot.command :squads do |event|
   s= Squad.all
   event << 'Зарегистрированные отряды:'
   s.each do |ss|
-    p = Player.where(:id => ss.squad_leader.to_i)
-    pp = Player.where(:squad_id => ss.id)
-       event << 'Номер п/п : ' + ss.squad_number.to_s + ' | ' +'Название отряда : ' + ss.squad_name + ' | ' + 'Состав отряда : ' + pp.count.to_s + ' чел.'+ ' | ' + (ss.squad_recruting ? 'Набор в отряд открыт' : 'Набор в отряд закрыт') + ' | ' +' Лидер отряда : ' +  'http://www.gamescum.ru/profile/' + p.player_nickname_translit
+
+       event << 'Номер п/п : ' + ss.squad_number.to_s + ' | ' +'Название отряда : ' + ss.squad_name +  ' | ' + (ss.squad_recruting ? 'Набор в отряд открыт' : 'Набор в отряд закрыт')
   end
   return nil
 end
