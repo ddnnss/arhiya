@@ -76,7 +76,7 @@ bot.command :server do |event|
 end
 
 bot.command :p do |event|
-  url = 'https://www.battlemetrics.com/servers/scum/2732521'
+  url = 'https://www.battlemetrics.com/servers/scum/2812189'
   html = open(url)
   doc = Nokogiri::HTML(html)
   players = doc.xpath('//*[@id="serverPage"]/div[1]/div/dl/dd[2]').text
