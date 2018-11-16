@@ -55,7 +55,7 @@
                   <% if logged_in? && current_player.player_id == s.player_id%>
                        style="    background-color: #e08821;"
                        <%end%>
-                  ><%=s.player_nickname == 'Unknown' ? s.player_id :  s.player_nickname %> </td>
+                  ><%=s.player_nickname == 'Unknown' ? 'Unknown' :  s.player_nickname %> </td>
                   <td style="vertical-align: middle; background-color: #181818;"><%=s.player_kills%></td>
                   <td style="vertical-align: middle;"><%=s.player_deaths%></td>
                 </tr>

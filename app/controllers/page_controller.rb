@@ -46,7 +46,7 @@ class PageController < ApplicationController
   def stats
     @activestat = 'active'
     @stats = Playerstat.all.order('player_kills DESC')
-    @lastedit = @stats.order('updated_at DESC').first
+    @lastedit = Playerstat.all.order('updated_at DESC').first
   end
 
   def faq
