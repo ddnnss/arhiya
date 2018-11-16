@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181025094452) do
+ActiveRecord::Schema.define(version: 20181115092754) do
 
   create_table "comments", force: :cascade do |t|
     t.integer "event_id"
@@ -113,6 +113,15 @@ ActiveRecord::Schema.define(version: 20181025094452) do
     t.index ["player_id"], name: "index_players_on_player_id"
     t.index ["player_nickname_translit"], name: "index_players_on_player_nickname_translit"
     t.index ["squad_id"], name: "index_players_on_squad_id"
+  end
+
+  create_table "playerstats", force: :cascade do |t|
+    t.string "player_nickname", default: "Unknown"
+    t.string "player_id", default: "0"
+    t.integer "player_kills", default: 0
+    t.integer "player_deaths", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "posts", force: :cascade do |t|

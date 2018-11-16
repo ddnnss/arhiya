@@ -1,6 +1,6 @@
 class AdminController < ApplicationController
   before_action :get_cart, :check_activity, :set_activity,:ch_admin
-
+  require "csv"
   def check_activity
     if logged_in?
       if current_player.updated_at + 1.hour < Time.now
@@ -35,6 +35,95 @@ def get_cart
 
   end
 end
+  def playerstat
+    uploadedFileDeath = params[:stat][:stat_file_death]
+    uploadedFileKills = params[:stat][:stat_file_kill]
+    d=0
+    k=0
+    if File.file?(Rails.root.join('public','tmp', uploadedFileKills.original_filename))
+      uploadedFileKills.original_filename = [*('a'..'z'),*('0'..'9')].shuffle[0,4].join + uploadedFileKills.original_filename
+    end
+
+    File.open(Rails.root.join('public','tmp',  uploadedFileKills.original_filename), 'wb' ) do |f|
+      f.write(uploadedFileKills.read)
+    end
+
+    if File.file?(Rails.root.join('public','tmp', uploadedFileDeath.original_filename))
+      uploadedFileDeath.original_filename = [*('a'..'z'),*('0'..'9')].shuffle[0,4].join + uploadedFileDeath.original_filename
+    end
+
+    File.open(Rails.root.join('public','tmp',  uploadedFileDeath.original_filename), 'wb' ) do |f|
+      f.write(uploadedFileDeath.read)
+    end
+
+    CSV.foreach('public/tmp/' + uploadedFileDeath.original_filename) do |row|
+      d=d+1
+      p = Player.find_by_player_id(row[0].to_s.split(';')[0])
+      if p
+        stat = Playerstat.find_by_player_id(p.player_id)
+          if stat
+            if stat.player_nickname == 'Unknown'
+              stat.update_column(:player_nickname, p.player_nickname)
+            end
+            stat.update_column(:player_deaths,stat.player_deaths + row[0].to_s.split(';')[1].to_i )
+          else
+            stat = Playerstat.new
+            stat.player_nickname = p.player_nickname
+            stat.player_id = p.player_id
+            stat.player_deaths = row[0].to_s.split(';')[1].to_i
+            stat.save
+          end
+      else
+        stat = Playerstat.find_by_player_id(row[0].to_s.split(';')[0])
+        if stat
+          stat.update_column(:player_deaths,stat.player_deaths + row[0].to_s.split(';')[1].to_i )
+        else
+          stat = Playerstat.new
+          stat.player_id = row[0].to_s.split(';')[0]
+          stat.player_deaths = row[0].to_s.split(';')[1].to_i
+          stat.save
+        end
+      end
+      logger.info(row[0].to_s.split(';')[0]) #id
+      logger.info(row[0].to_s.split(';')[1]) #death
+    end
+
+    CSV.foreach('public/tmp/' + uploadedFileKills.original_filename) do |row|
+      k=k+1
+      p = Player.find_by_player_id(row[0].to_s.split(';')[0])
+      if p
+        stat = Playerstat.find_by_player_id(p.player_id)
+        if stat
+          if stat.player_nickname == 'Unknown'
+            stat.update_column(:player_nickname, p.player_nickname)
+          end
+          stat.update_column(:player_kills,stat.player_kills + row[0].to_s.split(';')[1].to_i )
+        else
+          stat = Playerstat.new
+          stat.player_nickname = p.player_nickname
+          stat.player_id = p.player_id
+          stat.player_kills = row[0].to_s.split(';')[1].to_i
+          stat.save
+        end
+      else
+        stat = Playerstat.find_by_player_id(row[0].to_s.split(';')[0])
+        if stat
+          stat.update_column(:player_kills,stat.player_kills + row[0].to_s.split(';')[1].to_i )
+        else
+          stat = Playerstat.new
+          stat.player_id = row[0].to_s.split(';')[0]
+          stat.player_kills = row[0].to_s.split(';')[1].to_i
+          stat.save
+        end
+      end
+      logger.info(row[0].to_s.split(';')[0]) #id
+      logger.info(row[0].to_s.split(';')[1]) #death
+    end
+    flash[:stat] = 'Обработано: смертей - ' + d.to_s + ' убийств - ' + k.to_s
+    redirect_to '/admin'
+  end
+
+
 
 def shop
   @maincat = Scummaincat.all

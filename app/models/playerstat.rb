@@ -1,0 +1,2 @@
+class Playerstat < ApplicationRecord
+end

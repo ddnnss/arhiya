@@ -1,7 +1,6 @@
 class PageController < ApplicationController
   before_action :get_cart, :check_activity, :set_activity
-  require 'discordrb'
-  require 'nokogiri'
+   require 'nokogiri'
   require 'open-uri'
 
 
@@ -40,20 +39,14 @@ class PageController < ApplicationController
 
   def index
     @title = 'ГЛАВНАЯ'
-
-
     @homepage_topics = Topic.where(topic_show_homepage: true ).order('created_at desc').last(6)
     @homepage_topics.blank? ? @noslides = true :  @noslides = false
-
-
-
-
-
-
   end
-  def launcher
-    @p = Player.all
 
+  def stats
+    @activestat = 'active'
+    @stats = Playerstat.all.order('player_kills DESC')
+    @lastedit = @stats.order('updated_at DESC').first
   end
 
   def faq
@@ -99,8 +92,6 @@ class PageController < ApplicationController
     @events5 = Event.where(:event_date => @current_week[4].strftime('%d/%m/%Y')).order('event_time asc')
     @events6= Event.where(:event_date => @current_week[5].strftime('%d/%m/%Y')).order('event_time asc')
     @events7= Event.where(:event_date => @current_week[6].strftime('%d/%m/%Y')).order('event_time asc')
-
-
   end
 
   def event
@@ -110,7 +101,6 @@ class PageController < ApplicationController
     else
       redirect_to '/'
     end
-
   end
 
   def eventapp
@@ -136,25 +126,14 @@ class PageController < ApplicationController
       flash[:e_ok] = 'Заявка на участие подана. Просьба быть готовым к мероприятию заранее.'
       redirect_to '/event/'+params[:event_id]
     end
-
     else
       redirect_to '/'
     end
-
-
   end
 
   def squads
     @activesquads = 'active'
     @squads = Squad.all
-
-
   end
-
-
-
-
-
-
 
 end

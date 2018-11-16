@@ -55,10 +55,12 @@
                           <a href="/profile/<%=p.player_nickname_translit%>"><%=p.player_nickname%></a>
                               <%unless session[:moder]%>
                                   <a style="left: 20px;" href="/squadkick/<%=p.squad_id%>/<%=p.id%>" class="nk-btn nk-btn-sm nk-btn-bg-danger align-center" onclick="return confirm('ТОЧНО УДАЛИТЬ?')">УДАЛИТЬ ИЗ ОТРЯДА</a>
-
+                                  <a style="left: 20px;" href="/squadnewleader/<%=p.squad_id%>/<%=p.id%>" class="nk-btn nk-btn-sm nk-btn-bg-info align-center" onclick="return confirm('ТОЧНО СМЕНИТЬ?')">НАЗНАЧИТЬ ЛИДЕРОМ</a>
                               <%end%>
                           <%end%>
+                          <br>
                           <%end%>
+
                     </td>
 
                   </tr>
