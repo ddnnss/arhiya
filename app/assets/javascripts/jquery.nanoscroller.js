@@ -973,4 +973,4 @@
   $.fn.nanoScroller.Constructor = NanoScroll;
 });
 
-//# sourceMappingURL=jquery.nanoscroller.js.map
+//# sourceMappingURL=https://cdnjs.cloudflare.com/ajax/libs/jquery.nanoscroller/0.8.7/javascripts/jquery.nanoscroller.js.map

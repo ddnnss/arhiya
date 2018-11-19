@@ -37,18 +37,7 @@
             <div class="nk-social-profile-info-last-seen">Дата регистрации : <%= @player.created_at.strftime("%d.%m.%Y")%> | Последний вход : <%= @player.player_lastlogin.nil? ? 'НИКОГДА' : @player.player_lastlogin.strftime("%d.%m.%Y")%>  </div>
             <h1 class="nk-social-profile-info-name"><%= @player.player_nickname%></h1>
             <div class="nk-social-profile-info-username home-game-info" >
-              <%unless @player.squad_id.nil? %>
-                  <%logger.info (@player.squad.squad_leader)%>
-                  <%logger.info (@player.squad_id)%>
-                  <%if @player.squad.squad_leader == @player.id %>
 
-                      Лидер отряда: <%= @player.squad.squad_name%>
-                  <%else%>
-                      Ранг: <%= @player.player_rank%>
-                  <%end%>
-              <%else%>
-                  Ранг: <%= @player.player_rank%>
-              <%end%>
 
 
 
@@ -84,7 +73,25 @@
 
           <div class="nk-social-menu d-none d-lg-block">
             <ul>
+              <%unless @player.squad_id.nil? %>
+                  <%logger.info (@player.squad.squad_leader)%>
+                  <%logger.info (@player.squad_id)%>
+                  <%if @player.squad.squad_leader == @player.id %>
 
+                      <li>Лидер отряда: <%= @player.squad.squad_name%></li>
+                  <%else%>
+                      <li>Ранг: <%= @player.player_rank%></li>
+                  <%end%>
+              <%else%>
+                  <li>Ранг: <%= @player.player_rank%></li>
+              <%end%>
+              <li>Рейтинг : <%=@player.player_rating%></li>
+              <li><hr style="border-bottom: 1px dotted #e08821;"></li>
+              <%unless @stat.nil?%>
+              <li>Убийств : <%=@stat.player_kills%></li>
+              <li>Смертей : <%=@stat.player_deaths%></li>
+<li><hr style="border-bottom: 1px dotted #e08821;"></li>
+                  <%end%>
               <li>  VK : <%= @player.player_vk_link%></li>
 
               <li>  Discord : <%= @player.player_discord_link%></li>

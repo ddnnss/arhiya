@@ -1,0 +1,77 @@
+<!-- START: Page Background -->
+<div class="nk-page-background op-5" data-bg-mp4="<%= asset_path('bg-2.mp4') %>" data-bg-webm="<%= asset_path('bg-2.webm') %>" data-bg-ogv="<%= asset_path('bg-2.ogv') %>" data-bg-poster="<%= asset_path('bg-2.jpg') %>"></div>
+<!-- END: Page Background -->
+
+<div class="nk-main">
+
+  <div class="nk-header-title nk-header-title-sm nk-header-title-parallax-opacity">
+
+    <div class="nk-header-text-bottom">
+      <div class="nk-breadcrumbs text-xs-center">
+        <ul>
+          <li><a href="/">ГЛАВНАЯ</a></li>
+          <li>
+            <span>СТАТИСТИКА ИГРОКОВ</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+  <div class="container">
+    <div class="nk-gap-4"></div>
+
+    <div class="nk-box bg-dark-1 text-white">
+      <div class="nk-gap-4"></div>
+      <div class="container">
+        <h4 align="center">ПОСЛЕДНЕЕ ОБНОВЛЕНИЕ : <%= @lastedit.updated_at.strftime("%d.%m.%Y | %H:%M:%S")%></h4>
+<br>
+
+
+
+
+          <table class="table text-center" style="    width: 800px;
+              margin: auto;">
+            <tr>
+
+              <td>НИК</td>
+              <td style="background-color: #181818;">УБИЙСТВ</td>
+              <td>СМЕРТЕЙ</td>
+
+
+
+            </tr>
+
+            <%@stats.each do |s|%>
+                <tr>
+
+
+
+                  <td
+                  <% if logged_in? && current_player.player_id == s.player_id%>
+                       style="    background-color: #e08821;"
+                       <%end%>
+                  ><%=s.player_nickname == 'Unknown' ? 'Unknown' :  s.player_nickname %> </td>
+                  <td style="vertical-align: middle; background-color: #181818;"><%=s.player_kills%></td>
+                  <td style="vertical-align: middle;"><%=s.player_deaths%></td>
+                </tr>
+            <%end%>
+
+
+
+          </table>
+
+
+        <div class="nk-gap-4"></div>
+      </div>
+
+
+
+    </div>
+  </div>
+  <div class="nk-gap-4"></div>
+</div>

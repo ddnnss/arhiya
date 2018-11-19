@@ -241,6 +241,20 @@ class SquadController < ApplicationController
     end
   end
 
+  def squadnewleader
+    if player_admin
+      s = Squad.find(params[:squad_id])
+      cur_leader = Player.find(s.squad_leader)
+      new_leader = Player.find(params[:player_id])
+      s.update_column(:squad_leader,new_leader.id)
+      cur_leader.update_column(:squad_leader,false)
+      new_leader.update_column(:squad_leader,true)
+      redirect_to '/admin/squads'
+    else
+      redirect_to '/admin'
+    end
+  end
+
   def squaddeny
     if current_player.squad.squad_leader == current_player.id
      s = Squad.find(params[:squad_id])

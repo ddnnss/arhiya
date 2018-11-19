@@ -16,7 +16,15 @@
 
         <div class="">
           <div class="">
-
+            <%if flash[:stat]%>
+                <div class="nk-gap-1"></div>
+                <div class="nk-info-box bg-success">
+                  <div class="nk-info-box-icon">
+                    <i class="ion-alert-circled"></i>
+                  </div>
+                  <%=flash[:stat]%>
+                </div>
+            <%end%>
 
             <a href="/admin/events"  class="nk-btn nk-btn-sm nk-btn-color-warning">ИВЕНТЫ</a>
             <a href="/admin/event"  class="nk-btn nk-btn-sm nk-btn-color-danger">ИВЕНТЫ СОЗДАНИЕ</a>
@@ -28,6 +36,22 @@
             <a href="/admin/orders"  class="nk-btn nk-btn-sm nk-btn-color-warning">ЗАКАЗЫ</a>
             <hr>
             <a href="/clearimg?id=players"  class="nk-btn nk-btn-sm nk-btn-color-danger">Очистить не используемые аватары игроков</a>
+            <hr>
+            <%= form_for :stat, url: playerstat_path do |f|%>
+                <div class="form-group row">
+                  <label for="file" class="col-3 col-form-label">Файл статистики смертей</label>
+                  <div class="col-sm-9">
+                    <%= f.file_field :stat_file_death , class:'form-control', id:'file'%>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="file1" class="col-3 col-form-label">Файл статистики убийств</label>
+                  <div class="col-sm-9">
+                    <%= f.file_field :stat_file_kill , class:'form-control', id:'file1'%>
+                  </div>
+                </div>
+                <button  type="submit" class="nk-btn nk-btn-color-main-1 link-effect-4">Обновить статистику</button>
+            <%end%>
             <hr>
             <div class="nk-gap-1"></div>
             Пользователей : <%=@players.count%><br>

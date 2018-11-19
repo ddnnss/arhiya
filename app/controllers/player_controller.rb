@@ -40,7 +40,8 @@ class PlayerController < ApplicationController
     @player = Player.find_by_player_nickname_translit(params[:player_nickname])
     unless @player
       redirect_to root_path
-  else
+    else
+      @stat = Playerstat.find_by_player_id(@player.player_id)
    # @comments = Comment.where(comment_for_id: @player.id).order('created_at desc')
     if logged_in? && @player.id == current_player.id
     #  @pm = Privatemessage.where(message_for_id: session[:player_id]).order('created_at desc')

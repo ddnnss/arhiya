@@ -56,7 +56,7 @@ bot.command :red do |event|
 end
 
 bot.command :server do |event|
-  url = 'https://www.battlemetrics.com/servers/scum/2732521'
+  url = 'https://www.battlemetrics.com/servers/scum/2812189'
   html = open(url)
   doc = Nokogiri::HTML(html)
   players = doc.xpath('//*[@id="serverPage"]/div[1]/div/dl/dd[2]').text
@@ -76,7 +76,7 @@ bot.command :server do |event|
 end
 
 bot.command :p do |event|
-  url = 'https://www.battlemetrics.com/servers/scum/2732521'
+  url = 'https://www.battlemetrics.com/servers/scum/2812189'
   html = open(url)
   doc = Nokogiri::HTML(html)
   players = doc.xpath('//*[@id="serverPage"]/div[1]/div/dl/dd[2]').text
@@ -104,9 +104,8 @@ bot.command :squads do |event|
   s= Squad.all
   event << 'Зарегистрированные отряды:'
   s.each do |ss|
-    p = Player.find(ss.squad_leader)
-    pp = Player.where(:squad_id => ss.id)
-       event << 'Номер п/п : ' + ss.squad_number.to_s + ' | ' +'Название отряда : ' + ss.squad_name + ' | ' + 'Состав отряда : ' + pp.count.to_s + ' чел.'+ ' | ' + (ss.squad_recruting ? 'Набор в отряд открыт' : 'Набор в отряд закрыт') + ' | ' +' Лидер отряда : ' +  'http://www.gamescum.ru/profile/'+p.player_nickname_translit
+
+       event << 'Номер п/п : ' + ss.squad_number.to_s + ' | ' +'Название отряда : ' + ss.squad_name +  ' | ' + (ss.squad_recruting ? 'Набор в отряд открыт' : 'Набор в отряд закрыт')
   end
   return nil
 end

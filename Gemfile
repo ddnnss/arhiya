@@ -14,6 +14,7 @@ gem 'jquery-turbolinks'
 gem 'jquery-rails'
 gem 'translit'
 gem 'discordrb'
+gem 'csv'
 
 gem 'will_paginate', '~> 3.1.0'
 
