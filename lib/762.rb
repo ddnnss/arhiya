@@ -15,18 +15,20 @@ end
 bot.command :lfm do |event,ppl,level,age|
    if event.channel.type == 1
      cur_user = event.message.user.id
-     c_id = bot.user(cur_user).on(485410438436356096).voice_channel.id
-     descr = ''
+
+     descr = 'Состав группы :'
      if bot.user(cur_user).on(485410438436356096).voice_channel == nil
        event.user.pm 'Зайди в голосовой канал сначала'
      else
-
+       c_id = bot.user(cur_user).on(485410438436356096).voice_channel.id
+       i = 1
 
        event.user.pm.send_embed(message = '**ПОИСК ПАТИ**') do |embed|
          embed.author = { name: 'ИЩУ ' + ppl.to_s + ' чел. в пати. | ' + '**ТРЕБОВАНИЯ** Уровень : ' + level.to_s + '. Возраст : ' + age.to_s}
 
          bot.user(cur_user).on(485410438436356096).voice_channel.users.each do |u|
-           descr = descr + '<@' + u.id.to_s + '>'
+           descr = descr + i.to_s + ':' + '<@' + u.id.to_s + '>'
+           i= i+1
          end
          embed.description = descr
 
@@ -35,7 +37,7 @@ bot.command :lfm do |event,ppl,level,age|
 
        end
 
-       invite = bot.user(cur_user).on(485410438436356096).voice_channel.invite.url 
+       invite = bot.user(cur_user).on(485410438436356096).voice_channel.invite(3600).url
 event << invite
      end
    else
