@@ -35,7 +35,7 @@ bot.command :lfm do |event,ppl,level,age|
 
        end
 
-       invite = bot.user(cur_user).on(485410438436356096).voice_channel.invite.url
+       invite = bot.user(cur_user).on(485410438436356096).voice_channel.invite.url 
 event << invite
      end
    else
