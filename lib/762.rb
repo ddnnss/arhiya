@@ -5,6 +5,7 @@ bot = Discordrb::Commands::CommandBot.new token: 'NTExODQ4MzI0MzQxNTYzNDA0.Dsw3q
 bot.command :t76 do |event|
   event.user.pm ('
   ------------**ОБЩИЕ КОМАНДЫ**------------------
+  !lfm - поиск игрока в группу. Использование: !lfm сколько_нужно_человек уровень возраст
   !s - Продажа предмета
   !b - Покупка предмета
   !t - Обмен предмета
@@ -16,7 +17,7 @@ bot.command :lfm do |event,ppl,level,age|
    if event.channel.type == 1
      cur_user = event.message.user.id
 
-     descr = 'Состав группы :'
+     descr = 'Состав группы : \n'
      if bot.user(cur_user).on(485410438436356096).voice_channel == nil
        event.user.pm 'Зайди в голосовой канал сначала'
      else
@@ -35,10 +36,12 @@ bot.command :lfm do |event,ppl,level,age|
 
 
 
+
        end
 
        invite = bot.user(cur_user).on(485410438436356096).voice_channel.invite(3600).url
 event << invite
+
      end
    else
      event.user.pm 'Напиши мне в личку эту команду'
