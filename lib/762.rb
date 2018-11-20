@@ -13,22 +13,23 @@ bot.command :t76 do |event|
   ' + Base64.decode64('KipHUkVTSE5JSyBXQVMgSEVSRSoq'))
 end
 
-bot.command :lfm do |event,ppl,level,age,*info|
-   if event.channel.type == 1
+bot.command :l do |event,ppl,level,age,*info|
+     event.message.delete
      cur_user = event.message.user.id
      cur_server = 485410438436356096    #ID сервера
      post_channel = 499494113385644034  #ID канала, где бот будет писать сообщение
+     invite_time = 3600                 #время действия инвайта в сек.
      i = 1
      descr = ''
      if bot.user(cur_user).on(cur_server).voice_channel == nil
        event.user.pm 'Зайди в голосовой канал, в котором собираешь группу.'
      else
        if info.empty?
-         infa = 'Не указано'
+         infa = 'Не указана'
        else
          infa =  "#{info.join(' ')}"
        end
-       bot.channel(post_channel).send_embed(message = 'ИЩУ ' + ppl.to_s + ' чел. в пати. | ' + '**ТРЕБОВАНИЯ** Уровень : ' + level.to_s + '. Возраст : ' + age.to_s + ' | **ДОП. ИНФА : **'  + infa) do |embed|
+       event.channel.send_embed(message = '**Нужно ' + ppl.to_s + ' чел. в пати. | ' + 'Уровень от : ' + level.to_s + '. Возраст от : ' + age.to_s + ' | Цель : '  + infa + '**') do |embed|
          embed.author = { name: "Состав группы :"}
          bot.user(cur_user).on(cur_server).voice_channel.users.each do |u|
            descr = descr + i.to_s + ' : ' + '<@' + u.id.to_s + '> '
@@ -37,12 +38,10 @@ bot.command :lfm do |event,ppl,level,age,*info|
          embed.description = descr
 
        end
-       invite = bot.user(cur_user).on(cur_server).voice_channel.invite(3600).url
-       bot.send_message(post_channel,invite)
+       invite = bot.user(cur_user).on(cur_server).voice_channel.invite(invite_time).url
+       event.channel.send_message(invite)
      end
-   else
-     event.user.pm 'Напиши мне в личку эту команду'
-   end
+
 end
 
 bot.command :s do |event,item,price|
