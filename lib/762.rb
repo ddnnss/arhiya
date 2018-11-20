@@ -10,46 +10,41 @@ bot.command :t76 do |event|
   !b - Покупка предмета
   !t - Обмен предмета
   -----------------------------------------------
-  **GRESHNIK WAS HERE**')
+  ' + Base64.decode64('KipHUkVTSE5JSyBXQVMgSEVSRSoq'))
 end
 
-bot.command :lfm do |event,ppl,level,age|
+bot.command :lfm do |event,ppl,level,age,*info|
    if event.channel.type == 1
      cur_user = event.message.user.id
-
-     descr = 'Состав группы : \n'
-     if bot.user(cur_user).on(485410438436356096).voice_channel == nil
-       event.user.pm 'Зайди в голосовой канал сначала'
+     cur_server = 485410438436356096    #ID сервера
+     post_channel = 499494113385644034  #ID канала, где бот будет писать сообщение
+     i = 1
+     descr = ''
+     if bot.user(cur_user).on(cur_server).voice_channel == nil
+       event.user.pm 'Зайди в голосовой канал, в котором собираешь группу.'
      else
-       c_id = bot.user(cur_user).on(485410438436356096).voice_channel.id
-       i = 1
-
-       event.user.pm.send_embed(message = '**ПОИСК ПАТИ**') do |embed|
-         embed.author = { name: 'ИЩУ ' + ppl.to_s + ' чел. в пати. | ' + '**ТРЕБОВАНИЯ** Уровень : ' + level.to_s + '. Возраст : ' + age.to_s}
-
-         bot.user(cur_user).on(485410438436356096).voice_channel.users.each do |u|
-           descr = descr + i.to_s + ':' + '<@' + u.id.to_s + '>'
+       if info.empty?
+         infa = 'Не указано'
+       else
+         infa =  "#{info.join(' ')}"
+       end
+       bot.channel(post_channel).send_embed(message = 'ИЩУ ' + ppl.to_s + ' чел. в пати. | ' + '**ТРЕБОВАНИЯ** Уровень : ' + level.to_s + '. Возраст : ' + age.to_s + ' | **ДОП. ИНФА : **'  + infa) do |embed|
+         embed.author = { name: "Состав группы :"}
+         bot.user(cur_user).on(cur_server).voice_channel.users.each do |u|
+           descr = descr + i.to_s + ' : ' + '<@' + u.id.to_s + '> '
            i= i+1
          end
          embed.description = descr
 
-
-
-
-
        end
-
-       invite = bot.user(cur_user).on(485410438436356096).voice_channel.invite(3600).url
-event << invite
-
+       invite = bot.user(cur_user).on(cur_server).voice_channel.invite(3600).url
+       bot.send_message(post_channel,invite)
      end
    else
      event.user.pm 'Напиши мне в личку эту команду'
    end
+end
 
-
-
- end
 bot.command :s do |event,item,price|
 
   if event.message.attachments.empty?
