@@ -49,10 +49,44 @@ bot.command :red do |event|
   ------------**СПЕЦИАЛЬНЫЕ КОМАНДЫ**------------------
   !reg - регистрация на сайте. Формат команды !reg[пробел]ИГРОВОЙ-НИК[пробел]STEAMID64[пробел]E-MAIL (например: !reg GRESHNIK 76561198091XXXXXX admin@gamescum.ru) УЗНАТЬ СВОЙ STEAMID64 МОЖНО ТУТ https://steamid.xyz
   !zp - ежедневная выплата виртуальной валюты (Для получения нужно быть зереганым на сайте не менее 3х дней)
+  !lfm - поиск людей в пати. Формат команды !lfm[пробел]сколько людей ищем(число)[пробел]требуемый возраст(число)[пробел]дополнительная информация (по желанию) (например: !lfm 2 30)
   -----------------------------------
-  Бот обновлен : **01.11.2018**
+  Бот обновлен : **21.11.2018**
   -----------------------------------
-  **GRESHNIK WAS HERE**')
+  ** <@387895658826170368> WAS HERE**')
+end
+
+bot.command :lfm do |event,ppl,age,*info|
+  if event.channel.type == 1
+    cur_user = event.message.user.id
+    cur_server = 484067040307576873    #ID сервера
+    post_channel = 514673082544291840  #ID канала, где бот будет писать сообщение
+    invite_time = 3600                 #время действия инвайта в сек.
+    i = 1
+    descr = ''
+    if bot.user(cur_user).on(cur_server).voice_channel == nil
+      event.user.pm 'Зайди в голосовой канал, в котором собираешь группу.'
+    else
+      if info.empty?
+        infa = 'Не указаны'
+      else
+        infa =  "#{info.join(' ')}"
+      end
+      bot.channel(post_channel).send_embed(message = '**Нужно ' + ppl.to_s + ' чел. в пати. | ' +  '. Возраст от : ' + age.to_s + ' | Цели : '  + infa + '**') do |embed|
+        embed.author = { name: "Состав группы :"}
+        bot.user(cur_user).on(cur_server).voice_channel.users.each do |u|
+          descr = descr + i.to_s + ' : ' + '<@' + u.id.to_s + '> '
+          i= i+1
+        end
+        embed.description = descr
+
+      end
+      invite = bot.user(cur_user).on(cur_server).voice_channel.invite(invite_time).url
+      bot.send_message(post_channel,invite)
+    end
+  else
+    event.user.pm 'Напиши мне в личку эту команду'
+  end
 end
 
 bot.command :server do |event|
