@@ -65,6 +65,9 @@
 
                 <%= f.label :player_banned , 'Забанен'%>
                 <%=check_box_tag :player_banned , @player.player_banned, @player.player_banned%>
+
+                <%= f.label :player_vip , 'VIP'%>
+               <input type="checkbox" name="player_vip" <%=@player.player_temp2 == 'vip' ? 'checked':''%>>
                 <input type="hidden" name="p_id" value="<%=@player.id%>">
                 <div class="nk-gap-1"></div>
                 <%=submit_tag 'Внести изменения', class:'nk-btn  nk-btn-color-main-1'%>

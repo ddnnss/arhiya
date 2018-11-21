@@ -1,7 +1,16 @@
 class MarketController < ApplicationController
   before_action :ch_online
   before_action :get_cart, except: [:placeorder,:addtocart,:removecart]
-  before_action :check_activity, :set_activity
+  before_action :check_activity, :set_activity, :check_ban
+
+  def check_ban
+    if player_banned
+      session[:active] = false
+      reset_session
+      flash[:ban] = 'Аккаунт заблокирован'
+      redirect_to '/'
+    end
+  end
 
   def ch_online
     

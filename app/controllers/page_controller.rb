@@ -1,9 +1,16 @@
 class PageController < ApplicationController
-  before_action :get_cart, :check_activity, :set_activity
+  before_action :get_cart, :check_activity, :set_activity, :check_ban
    require 'nokogiri'
   require 'open-uri'
 
-
+def check_ban
+  if player_banned
+    session[:active] = false
+    reset_session
+    flash[:ban] = 'Аккаунт заблокирован'
+    redirect_to '/'
+  end
+end
   def check_activity
     if logged_in?
       if current_player.updated_at + 1.hour < Time.now
@@ -39,13 +46,15 @@ class PageController < ApplicationController
 
   def index
     @title = 'ГЛАВНАЯ'
-    @homepage_topics = Topic.where(topic_show_homepage: true ).order('created_at desc').last(6)
+    @homepage_topics = Vknews.all.order('created_at desc').limit(6)
     @homepage_topics.blank? ? @noslides = true :  @noslides = false
+
   end
 
   def stats
+    @title = 'ТОП 20 ИГРОКОВ СЕРВЕРА'
     @activestat = 'active'
-    @stats = Playerstat.all.order('player_kills DESC')
+    @stats = Playerstat.all.order('player_kills DESC').limit(20)
     @lastedit = Playerstat.all.order('updated_at DESC').first
   end
 

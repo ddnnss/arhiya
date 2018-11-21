@@ -1,5 +1,14 @@
 class ForumController < ApplicationController
-  before_action :get_cart, :check_activity, :set_activity
+  before_action :get_cart, :check_activity, :set_activity, :check_ban
+
+  def check_ban
+    if player_banned
+      session[:active] = false
+      reset_session
+      flash[:ban] = 'Аккаунт заблокирован'
+      redirect_to '/'
+    end
+  end
 
   def check_activity
     if logged_in?

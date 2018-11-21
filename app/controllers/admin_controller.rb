@@ -382,6 +382,11 @@ def adminuser
   else
     p.update_column(:player_banned,false)
   end
+  if params[:player_vip]
+    p.update_column(:player_temp2,'vip')
+  else
+    p.update_column(:player_temp2,'')
+  end
   p.save!
   redirect_to '/admin/players'
 end

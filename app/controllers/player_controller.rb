@@ -1,5 +1,14 @@
 class PlayerController < ApplicationController
-  before_action :get_cart, :check_activity, :set_activity
+  before_action :get_cart, :check_activity, :set_activity, :check_ban
+
+  def check_ban
+    if player_banned
+      session[:active] = false
+      reset_session
+      flash[:ban] = 'Аккаунт заблокирован'
+      redirect_to '/'
+    end
+  end
 
   def check_activity
     if logged_in?
@@ -141,21 +150,32 @@ class PlayerController < ApplicationController
     if user             ##check user exists
       if user.player_activated ##check user activated
         if user.player_password == params[:login][:player_password]##check user password
+          if user.player_banned
+            session[:ban]=true
+          end
+          if user.player_temp2 == 'vip'
+            session[:vip] = true
+          end
           session[:player_id] = user.id
           session[:cart] = user.player_cart
           if user.player_temp1 == 'moder'
             session[:moder] = true
           end
           current_player.update_column(:updated_at, Time.now)
+          user.update_column(:player_rating,user.player_rating.to_f + 0.00001)
           if user.player_lastlogin != Date.today
            user.update_column(:player_lastlogin,Date.today)
-           user.update_column(:player_wallet,user.player_wallet + (30 * user.player_rating.to_i))
 
+           if session[:vip]
+             user.update_column(:player_wallet,user.player_wallet + (70 * user.player_rating.to_i))
+           else
+             user.update_column(:player_wallet,user.player_wallet + (30 * user.player_rating.to_i))
            end
+          end
 
           if user.player_admin
             session[:admin] = true
-            if user.player_rank == 'Комрад'
+            if user.player_rank == 'Новичек'
               user.update_column( :player_rank , 'CЕРВЕР-АДМИН')
             end
           end
@@ -238,6 +258,7 @@ class PlayerController < ApplicationController
   end                     ##end create
 
   def destroy
+
     session[:active] = false
     reset_session
     redirect_to '/'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181115092754) do
+ActiveRecord::Schema.define(version: 20181121093310) do
 
   create_table "comments", force: :cascade do |t|
     t.integer "event_id"
@@ -256,6 +256,16 @@ ActiveRecord::Schema.define(version: 20181115092754) do
     t.index ["subforum_id"], name: "index_topics_on_subforum_id"
     t.index ["topic_name_translit"], name: "index_topics_on_topic_name_translit"
     t.index ["topic_show_homepage"], name: "index_topics_on_topic_show_homepage"
+  end
+
+  create_table "vknews", force: :cascade do |t|
+    t.string "news_id"
+    t.string "news_text"
+    t.string "news_name"
+    t.string "news_image"
+    t.string "news_link"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

@@ -257,11 +257,20 @@ bot.command :zp do |event|
   else
     if p.created_at + 3.day < Time.now
       if p.player_last_zp < Time.now
-
+        p.update_column(:player_rating,p.player_rating.to_f + 0.00001)
         p.update_column(:player_last_zp, Time.now + 1.day)
-        p.update_column(:player_wallet, p.player_wallet + (30 * p.player_rating.to_i))
+        if p.player_temp2 == 'vip'
+          p.update_column(:player_wallet, p.player_wallet + (60 * p.player_rating.to_f).to_i)
 
-        event.user.pm ('Ежедневная выплата выдана. С учетом твоего рейтинга начислено : ' + 30 * p.player_rating.to_i + ' RC . **Текущий баланс** : ' + p.player_wallet.to_s + ' RC')
+          event.user.pm ('Ежедневная выплата выдана. С учетом твоего рейтинга и статуса начислено : ' + (60 * p.player_rating.to_f).to_i.to_s + ' RC . **Текущий баланс** : ' + p.player_wallet.to_s + ' RC')
+
+        else
+          p.update_column(:player_wallet, p.player_wallet + (30 * p.player_rating.to_f).to_i)
+
+          event.user.pm ('Ежедневная выплата выдана. С учетом твоего рейтинга и статуса начислено : ' + (30 * p.player_rating.to_f).to_i.to_s + ' RC . **Текущий баланс** : ' + p.player_wallet.to_s + ' RC')
+
+        end
+
 
       else
         event.user.pm ('Лимит выполнения команды 1 раз в сутки! **Текущий баланс** : ' + p.player_wallet.to_s + ' RC')

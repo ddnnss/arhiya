@@ -40,6 +40,14 @@
             <div class="nk-social-profile-info-username home-game-info" > </div>
 
             <div class="nk-social-profile-info-actions">
+              <%if session[:vip]%>
+              <span style="    color: #ffffff;
+                  background-color: #da9d47;
+                  padding: 5px;
+                  font-family: bigf;
+                  font-size: 20px;
+                  border-radius: 5px;">ВИП СТАТУС</span><br>
+              <%end%>
               Баланс : <%= @player.player_wallet%> RedCoin (RC)<br>
               Рейтинг : <%= @player.player_rating%><br>
               Отряд : <%= @player.squad.nil? ? 'НЕТ' : @player.squad.squad_name%>
