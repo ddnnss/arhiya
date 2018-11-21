@@ -296,3 +296,6 @@ bot.run
 #  bot.send_file(491290689846378506,File.open('c:/vendetta.png', 'r'))
 #  return nil
 #end
+
+
+#Z975376717386 R202493688161 https://www.paypal.me/gamescum https://qiwi.me/gamescum https://money.yandex.ru/to/410016706719303
