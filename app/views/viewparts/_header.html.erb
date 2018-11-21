@@ -342,10 +342,10 @@ Additional Classes:
             font-style: normal;
             font-weight: 700;
             margin-left: 10px;">Всего</span>
-        <span id="total" ><%= session[:total]%> </span> <span style="font-size: 2rem;font-style: normal;font-weight: 700;margin-left: 10px;">RC - <%= current_player.player_rating %>% = </span><span style="font-size: 2rem;
+        <span id="total" ><%= session[:total]%> </span> <span style="font-size: 2rem;font-style: normal;font-weight: 700;margin-left: 10px;">RC - 50% = </span><span style="font-size: 2rem;
           font-style: normal;
           font-weight: 700;
-          margin-left: 10px;" id="total_discount"><%= session[:total].to_i - (session[:total].to_i * current_player.player_rating.to_i / 100) %> RC</span>
+          margin-left: 10px;" id="total_discount"><%= session[:total].to_i - (session[:total].to_i * 50 / 100) %> RC</span>
 
       </div>
 
