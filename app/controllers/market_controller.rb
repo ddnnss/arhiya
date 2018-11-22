@@ -50,6 +50,8 @@ class MarketController < ApplicationController
   end
 
   def placeorder
+    #discount_val = current_player.player_rating.to_i
+    discount_val = 50
     if session[:cart].blank?
       logger.info('[INFO] : Сумма заказа = 0')
       logger.info('[INFO] : session[:total] = ' + session[:total].to_s)
@@ -63,7 +65,7 @@ class MarketController < ApplicationController
         total_price =  total_price + ii.item_price * session[:cart][ii.id.to_s]
       end
 
-      total = total_price - (total_price * current_player.player_rating.to_i / 100)
+      total = total_price - (total_price * discount_val / 100)
       logger.info('total = ' + total.to_s)
       if current_player.player_wallet < total
         logger.info('[INFO] : Не хватает денег')
