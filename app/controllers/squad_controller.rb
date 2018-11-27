@@ -173,7 +173,39 @@ class SquadController < ApplicationController
   end
 
   def squaddel
-    if current_player.squad.squad_leader == current_player.id || player_admin
+    if player_admin
+
+        s = Squad.find_by_id(params[:squad_id])
+        if s
+          p_ids=[]
+          s.destroy
+          p = Player.where(:squad_id => params[:squad_id])
+          p.each do |pp|
+            p_ids.append(pp.id.to_s)
+            pp.update_column(:squad_id,nil)
+          end
+          ss = Squad.all
+          i=1
+          ss.each do |ss|
+            ss.update_column(:squad_number , i)
+            i =i+1
+          end
+          e=Event.where(:event_active =>true)
+          e.each do |ee|
+            if ee.event_group
+              ee.update_column(:event_squads,(ee.event_squads.split(',') -[params[:squad_id]]).join(','))
+              ee.update_column(:event_players,(ee.event_players.split(',') -  p_ids).join(','))
+            end
+          end
+          current_player.update_column(:squad_leader,false)
+
+            redirect_to '/admin/squads'
+
+
+        end
+
+    end
+    if current_player.squad.squad_leader == current_player.id
       s = Squad.find_by_id(params[:squad_id])
         if s
           p_ids=[]
