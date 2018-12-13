@@ -90,7 +90,7 @@ bot.command :lfm do |event,ppl,age,*info|
 end
 
 bot.command :server do |event|
-  url = 'https://www.battlemetrics.com/servers/scum/2812189'
+  url = 'https://www.battlemetrics.com/servers/scum/2966477'
   html = open(url)
   doc = Nokogiri::HTML(html)
   players = doc.xpath('//*[@id="serverPage"]/div[1]/div/dl/dd[2]').text
@@ -110,7 +110,7 @@ bot.command :server do |event|
 end
 
 bot.command :p do |event|
-  url = 'https://www.battlemetrics.com/servers/scum/2812189'
+  url = 'https://www.battlemetrics.com/servers/scum/2966477'
   html = open(url)
   doc = Nokogiri::HTML(html)
   players = doc.xpath('//*[@id="serverPage"]/div[1]/div/dl/dd[2]').text
